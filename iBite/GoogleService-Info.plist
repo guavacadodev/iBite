@@ -15,16 +15,20 @@
 	<key>STORAGE_BUCKET</key>
 	<string>ibite-94f65.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
-	<false></false>
+	<false/>
 	<key>IS_ANALYTICS_ENABLED</key>
-	<false></false>
+	<false/>
 	<key>IS_APPINVITE_ENABLED</key>
-	<true></true>
+	<true/>
 	<key>IS_GCM_ENABLED</key>
-	<true></true>
+	<true/>
 	<key>IS_SIGNIN_ENABLED</key>
-	<true></true>
+	<true/>
 	<key>GOOGLE_APP_ID</key>
 	<string>1:774135308868:ios:dd58e15483831bafcd1211</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>iBite needs your location to show nearby restaurants.</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>iBite needs your location to show nearby restaurants.</string>
 </dict>
 </plist>
