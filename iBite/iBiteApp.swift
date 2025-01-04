@@ -11,6 +11,8 @@ import FirebaseAppCheck
 
 @main
 struct iBiteApp: App {
+    @State private var modelIndex = 0 // Manage the state at the app level
+    @StateObject private var modelManager = ModelManager()
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
 
     init() {
@@ -20,7 +22,8 @@ struct iBiteApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            MainView()
+                .environmentObject(modelManager) // Pass ModelManager to all views
         }
     }
 }

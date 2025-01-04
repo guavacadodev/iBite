@@ -39,12 +39,12 @@ struct MapView: UIViewRepresentable {
                 span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
             ), animated: true)
             
-            // Update or add the pin for the selected location
-            uiView.removeAnnotations(uiView.annotations.filter { $0 is MKPointAnnotation && $0.title == "Selected Location" })
-            let selectionAnnotation = MKPointAnnotation()
-            selectionAnnotation.coordinate = location
-            selectionAnnotation.title = "Selected Location"
-            uiView.addAnnotation(selectionAnnotation)
+//            // Update or add the pin for the selected location
+//            uiView.removeAnnotations(uiView.annotations.filter { $0 is MKPointAnnotation && $0.title == "Selected Location" })
+//            let selectionAnnotation = MKPointAnnotation()
+//            selectionAnnotation.coordinate = location
+//            selectionAnnotation.title = "Selected Location"
+//            uiView.addAnnotation(selectionAnnotation)
         }
         
         // Update restaurant annotations
@@ -52,7 +52,7 @@ struct MapView: UIViewRepresentable {
         let restaurantAnnotations = restaurants.map { restaurant -> MKPointAnnotation in
             let annotation = MKPointAnnotation()
             annotation.title = restaurant.name
-            annotation.subtitle = restaurant.cuisine
+            annotation.subtitle = restaurant.cuisine.rawValue
             annotation.coordinate = restaurant.location
             return annotation
         }

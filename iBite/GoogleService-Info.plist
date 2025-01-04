@@ -26,9 +26,5 @@
 	<true/>
 	<key>GOOGLE_APP_ID</key>
 	<string>1:774135308868:ios:dd58e15483831bafcd1211</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>iBite needs your location to show nearby restaurants.</string>
-	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>iBite needs your location to show nearby restaurants.</string>
 </dict>
 </plist>

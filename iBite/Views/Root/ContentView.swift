@@ -10,124 +10,308 @@ import ARKit
 import SceneKit
 import MapKit
 
+let cuisineFilters: [(name: String, icon: String)] = [
+    ("All", "globe"),
+    ("Italian", "fork.knife"),
+    ("Mexican", "tortilla"),
+    ("American", "hamburger")
+]
+
 struct ContentView: View {
-    @State private var searchText = ""
-    @State private var isMapView = false
-    @State private var selectedRestaurant: Restaurant?
-    @State private var showARMenuView = false
-    @State private var modelIndex = 0
+    @State private var navTitleImage = Image("iBiteTransparentBackground")
+    @State private var searchText = "" // Used for user input to search content
+    @State private var isMapView = false // Variable that determines whether the MapView is displayed or not
+    @State private var selectedRestaurant: Restaurant? //variable that tracks whether user has selected a restaurant. Can be true false or nil
+    @State private var showARMenuView = false // variable to toggle display of ARMenuView
+    @Binding var showingARView: Bool // Binds to the MainView showingARView variable to track whether or not the ARMenuView is showing. If this variable is true, the BottomNavigationBar gets pushed down, as stated in the MainView. It means that the showingARView is showing.
+
+    // Other state variables and ObservedObject
+    @State private var selectedCuisine: String? = "All"
+    @State private var modelIndex = 0 // tracks the index of the model for the restaurants
     @State private var enteredAddress = ""
     @State private var isAddressEntryPresented = false
-    @State private var selectedLocation: CLLocationCoordinate2D?
-    @State private var filteredRestaurants: [Restaurant] = []
+    @State private var selectedLocation: CLLocationCoordinate2D? // selectedLocation variable that presents a coordinate
+    @State private var filteredRestaurants: [Restaurant] = [] // filteredRestaurants variable that updates the array based on the user's radius
     @State private var updatedRestaurants: [Restaurant] = [] // Stores restaurants with accurate coordinates
     @State private var searchRadius: Double = 10.0
-
     @ObservedObject private var locationManager = LocationManager.shared
 
     var body: some View {
         NavigationView {
+            // -- Main UI -- //
             ZStack {
+                // Base UI code for all elements of this screen:
                 VStack {
-                    // Location and Search Bar
+                    // Location, List & Map Picker, Radius Slider //
                     VStack {
+                        // My address text with change button
                         HStack {
-                            Text("My Address: \(enteredAddress.isEmpty ? "Not Added" : enteredAddress)")
-                                .font(.caption)
+                            Text("My Address: ")
+                                .font(.custom("Fredoka-SemiBold", size: 12))
+                                .foregroundColor(Color("whiteNeutral")) +
+                            Text(locationManager.userAddress.isEmpty ? "Not Added" : locationManager.userAddress)
+                                .font(.custom("Fredoka-Regular", size: 12))
+                                .foregroundColor(Color("lightGrayNeutral"))
                             Spacer()
                             Button("Change") {
                                 isAddressEntryPresented = true
                             }
-                            .font(.caption)
+                            .font(.custom("Fredoka-Bold", size: 9))
+                            .padding(.horizontal, 14) // Add padding around the text
+                            .padding(.vertical, 5)
+                            .background(Color("teal1"))
+                            .foregroundColor(Color("whiteNeutral"))
+                            .cornerRadius(10)
+                            .shadow(radius: 5)
+                            .overlay( // Add the teal2 outline
+                                RoundedRectangle(cornerRadius: 8)
+                                    .stroke(Color("teal2"), lineWidth: 2)
+                            )
+                            //.shadow(color: .gray.opacity(0.5), radius: 10, x: 0, y: 5) // Add a shadow for depth
+                            .scaleEffect(isAddressEntryPresented ? 1.1 : 1.0) // Add scale animation
+                            .animation(.easeInOut(duration: 0.2), value: isAddressEntryPresented) // Smooth animation
+
                         }
                         .padding(.horizontal)
-                        
-                        Picker("View Mode", selection: $isMapView) {
-                            Text("List").tag(false)
-                            Text("Map").tag(true)
+                        // list and map picker
+                        HStack {
+                            Button(action: { isMapView = false }) {
+                                Text("List")
+                                    .frame(maxWidth: .infinity)
+                                    .font(.custom("Fredoka-Bold", size: 24))
+                                    .padding()
+                                    .background(isMapView ? Color("grayNeutral").opacity(0.4) : Color("purple1"))
+                                    .foregroundColor(isMapView ? Color("lightGrayNeutral").opacity(0.4) : Color("whiteNeutral"))
+                                    .cornerRadius(8)
+                                    .overlay( // Add the outline with dynamic color
+                                        RoundedRectangle(cornerRadius: 8)
+                                            .stroke(isMapView ? Color("lightGrayNeutral").opacity(0.4) : Color("purple2"), lineWidth: 2)
+                                    )
+                            }
+
+                            Button(action: { isMapView = true }) {
+                                Text("Map")
+                                    .frame(maxWidth: .infinity)
+                                    .font(.custom("Fredoka-Bold", size: 24))
+                                    .padding()
+                                    .background(isMapView ? Color("purple1") : Color("grayNeutral").opacity(0.4))
+                                    .foregroundColor(isMapView ? Color("whiteNeutral") : Color("lightGrayNeutral").opacity(0.4))
+                                    .cornerRadius(8)
+                                    .overlay( // Add the outline with dynamic color
+                                        RoundedRectangle(cornerRadius: 8)
+                                            .stroke(isMapView ? Color("purple2") : Color("lightGrayNeutral").opacity(0.4), lineWidth: 2)
+                                    )
+                            }
                         }
-                        .pickerStyle(SegmentedPickerStyle())
                         .padding(.horizontal)
-                        
                         // Radius slider and display
                         HStack {
-                            Text("Radius: \(Int(searchRadius)) miles")
+                            Text("Radius: ")
+                                .font(.custom("Fredoka-SemiBold", size: 12))
+                                .foregroundColor(Color("whiteNeutral")) +
+                            Text("\(Int(searchRadius)) miles")
+                                .font(.custom("Fredoka-Regular", size: 12))
+                                .foregroundColor(Color("lightGrayNeutral"))
+                            
                             Slider(value: $searchRadius, in: 1...50, step: 1)
+                                .tint(Color("yellow1")) // Change the slider bar color to yellow
                                 .onChange(of: searchRadius) { _ in
                                     onSelectedLocationChange()
                                 }
                         }
                         .padding(.horizontal)
                     }
-                    .background(Color.white.opacity(0.9))
-                    
-                    // Map or List View based on picker
+                    .background(Color("darkNeutral"))
+                    // Picker content for either List or Map. If the selection is on MapView, then execute the if statement, else execute the content in the else statement for the List picker.
                     if isMapView {
+                        // Map View VStack with optional Featured Restaurants carousel and No Featured Restaurant content.
                         VStack {
                             MapView(selectedLocation: $selectedLocation, restaurants: filteredRestaurants)
                                 .frame(height: 300)
-                            
-                            // Dynamically change the text based on the availability of nearby restaurants
-                            Text(filteredRestaurants.isEmpty ? "No Featured Restaurants" : "Featured Restaurants")
-                                .font(.headline)
+                            // If there are no featured restaurants within the user's radius, show the "No Featured Restaurants" text otherwise, default to "Featured Restaurants"
+                            Text(filteredRestaurants.isEmpty ? "No Results Found" : "Featured Restaurants")
+                                .font(.custom("Fredoka-Regular", size: 18))
                                 .padding(.top, 10)
-                            
+                                .foregroundColor(Color("lightGrayNeutral"))
+                            Text(filteredRestaurants.isEmpty ? "Try Updating Your Address" : "")
+                                .font(.custom("Fredoka-Light", size: 9))
+                                .foregroundColor(Color("lightGrayNeutral"))
+                            // This code displays the purple monster below the "No Featured Restaurants" text in the scenario there are no restaurants nearby.
                             if filteredRestaurants.isEmpty {
-                                // Show 'no featured restaurants' image if no restaurants are nearby
-                                Image("no_featured_restaurants")
+                                Image("sadpurplemonster")
                                     .resizable()
                                     .scaledToFit()
-                                    .frame(height: 200)
+                                    .frame(height: 120)
                                     .padding(.top, 20)
+                            // This else statement will show nearby restaurants in the form of a slideable horizontal carousel in the case that there are restaurants near the user's location.
                             } else {
-                                // Show restaurant carousel if there are nearby restaurants
                                 ScrollView(.horizontal, showsIndicators: false) {
                                     HStack(spacing: 16) {
                                         ForEach(filteredRestaurants.prefix(5)) { restaurant in
                                             FeaturedRestaurantCardView(restaurant: restaurant)
-                                                .frame(width: 300)
+                                                .frame(width: 250)
+                                                .onTapGesture {
+                                                    self.selectedRestaurant = restaurant
+                                                    self.showARMenuView = true
+                                                }
                                         }
                                     }
                                     .padding(.horizontal)
                                 }
                             }
                         }
+                        // Content for the list tab.
                     } else {
-                        ScrollView {
-                            ForEach(filteredRestaurants) { restaurant in
-                                RestaurantCardView(restaurant: restaurant)
-                                    .onTapGesture {
-                                        self.selectedRestaurant = restaurant
-                                        self.showARMenuView = true
+                        ZStack {
+                            ScrollView {
+                                VStack {
+                                    // CUISINE FILTER
+                                    HStack(spacing: 10) {
+                                        ForEach(cuisineFilters, id: \.name) { filter in
+                                            Button(action: {
+                                                // Update the selected cuisine
+                                                selectedCuisine = filter.name
+                                                updateFilteredRestaurants()
+                                            }) {
+                                                VStack {
+                                                    Image(systemName: filter.icon) // Add SF Symbol
+                                                        .font(.system(size: 20))
+                                                        .foregroundColor(selectedCuisine == filter.name ? .white : .black)
+                                                    Text(filter.name)
+                                                        .font(.custom("Fredoka-Regular", size: 14))
+                                                        .foregroundColor(selectedCuisine == filter.name ? .white : .black)
+                                                }
+                                                .padding(8)
+                                                .background(selectedCuisine == filter.name ? Color("purple1") : Color.gray.opacity(0.2))
+                                                .cornerRadius(8)
+                                            }
+                                        }
                                     }
                                     .padding(.horizontal)
+                                    .frame(height: 100)
+                                    if filteredRestaurants.isEmpty {
+                                        // Display "No Results Found" text and sadpurplemonster image
+                                        VStack {
+                                            Text("No Results!")
+                                                .font(.custom("Fredoka-Regular", size: 18))
+                                                .foregroundColor(Color("lightGrayNeutral"))
+                                            Text("Try Updating Your Address")
+                                                .font(.custom("Fredoka-Light", size: 9))
+                                                .foregroundColor(Color("lightGrayNeutral"))
+                                            Image("sadpurplemonster")
+                                                .resizable()
+                                                .scaledToFit()
+                                                .frame(height: 125)
+                                                .padding(.top, 20)
+                                        }
+                                    } else {
+                                        // Display LIST content
+                                        ScrollView {
+                                            VStack {
+                                                ScrollView {
+                                                    VStack {
+                                                        Divider().background(Color("lightGrayNeutral"))
+                                                        //POPULAR CATEGORY
+                                                        ScrollView {
+                                                            HStack(spacing: 3) {
+                                                                Spacer()
+                                                                Image(systemName: "star.fill")
+                                                                    //.padding(.leading, 15)
+                                                                    .font(.custom("Fredoka-SemiBold", size: 24))
+                                                                    .foregroundColor(Color("yellow1"))
+                                                                Text("Popular")
+                                                                    //.padding(.leading, 15)
+                                                                    .font(.custom("Fredoka-Medium", size: 24))
+                                                                    .foregroundColor(Color("yellow1"))
+                                                                Image(systemName: "star.fill")
+                                                                    //.padding(.leading, 15)
+                                                                    .font(.custom("Fredoka-SemiBold", size: 24))
+                                                                    .foregroundColor(Color("yellow1"))
+                                                                Spacer()
+                                                            }
+                                                            ScrollView(.horizontal, showsIndicators: false) {
+                                                                HStack(spacing: 16) {
+                                                                    ForEach(filteredRestaurants.prefix(5)) { restaurant in
+                                                                        FeaturedRestaurantCardView(restaurant: restaurant)
+                                                                            .frame(width: 250)
+                                                                            .onTapGesture {
+                                                                                self.selectedRestaurant = restaurant
+                                                                                self.showARMenuView = true
+                                                                            }
+                                                                    }
+                                                                }
+                                                                .padding()
+                                                            }
+                                                        }
+                                                        .scaleEffect(0.9)
+                                                        Divider().background(Color("lightGrayNeutral"))
+                                                        //NEAR YOU CATEGORY
+                                                        HStack {
+                                                            Text("Near You")
+                                                                .padding(.leading, 15)
+                                                                .font(.custom("Fredoka-Medium", size: 24))
+                                                                .foregroundColor(Color("whiteNeutral"))
+                                                            Spacer()
+                                                        }
+                                                        ScrollView {
+                                                            ForEach(filteredRestaurants) { restaurant in
+                                                                RestaurantCardView(restaurant: restaurant)
+                                                                    .onTapGesture {
+                                                                        self.selectedRestaurant = restaurant
+                                                                        self.showARMenuView = true
+                                                                    }
+                                                                    .padding(.horizontal)
+                                                            }
+                                                        }
+                                                        Divider().background(Color("lightGrayNeutral"))
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
                             }
                         }
                     }
                     Spacer()
                 }
-                
-                // NavigationLink to ARMenuContainerView
+                .background(Color("darkNeutral"))
+                // If the user selects a restaurant from the List tab, capture it in the restaurant variable.
+                // Then pass the associated models and menuItems of the selected restaurant to the ARMenuContainerView1.
                 if let restaurant = selectedRestaurant {
                     NavigationLink(
-                        destination: ARMenuContainerView(
+                        destination: ARMenuContentView(
                             models: restaurant.models,
-                            menuItems: restaurant.menuItems, // Pass menu items here
-                            modelIndex: $modelIndex
-                        ),
+                            menuItems: restaurant.menuItems
+                        )
+                        .onAppear {
+                            // Set the binding showingARView to true to render the BottomNavigationBar invisible.
+                            showingARView = true
+                        }
+                        .onDisappear {
+                            // Set it back to false when the user exits, so that the BottomNavigationBar reappears.
+                            showingARView = false
+                        },
                         isActive: $showARMenuView
                     ) {
                         EmptyView()
                     }
                 }
             }
-            .navigationTitle("iBite").navigationBarTitleDisplayMode(.inline)
+            //.navigationTitle("iBite").navigationBarTitleDisplayMode(.inline)
+            .navigationBarItems(leading: navTitleImage.resizable().frame(width: 80, height: 80).offset(x: 140))
+            // Address Entry View Pop Up
             .sheet(isPresented: $isAddressEntryPresented) {
-                AddressEntryView(enteredAddress: $enteredAddress)
+                AddressEntryView(enteredAddress: Binding(
+                    get: { locationManager.userAddress },
+                    set: {
+                        locationManager.setManualAddress($0)
+                        updateLocationFromManualInput()
+                    }
+                ))
             }
             .onAppear {
                 locationManager.requestWhenInUseAuthorization()
-                
                 // Fetch real locations for all sample restaurants if `updatedRestaurants` is empty
                 if updatedRestaurants.isEmpty {
                     for restaurant in sampleRestaurants {
@@ -155,28 +339,47 @@ struct ContentView: View {
                     onSelectedLocationChange()
                 }
             }
-            .onChange(of: enteredAddress) { newAddress in
-                onEnteredAddressChange(newAddress)
-            }
         }
         .preferredColorScheme(.light)
     }
     
-    // Geocode address and update selectedLocation
-    private func onEnteredAddressChange(_ address: String) {
-        guard !address.isEmpty else { return }
-        let geocoder = CLGeocoder()
-        geocoder.geocodeAddressString(address) { placemarks, error in
-            if let placemark = placemarks?.first, let location = placemark.location {
-                selectedLocation = location.coordinate
-                onSelectedLocationChange()
-            } else {
-                print("Geocoding failed: \(error?.localizedDescription ?? "Unknown error")")
-            }
+    // Function to update the filtered restaurants
+    private func updateFilteredRestaurants() {
+        if selectedCuisine == "All" {
+            filteredRestaurants = sampleRestaurants // Show all cuisines
+        } else {
+            filteredRestaurants = sampleRestaurants.filter { $0.cuisine.rawValue == selectedCuisine }
         }
     }
     
-    // Filter restaurants within the selected radius
+    // Changes location based on manual input
+    private func updateLocationFromManualInput() {
+        guard let location = locationManager.userLocation?.coordinate else { return }
+        selectedLocation = location
+        onSelectedLocationChange()
+    }
+    
+    // Loads restaurants locations based on location
+    private func loadRestaurantLocations() {
+        if updatedRestaurants.isEmpty {
+            for restaurant in sampleRestaurants {
+                fetchRealLocation(for: restaurant) { coordinate in
+                    if let coordinate = coordinate {
+                        var updatedRestaurant = restaurant
+                        updatedRestaurant.location = coordinate
+                        updatedRestaurants.append(updatedRestaurant)
+                        if updatedRestaurants.count == sampleRestaurants.count {
+                            onSelectedLocationChange()
+                        }
+                    }
+                }
+            }
+        } else {
+            onSelectedLocationChange()
+        }
+    }
+    
+    // Restaurant filter within a selected radius of user's location
     private func onSelectedLocationChange() {
         guard let location = selectedLocation else {
             filteredRestaurants = [] // Clear if no location
@@ -193,6 +396,20 @@ struct ContentView: View {
             return updatedRestaurant
         }
         .filter { $0.distance <= searchRadius }
+    }
+    
+    // Converts string address into geo coordinates & updates apps location
+    private func onEnteredAddressChange(_ address: String) {
+        guard !address.isEmpty else { return }
+        let geocoder = CLGeocoder()
+        geocoder.geocodeAddressString(address) { placemarks, error in
+            if let placemark = placemarks?.first, let location = placemark.location {
+                selectedLocation = location.coordinate
+                onSelectedLocationChange()
+            } else {
+                print("Geocoding failed: \(error?.localizedDescription ?? "Unknown error")")
+            }
+        }
     }
 }
 
@@ -219,9 +436,6 @@ extension ContentView {
     }
 }
 
-#Preview {
-    ContentView()
-}
 
 
 

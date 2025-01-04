@@ -16,25 +16,26 @@ struct FeaturedRestaurantCardView: View {
             Image(restaurant.imageName)
                 .resizable()
                 .aspectRatio(contentMode: .fill)
-                .frame(width: 300, height: 200)
+                .frame(width: 250, height: 100)
                 .clipped()
                 .cornerRadius(8)
             
             VStack(alignment: .leading, spacing: 4) {
                 Text(restaurant.name)
-                    .font(.headline)
+                    .font(.custom("Fredoka-Regular", size: 18))
+                    .foregroundColor(Color("grayNeutral"))
                     .lineLimit(1)
                 
                 Text("\(restaurant.distance, specifier: "%.1f") miles away")
-                    .font(.caption)
-                    .foregroundColor(.gray)
+                    .font(.custom("Fredoka-Medium", size: 12)) // Updated font to Fredoka-SemiBold
+                    .foregroundColor(Color("purple1"))
             }
             .padding([.horizontal, .bottom], 8)
         }
-        .background(Color.white)
+        .background(Color("yellow1"))
         .cornerRadius(10)
-        .shadow(radius: 5)
-        .frame(width: 300) // Fixed width for each card
+        .shadow(color: Color("orange1"), radius: 5, x: 0, y: 0)
+        .frame(width: 250) // Fixed width for each card
     }
 }
 
@@ -42,7 +43,7 @@ struct FeaturedRestaurantCardView: View {
 #Preview {
     FeaturedRestaurantCardView(restaurant: Restaurant(
         name: "Sample Restaurant",
-        cuisine: "Italian",
+        cuisine: Cuisines(rawValue: "Italian") ?? .Italian,
         location: CLLocationCoordinate2D(latitude: 40.7128, longitude: -74.0060),
         distance: 2.5,
         imageName: "sample_image", // Use an actual image name from your assets
