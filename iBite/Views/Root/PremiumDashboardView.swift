@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import CoreLocation
 
 struct PremiumDashboardView: View {
     @Environment(\.presentationMode) var presentationMode
@@ -155,6 +156,7 @@ struct UnsubscribedDashboardView: View {
 
 
 struct SubscribedDashboardView: View {
+    @State private var showCreateRestaurantView = false
     var body: some View {
         NavigationView {
             ScrollView {
@@ -170,7 +172,7 @@ struct SubscribedDashboardView: View {
                                 .foregroundColor(Color("lightGrayNeutral"))
                         }
                         Spacer()
-                        Image("profilePlaceholder") // Replace with the actual profile image
+                        Image("profile_image") // Replace with the actual profile image
                             .resizable()
                             .scaledToFill()
                             .frame(width: 60, height: 60)
@@ -188,14 +190,16 @@ struct SubscribedDashboardView: View {
                             .foregroundColor(Color("purple1"))
 
                         HStack {
+                            //Take a Photo of a Menu Item
                             Button(action: {
-                                print("Create a Restaurant")
+                                // create a pop up with options to take a photo or a 3D scan using the photogrammetry view
+                                print("Take A Photo")
                             }) {
                                 VStack {
-                                    Image(systemName: "plus.app.fill")
+                                    Image(systemName: "camera.fill")
                                         .font(.system(size: 40))
                                         .foregroundColor(Color("teal1"))
-                                    Text("Create a Restaurant")
+                                    Text("Take a Photo")
                                         .font(.custom("Fredoka-Medium", size: 14))
                                         .foregroundColor(Color("lightGrayNeutral"))
                                 }
@@ -205,15 +209,16 @@ struct SubscribedDashboardView: View {
                                 .cornerRadius(12)
                                 .shadow(radius: 5)
                             }
-
+                            // Take a 3D Scan of a Menu Item
                             Button(action: {
-                                print("Access Photogrammetry View")
+                                // create a pop up with options to take a photo or a 3D scan using the photogrammetry view
+                                print("3D Photo Scan")
                             }) {
                                 VStack {
                                     Image(systemName: "camera.fill")
                                         .font(.system(size: 40))
                                         .foregroundColor(Color("teal1"))
-                                    Text("Photogrammetry Tools")
+                                    Text("3D Scan")
                                         .font(.custom("Fredoka-Medium", size: 14))
                                         .foregroundColor(Color("lightGrayNeutral"))
                                 }
@@ -227,6 +232,11 @@ struct SubscribedDashboardView: View {
                     }
                     .padding(.horizontal)
 
+                    Divider().background(Color("lightGrayNeutral"))
+                    
+                    // Restaurant Management Section
+                    MyRestaurantsView() // New view to show user's restaurants
+                    
                     Divider().background(Color("lightGrayNeutral"))
 
                     // Analytics Section
@@ -334,6 +344,7 @@ struct AnalyticsCardView: View {
         .shadow(radius: 5)
     }
 }
+
 
 
 //// Preview

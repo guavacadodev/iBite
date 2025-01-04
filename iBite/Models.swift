@@ -17,7 +17,7 @@ struct Restaurant: Identifiable {
     var distance: Double
     let imageName: String
     let models: [String]
-    let menuItems: [MenuItem] // New property for menu items
+    let menuItems: [MenuItem]
 }
 
 // Review Model
