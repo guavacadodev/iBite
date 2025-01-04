@@ -103,11 +103,11 @@ struct BottomNavigationBar: View {
                         }
                         .padding()
                         .frame(maxWidth: .infinity)
-                        .background(userIsPremium ? Color.red : Color("purple1"))
+                        .background(userIsPremium ? Color("red1") : Color("purple1"))
                         .cornerRadius(8)
                         .overlay(
                             RoundedRectangle(cornerRadius: 8)
-                                .stroke(userIsPremium ? Color.red.opacity(0.7) : Color("purple2"), lineWidth: 2)
+                                .stroke(userIsPremium ? Color("red2") : Color("purple2"), lineWidth: 2)
                         )
                     }
                 }
