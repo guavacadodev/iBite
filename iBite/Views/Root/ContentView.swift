@@ -34,6 +34,7 @@ struct ContentView: View {
     @State private var filteredRestaurants: [Restaurant] = [] // filteredRestaurants variable that updates the array based on the user's radius
     @State private var updatedRestaurants: [Restaurant] = [] // Stores restaurants with accurate coordinates
     @State private var searchRadius: Double = 10.0
+    @State private var userHasLikedRestaurant: Bool = false
     @ObservedObject private var locationManager = LocationManager.shared
 
     var body: some View {
@@ -53,6 +54,7 @@ struct ContentView: View {
                                 .font(.custom("Fredoka-Regular", size: 12))
                                 .foregroundColor(Color("lightGrayNeutral"))
                             Spacer()
+                            // MARK: - Update Address Entry Button here @Eslam //
                             Button("Change") {
                                 isAddressEntryPresented = true
                             }
@@ -214,7 +216,7 @@ struct ContentView: View {
                                                         //POPULAR CATEGORY
                                                         ScrollView {
                                                             HStack(spacing: 3) {
-                                                                Spacer()
+                                                                //Spacer()
                                                                 Image(systemName: "star.fill")
                                                                     //.padding(.leading, 15)
                                                                     .font(.custom("Fredoka-SemiBold", size: 24))
@@ -248,6 +250,7 @@ struct ContentView: View {
                                                         //NEAR YOU CATEGORY
                                                         HStack {
                                                             Text("Near You")
+                                                                .padding(.top, 15)
                                                                 .padding(.leading, 15)
                                                                 .font(.custom("Fredoka-Medium", size: 24))
                                                                 .foregroundColor(Color("whiteNeutral"))
@@ -255,7 +258,7 @@ struct ContentView: View {
                                                         }
                                                         ScrollView {
                                                             ForEach(filteredRestaurants) { restaurant in
-                                                                RestaurantCardView(restaurant: restaurant)
+                                                                RestaurantCardView(restaurant: restaurant, userHasLikedRestaurant: $userHasLikedRestaurant)
                                                                     .onTapGesture {
                                                                         self.selectedRestaurant = restaurant
                                                                         self.showARMenuView = true

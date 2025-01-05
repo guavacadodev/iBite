@@ -9,6 +9,7 @@ import SwiftUI
 
 struct RestaurantCardView: View {
     var restaurant: Restaurant
+    @Binding var userHasLikedRestaurant: Bool
 
     var body: some View {
         VStack(alignment: .leading) {
@@ -22,22 +23,26 @@ struct RestaurantCardView: View {
             VStack(alignment: .leading) {
                 HStack {
                     Text(restaurant.name)
-                        .font(.custom("Fredoka-Regular", size: 18))
+                        .font(.custom("Fredoka-Medium", size: 18))
                         .foregroundColor(Color("whiteNeutral"))
                     Spacer()
+                }
+                .overlay {
                     Button(action: {
-                        // Add action here
+                        userHasLikedRestaurant.toggle()
                     }) {
-                        Image(systemName: "heart")
-                            .font(.system(size: 18)) // Adjust size as needed
-                            .foregroundColor(Color("whiteNeutral"))
+                        Spacer()
+                        Image(systemName: userHasLikedRestaurant ? "heart.fill" : "heart")
+                            .padding(.top, 15)
+                            .font(.system(size: 24)) // Adjust size as needed
+                            .foregroundColor(userHasLikedRestaurant ? Color("red1") : Color("whiteNeutral"))
                     }
                 }
                 Text(restaurant.cuisine.rawValue)
                     .font(.custom("Fredoka-Light", size: 13))
-                    .foregroundColor(Color("lightGrayNeutral"))
+                    .foregroundColor(Color("yellow1"))
                 Text("\(restaurant.distance, specifier: "%.1f") miles away") // Display real distance
-                    .font(.custom("Fredoka-Medium", size: 12)) // Updated font to Fredoka-SemiBold
+                    .font(.custom("Fredoka-SemiBold", size: 12)) // Updated font to Fredoka-SemiBold
                     .foregroundColor(Color("lightGrayNeutral"))
             }
             .padding([.leading, .bottom, .trailing], 8)

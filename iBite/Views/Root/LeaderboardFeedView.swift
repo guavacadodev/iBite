@@ -95,7 +95,7 @@ struct RankingCardView: View {
         .frame(width: width * 0.9, height: height * 0.8)
         .background(Color("grayNeutral"))
         .cornerRadius(20)
-        .shadow(radius: 10)
+        .shadow(color: Color("lightGrayNeutral"), radius: 10)
         .padding()
     }
 }

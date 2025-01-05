@@ -23,10 +23,10 @@ struct PremiumDashboardView: View {
                     }) {
                         HStack {
                             Image(systemName: "chevron.left")
-                                .foregroundColor(Color("purple1"))
+                                .foregroundColor(userIsPremium ? Color("purple1") : Color("whiteNeutral"))
                             Text("Back")
                                 .font(.custom("Fredoka-Regular", size: 16))
-                                .foregroundColor(Color("purple1"))
+                                .foregroundColor(userIsPremium ? Color("purple1") : Color("whiteNeutral"))
                         }
                     }
                 )
@@ -46,110 +46,95 @@ struct PremiumDashboardView: View {
 // Existing Views
 
 struct UnsubscribedDashboardView: View {
+    @State private var selectedPlan: SubscriptionPlan = .annual
     @Environment(\.presentationMode) var presentationMode
     var body: some View {
-        NavigationView {
-            VStack(spacing: 20) {
-                Spacer()
+        ZStack {
+            LinearGradient(
+                gradient: Gradient(colors: [Color("purple1"), Color("purple2")]),
+                startPoint: .topLeading,
+                endPoint: .bottomTrailing
+            )
+            .ignoresSafeArea()
 
+            VStack(spacing: 30) {
                 // Header Section
                 VStack(spacing: 10) {
-                    Text("Unlock Premium Features")
+                    Image("happymonster")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(height: 120)
+                        //.foregroundColor(.white)
+                        .padding(.top, 20)
+
+                    Text("Unlock the full iBite Experience")
                         .font(.custom("Fredoka-Bold", size: 24))
-                        .foregroundColor(Color("purple1"))
-
-                    Text("Access exclusive tools for model scanning, restaurant creation, advanced analytics, and more!")
-                        .font(.custom("Fredoka-Regular", size: 16))
-                        .foregroundColor(Color("lightGrayNeutral"))
+                        .foregroundColor(.white)
                         .multilineTextAlignment(.center)
-                        .padding(.horizontal, 30)
+
+                    Text("Enjoy exclusive features to enhance your experience!")
+                        .font(.custom("Fredoka-Regular", size: 14))
+                        .foregroundColor(Color("darkNeutral"))
+                        .multilineTextAlignment(.center)
+                        .padding(.horizontal, 20)
                 }
 
-                Spacer()
-
-                // Benefits Section
-                VStack(spacing: 15) {
-                    HStack(spacing: 15) {
-                        Image(systemName: "star.fill")
-                            .foregroundColor(.yellow)
-                            .font(.system(size: 24))
-                        Text("Exclusive Model Scanning")
-                            .font(.custom("Fredoka-Regular", size: 18))
-                            .foregroundColor(Color("whiteNeutral"))
-                    }
-
-                    HStack(spacing: 15) {
-                        Image(systemName: "chart.bar.fill")
-                            .foregroundColor(.green)
-                            .font(.system(size: 24))
-                        Text("Advanced Analytics")
-                            .font(.custom("Fredoka-Regular", size: 18))
-                            .foregroundColor(Color("whiteNeutral"))
-                    }
-
-                    HStack(spacing: 15) {
-                        Image(systemName: "crown.fill")
-                            .foregroundColor(.purple)
-                            .font(.system(size: 24))
-                        Text("Priority Support")
-                            .font(.custom("Fredoka-Regular", size: 18))
-                            .foregroundColor(Color("whiteNeutral"))
-                    }
+                // Features Section
+                VStack(alignment: .leading, spacing: 15) {
+                    FeatureRow(icon: "checkmark.circle.fill", text: "Create and manage restaurants easily.")
+                    FeatureRow(icon: "checkmark.circle.fill", text: "Access advanced analytics.")
+                    FeatureRow(icon: "checkmark.circle.fill", text: "Unlock photogrammetry tools.")
+                    FeatureRow(icon: "checkmark.circle.fill", text: "Enjoy premium priority support.")
                 }
+                .padding(.horizontal, 20)
 
-                Spacer()
+                // Subscription Plans
+                VStack(spacing: 10) {
+                    PlanOptionView(
+                        title: "Monthly",
+                        price: "$4.99 / MO",
+                        isSelected: selectedPlan == .monthly
+                    )
+                    .onTapGesture {
+                        selectedPlan = .monthly
+                    }
 
-                // Purchase Section
-                VStack(spacing: 20) {
-                    Text("Subscribe for only $2.99/month")
-                        .font(.custom("Fredoka-Bold", size: 20))
-                        .foregroundColor(Color("purple1"))
-
-                    Button(action: {
-                        // Add subscription logic here
-                        print("Purchase premium subscription")
-                    }) {
-                        Text("Upgrade to Premium")
-                            .font(.custom("Fredoka-Bold", size: 18))
-                            .padding()
-                            .frame(maxWidth: .infinity)
-                            .background(Color("teal1"))
-                            .foregroundColor(Color("whiteNeutral"))
-                            .cornerRadius(10)
-                            .shadow(radius: 5)
-                            .overlay( // Add the teal2 outline
-                                RoundedRectangle(cornerRadius: 8)
-                                    .stroke(Color("teal2"), lineWidth: 2)
-                                )
+                    PlanOptionView(
+                        title: "Annual",
+                        price: "$4.24 / MO",
+                        subtitle: "$50.90 billed yearly",
+                        badge: "15 % OFF!",
+                        isSelected: selectedPlan == .annual
+                    )
+                    .onTapGesture {
+                        selectedPlan = .annual
                     }
                 }
                 .padding(.horizontal, 20)
 
-                Spacer()
+                // Call-to-Action Button
+                Button(action: {
+                    print("Subscribe to \(selectedPlan.rawValue) plan")
+                }) {
+                    Text("Try FREE and Subscribe")
+                        .font(.custom("Fredoka-Bold", size: 18))
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .background(Color("yellow1"))
+                        .foregroundColor(.white)
+                        .cornerRadius(10)
+                        .shadow(radius: 5)
+                }
+                .padding(.horizontal, 20)
 
                 // Footer Section
-                Button(action: {
-                    presentationMode.wrappedValue.dismiss()
-                }) {
-                    Text("Not Now")
-                        .font(.custom("Fredoka-Regular", size: 16))
-                        .foregroundColor(Color("lightGrayNeutral"))
-                }
+                Text("7 day trial, then just $69.99 per year\nCancel anytime in the App Store")
+                    .font(.custom("Fredoka-Regular", size: 12))
+                    .foregroundColor(Color("lightGrayNeutral"))
+                    .multilineTextAlignment(.center)
+                    .padding(.top, 10)
             }
-            .background(Color("darkNeutral"))
-//            .navigationBarItems(
-//                leading: Button(action: {
-//                    presentationMode.wrappedValue.dismiss()
-//                }) {
-//                    HStack {
-//                        Image(systemName: "chevron.left")
-//                            .foregroundColor(Color("purple1"))
-//                        Text("Back")
-//                            .font(.custom("Fredoka-Regular", size: 16))
-//                            .foregroundColor(Color("purple1"))
-//                    }
-//                }
-//            )
+            .padding(.vertical, 20)
         }
     }
 }
@@ -353,5 +338,6 @@ struct AnalyticsCardView: View {
 //        PremiumDashboardView(userIsPremium: Bool)
 //    }
 //}
+
 
 

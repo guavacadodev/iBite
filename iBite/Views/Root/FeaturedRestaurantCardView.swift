@@ -22,12 +22,12 @@ struct FeaturedRestaurantCardView: View {
             
             VStack(alignment: .leading, spacing: 4) {
                 Text(restaurant.name)
-                    .font(.custom("Fredoka-Regular", size: 18))
+                    .font(.custom("Fredoka-Medium", size: 18))
                     .foregroundColor(Color("grayNeutral"))
                     .lineLimit(1)
                 
                 Text("\(restaurant.distance, specifier: "%.1f") miles away")
-                    .font(.custom("Fredoka-Medium", size: 12)) // Updated font to Fredoka-SemiBold
+                    .font(.custom("Fredoka-SemiBold", size: 12)) // Updated font to Fredoka-SemiBold
                     .foregroundColor(Color("purple1"))
             }
             .padding([.horizontal, .bottom], 8)
