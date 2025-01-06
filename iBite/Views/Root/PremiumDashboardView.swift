@@ -33,19 +33,19 @@ struct PremiumDashboardView: View {
         }
     }
 
+    // This function is responsible for either displaying the UnsubscribedView or SubscribedView
     @ViewBuilder
     private func switchView() -> some View {
         if userIsPremium {
-            SubscribedDashboardView()
+            SubscribedView()
         } else {
-            UnsubscribedDashboardView()
+            UnsubscribedView()
         }
     }
 }
 
-// Existing Views
-
-struct UnsubscribedDashboardView: View {
+// MARK: - Displays if the user is not premium
+struct UnsubscribedView: View {
     @State private var selectedPlan: SubscriptionPlan = .annual
     @Environment(\.presentationMode) var presentationMode
     var body: some View {
@@ -139,8 +139,8 @@ struct UnsubscribedDashboardView: View {
     }
 }
 
-
-struct SubscribedDashboardView: View {
+// MARK: - Displays if the user is premium
+struct SubscribedView: View {
     @State private var showCreateRestaurantView = false
     var body: some View {
         NavigationView {
@@ -165,7 +165,6 @@ struct SubscribedDashboardView: View {
                             .shadow(radius: 5)
                     }
                     .padding(.horizontal)
-
                     Divider().background(Color("lightGrayNeutral"))
 
                     // Restaurant Management Section
@@ -173,54 +172,12 @@ struct SubscribedDashboardView: View {
                         Text("Restaurant Management")
                             .font(.custom("Fredoka-Bold", size: 18))
                             .foregroundColor(Color("purple1"))
-
-                        HStack {
-                            //Take a Photo of a Menu Item
-                            Button(action: {
-                                // create a pop up with options to take a photo or a 3D scan using the photogrammetry view
-                                print("Take A Photo")
-                            }) {
-                                VStack {
-                                    Image(systemName: "camera.fill")
-                                        .font(.system(size: 40))
-                                        .foregroundColor(Color("teal1"))
-                                    Text("Take a Photo")
-                                        .font(.custom("Fredoka-Medium", size: 14))
-                                        .foregroundColor(Color("lightGrayNeutral"))
-                                }
-                                .frame(maxWidth: .infinity)
-                                .padding()
-                                .background(Color("darkNeutral"))
-                                .cornerRadius(12)
-                                .shadow(radius: 5)
-                            }
-                            // Take a 3D Scan of a Menu Item
-                            Button(action: {
-                                // create a pop up with options to take a photo or a 3D scan using the photogrammetry view
-                                print("3D Photo Scan")
-                            }) {
-                                VStack {
-                                    Image(systemName: "camera.fill")
-                                        .font(.system(size: 40))
-                                        .foregroundColor(Color("teal1"))
-                                    Text("3D Scan")
-                                        .font(.custom("Fredoka-Medium", size: 14))
-                                        .foregroundColor(Color("lightGrayNeutral"))
-                                }
-                                .frame(maxWidth: .infinity)
-                                .padding()
-                                .background(Color("darkNeutral"))
-                                .cornerRadius(12)
-                                .shadow(radius: 5)
-                            }
-                        }
+                        AddRestaurantButtonView() // New view to show user's restaurants
                     }
                     .padding(.horizontal)
-
                     Divider().background(Color("lightGrayNeutral"))
                     
-                    // Restaurant Management Section
-                    MyRestaurantsView() // New view to show user's restaurants
+                    // Displays the slider of restaurants here when added
                     
                     Divider().background(Color("lightGrayNeutral"))
 
@@ -264,7 +221,6 @@ struct SubscribedDashboardView: View {
                         }
                     }
                     .padding(.horizontal)
-
                     Divider().background(Color("lightGrayNeutral"))
 
                     // Today's Insights Section
@@ -336,6 +292,47 @@ struct AnalyticsCardView: View {
 //struct PremiumDashboardView_Previews: PreviewProvider {
 //    static var previews: some View {
 //        PremiumDashboardView(userIsPremium: Bool)
+//    }
+//}
+
+//HStack {
+//    //Take a Photo of a Menu Item
+//    Button(action: {
+//        // create a pop up with options to take a photo or a 3D scan using the photogrammetry view
+//        print("Take A Photo")
+//    }) {
+//        VStack {
+//            Image(systemName: "camera.fill")
+//                .font(.system(size: 40))
+//                .foregroundColor(Color("teal1"))
+//            Text("Take a Photo")
+//                .font(.custom("Fredoka-Medium", size: 14))
+//                .foregroundColor(Color("lightGrayNeutral"))
+//        }
+//        .frame(maxWidth: .infinity)
+//        .padding()
+//        .background(Color("darkNeutral"))
+//        .cornerRadius(12)
+//        .shadow(radius: 5)
+//    }
+//    // Take a 3D Scan of a Menu Item
+//    Button(action: {
+//        // create a pop up with options to take a photo or a 3D scan using the photogrammetry view
+//        print("3D Photo Scan")
+//    }) {
+//        VStack {
+//            Image(systemName: "camera.fill")
+//                .font(.system(size: 40))
+//                .foregroundColor(Color("teal1"))
+//            Text("3D Scan")
+//                .font(.custom("Fredoka-Medium", size: 14))
+//                .foregroundColor(Color("lightGrayNeutral"))
+//        }
+//        .frame(maxWidth: .infinity)
+//        .padding()
+//        .background(Color("darkNeutral"))
+//        .cornerRadius(12)
+//        .shadow(radius: 5)
 //    }
 //}
 

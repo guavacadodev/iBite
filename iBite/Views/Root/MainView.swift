@@ -15,7 +15,7 @@ struct MainView: View {
     @State private var showingSearchView: Bool = false // Track whether or not the SearchView is showing
     @State private var showingPremiumDashboard: Bool = false
     @State private var isUsersOwnProfile: Bool = false // Track whether the user is looking at their own profile or another user's profile.
-    @State private var userIsPremium: Bool = false // Track whether the user has a premium subscription
+    @State private var userIsPremium: Bool = true // Track whether the user has a premium subscription
     @State private var userIsLoggedIn: Bool = false // Track whether the user is logged in or not. Send them to onboarding if they are not.
 
     var body: some View {
