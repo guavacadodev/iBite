@@ -18,15 +18,17 @@ struct Restaurant: Identifiable {
     let imageName: String
     let models: [String]
     let menuItems: [MenuItem]
+    let reviewText: String?
+    let rating: Int?
 }
 
-// Review Model
-struct Review: Identifiable {
-    let id = UUID()
-    let restaurantName: Restaurant
-    let reviewText: String
-    let rating: Int
-}
+//// Review Model
+//struct Review: Identifiable {
+//    let id = UUID()
+//    let restaurantName: Restaurant
+//    let reviewText: String
+//    let rating: Int
+//}
 
 struct ModelItem: Identifiable {
     let id = UUID()
@@ -92,7 +94,9 @@ let sampleRestaurants = [
         menuItems: [
             MenuItem(name: "Spaghetti Carbonara", price: "$13.99", ingredients: "Pasta, Eggs, Parmesan, Bacon"),
             MenuItem(name: "Margherita Pizza", price: "$9.99", ingredients: "Tomato, Mozzarella, Basil")
-        ]
+        ],
+        reviewText: nil,
+        rating: nil
     ),
     Restaurant(
         name: "The Rainier Bar & Grill",
@@ -104,7 +108,9 @@ let sampleRestaurants = [
         menuItems: [
             MenuItem(name: "Spaghetti Carbonara", price: "$13.99", ingredients: "Pasta, Eggs, Parmesan, Bacon"),
             MenuItem(name: "Margherita Pizza", price: "$9.99", ingredients: "Tomato, Mozzarella, Basil")
-        ]
+        ],
+        reviewText: nil,
+        rating: nil
     ),
     Restaurant(
         name: "Sushi Palace",
@@ -116,7 +122,9 @@ let sampleRestaurants = [
         menuItems: [
             MenuItem(name: "Spaghetti Carbonara", price: "$13.99", ingredients: "Pasta, Eggs, Parmesan, Bacon"),
             MenuItem(name: "Margherita Pizza", price: "$9.99", ingredients: "Tomato, Mozzarella, Basil")
-        ]
+        ],
+        reviewText: nil,
+        rating: nil
     ),
 ]
 

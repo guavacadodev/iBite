@@ -51,7 +51,9 @@ struct FeaturedRestaurantCardView: View {
         menuItems: [
             MenuItem(name: "Sample Dish 1", price: "$12.99", ingredients: "Ingredient A, Ingredient B"),
             MenuItem(name: "Sample Dish 2", price: "$9.99", ingredients: "Ingredient C, Ingredient D")
-        ]
+        ],
+        reviewText: nil,
+        rating: nil
     ))
 }
 

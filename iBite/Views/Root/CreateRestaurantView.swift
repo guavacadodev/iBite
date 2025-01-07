@@ -144,7 +144,9 @@ struct CreateRestaurantView: View {
             distance: 0.0,
             imageName: saveImageToDisk(selectedImage),
             models: [],
-            menuItems: []
+            menuItems: [],
+            reviewText: nil,
+            rating: nil
         )
         myRestaurants.append(newRestaurant)
         print("Created Restaurant: \(newRestaurant)")

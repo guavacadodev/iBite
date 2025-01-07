@@ -258,64 +258,65 @@ struct ProfileFeedView: View {
 
 // Example content views for each tab
 struct ReviewsView: View {
-    // Mock data for reviews
-    let reviews: [Review] = [
-        Review(restaurantName: Restaurant(
-                    //id: UUID(),
-                    name: "Pizza Palace",
-                    cuisine: .Italian,
-                    location: CLLocationCoordinate2D(latitude: 47.6062, longitude: -122.3321),
-                    distance: 1.5,
-                    imageName: "pizza_palace",
-                    models: [],
-                    menuItems: []
-               ),
-               reviewText: "The best pizza in town!",
-               rating: 5),
-        Review(restaurantName: Restaurant(
-                    //id: UUID(),
-                    name: "Burger Haven",
-                    cuisine: .BBQ,
-                    location: CLLocationCoordinate2D(latitude: 47.608, longitude: -122.340),
-                    distance: 2.3,
-                    imageName: "burger_haven",
-                    models: [],
-                    menuItems: []
-               ),
-               reviewText: "Juicy and delicious burgers.",
-               rating: 4)
+    // Mock data for restaurants with reviews
+    let reviews: [Restaurant] = [
+        Restaurant(
+            name: "Pizza Palace",
+            cuisine: .Italian,
+            location: CLLocationCoordinate2D(latitude: 47.6062, longitude: -122.3321),
+            distance: 1.5,
+            imageName: "pasta_palace",
+            models: [],
+            menuItems: [],
+            reviewText: "The best pizza in town!",
+            rating: 5
+        ),
+        Restaurant(
+            name: "Sushi Place",
+            cuisine: .Seafood,
+            location: CLLocationCoordinate2D(latitude: 47.608, longitude: -122.340),
+            distance: 2.3,
+            imageName: "sushi_place",
+            models: [],
+            menuItems: [],
+            reviewText: "Juicy and delicious burgers.",
+            rating: 4
+        )
     ]
 
     var body: some View {
         ScrollView {
             LazyVStack(spacing: 10) {
-                ForEach(reviews) { review in
-                    ReviewCard(review: review)
+                ForEach(reviews) { restaurant in
+                    ReviewCard(restaurant: restaurant)
                 }
             }
+            .padding(.top, 10)
+            .padding(.bottom, 10)
             .padding(.horizontal)
         }
+        //.padding(.top, 5)
         .background(Color("darkNeutral"))
     }
 }
 
 struct ReviewCard: View {
-    let review: Review
+    let restaurant: Restaurant
 
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             // Display restaurant details
             HStack {
-                Image(review.restaurantName.imageName)
+                Image(restaurant.imageName)
                     .resizable()
                     .frame(width: 60, height: 60)
                     .clipShape(RoundedRectangle(cornerRadius: 8))
 
                 VStack(alignment: .leading) {
-                    Text(review.restaurantName.name)
+                    Text(restaurant.name)
                         .font(.headline)
                         .foregroundColor(Color("purple2"))
-                    Text("\(review.restaurantName.cuisine.rawValue) • \(String(format: "%.1f", review.restaurantName.distance)) mi")
+                    Text("\(restaurant.cuisine.rawValue) • \(String(format: "%.1f", restaurant.distance)) mi")
                         .font(.subheadline)
                         .foregroundColor(Color("lightGrayNeutral"))
                 }
@@ -325,25 +326,26 @@ struct ReviewCard: View {
                 // Display star rating
                 HStack(spacing: 2) {
                     ForEach(0..<5) { starIndex in
-                        Image(systemName: starIndex < review.rating ? "star.fill" : "star")
-                            .foregroundColor(starIndex < review.rating ? Color("teal1") : Color.gray)
+                        Image(systemName: starIndex < (restaurant.rating ?? 0) ? "star.fill" : "star")
+                            .foregroundColor(starIndex < (restaurant.rating ?? 0) ? Color("yellow1") : Color.gray)
                             .font(.system(size: 14))
                     }
                 }
             }
 
             // Display review text
-            Text(review.reviewText)
+            Text(restaurant.reviewText ?? "No review available")
                 .font(.body)
                 .foregroundColor(Color("lightGrayNeutral"))
+
 
             Divider()
                 .background(Color("grayNeutral"))
         }
         .padding()
-        .background(Color("yellow1"))
+        .background(Color("grayNeutral"))
         .cornerRadius(12)
-        .shadow(color: Color.black.opacity(0.1), radius: 4, x: 0, y: 2)
+        .shadow(color: Color("lightGrayNeutral"), radius: 10)
     }
 }
 
