@@ -17,18 +17,19 @@ struct CreateRestaurantView: View {
     @State private var cuisine: Cuisines = .American
     @State private var selectedImage: UIImage? = nil
     @State private var showImagePicker: Bool = false
-    @Binding var myRestaurants: [Restaurant]
+    @Binding var myRestaurants: [Restaurant?]
     @Environment(\.presentationMode) var presentationMode
 
     var body: some View {
         NavigationView {
             ScrollView {
+                //MARK: - Main Content
                 VStack(spacing: 20) {
                     Text("Add a New Restaurant")
                         .font(.custom("Fredoka-Bold", size: 24))
                         .foregroundColor(Color("purple1"))
 
-                    // Restaurant Splash Image Section
+                    // #1 Restaurant Splash Image Section
                     VStack {
                         // shows the selected image
                         if let selectedImage = selectedImage {
@@ -65,7 +66,7 @@ struct CreateRestaurantView: View {
                     .padding(.horizontal)
                     Divider().background(Color("lightGrayNeutral"))
 
-                    // Restaurant Details Section
+                    // #2 Restaurant Details Section
                     VStack(alignment: .leading, spacing: 15) {
                         VStack(alignment: .leading, spacing: 15) {
                             Text("Restaurant Details")
@@ -95,12 +96,10 @@ struct CreateRestaurantView: View {
                         }
 
                     }
-
                     .padding(.horizontal)
-
                     Divider().background(Color("lightGrayNeutral"))
 
-                    // Save Button
+                    // #3 Save Button
                     Button(action: saveRestaurant) {
                         Text("Save Restaurant")
                             .font(.custom("Fredoka-Bold", size: 18))
@@ -131,6 +130,7 @@ struct CreateRestaurantView: View {
         }
     }
 
+    // Saves a new restaurant in myRestaurants [] which can later be accessed
     private func saveRestaurant() {
         guard !name.isEmpty, !location.isEmpty, let selectedImage = selectedImage else {
             print("Error: Name, location, and image cannot be empty.")
@@ -167,89 +167,32 @@ struct CreateRestaurantView: View {
 
 struct AddRestaurantButtonView: View {
     @State private var showCreateRestaurantView: Bool = false
-    @State private var myRestaurants: [Restaurant] = []
+    @Binding var myRestaurants: [Restaurant?]
 
     var body: some View {
         VStack {
-            if myRestaurants.isEmpty {
-                // Show the "Create a Restaurant" button when no restaurants exist
-                Button(action: {
-                    showCreateRestaurantView = true
-                }) {
-                    VStack {
-                        Image(systemName: "plus.app.fill")
-                            .font(.system(size: 40))
-                            .foregroundColor(Color("teal1"))
-                        Text("Create a Restaurant")
-                            .font(.custom("Fredoka-Medium", size: 14))
-                            .foregroundColor(Color("lightGrayNeutral"))
-                    }
-                    .frame(maxWidth: .infinity)
-                    .padding()
-                    .background(Color("darkNeutral"))
-                    .cornerRadius(12)
-                    .shadow(radius: 5)
-                    .padding(.horizontal)
+            Button(action: {
+                showCreateRestaurantView = true
+            }) {
+                VStack {
+                    Image(systemName: "plus.app.fill")
+                        .font(.system(size: 40))
+                        .foregroundColor(Color("teal1"))
+                    Text("Create a Restaurant")
+                        .font(.custom("Fredoka-Medium", size: 14))
+                        .foregroundColor(Color("lightGrayNeutral"))
                 }
-                .sheet(isPresented: $showCreateRestaurantView) {
-                    CreateRestaurantView(myRestaurants: $myRestaurants)
-                }
-            } else {
-                // Show the horizontal slider with restaurants if restaurants exist
-                MyRestaurantsHorizontalSliderView(myRestaurants: $myRestaurants)
+                .frame(maxWidth: .infinity)
+                .padding()
+                .background(Color("darkNeutral"))
+                .cornerRadius(12)
+                .shadow(radius: 5)
+                .padding(.horizontal)
+            }
+            .sheet(isPresented: $showCreateRestaurantView) {
+                CreateRestaurantView(myRestaurants: $myRestaurants)
             }
         }
-    }
-}
-
-
-struct MyRestaurantsHorizontalSliderView: View {
-    @Binding var myRestaurants: [Restaurant]
-
-    var body: some View {
-        ScrollView(.horizontal, showsIndicators: false) {
-            HStack(spacing: 16) {
-                ForEach(myRestaurants, id: \.id) { restaurant in
-                    VStack {
-                        // Check if the image is saved on disk
-                        if let imagePath = getSavedImagePath(for: restaurant.imageName),
-                           let uiImage = UIImage(contentsOfFile: imagePath) {
-                            Image(uiImage: uiImage)
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 100, height: 100)
-                                .cornerRadius(8)
-                        } else {
-                            // Fallback to a default image
-                            Image("defaultImage")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 100, height: 100)
-                                .cornerRadius(8)
-                        }
-
-                        Text(restaurant.name)
-                            .font(.custom("Fredoka-Regular", size: 16))
-                            .foregroundColor(Color("lightGrayNeutral"))
-
-                        Text(restaurant.cuisine.rawValue)
-                            .font(.custom("Fredoka-Regular", size: 14))
-                            .foregroundColor(Color("teal1"))
-                    }
-                    .padding()
-                    .background(Color("darkNeutral"))
-                    .cornerRadius(12)
-                    .shadow(radius: 5)
-                }
-            }
-            .padding(.horizontal)
-        }
-    }
-
-    // Helper function to get the full path of the saved image
-    private func getSavedImagePath(for fileName: String) -> String? {
-        let filePath = FileManager.default.temporaryDirectory.appendingPathComponent(fileName).path
-        return FileManager.default.fileExists(atPath: filePath) ? filePath : nil
     }
 }
 
@@ -328,7 +271,7 @@ struct CustomCuisinePicker: View {
     }
 }
 
-//
+// modifiers for Restaurant Details Text
 struct TextFieldModifier: ViewModifier {
     let isEmpty: Bool
 
@@ -353,10 +296,6 @@ extension View {
         self.modifier(TextFieldModifier(isEmpty: isEmpty))
     }
 }
-
-
-
-
 
 
 #Preview {

@@ -15,8 +15,10 @@ struct MainView: View {
     @State private var showingSearchView: Bool = false // Track whether or not the SearchView is showing
     @State private var showingPremiumDashboard: Bool = false
     @State private var isUsersOwnProfile: Bool = false // Track whether the user is looking at their own profile or another user's profile.
-    @State private var userIsPremium: Bool = true // Track whether the user has a premium subscription
+    @State private var userIsPremium: Bool = false // Track whether the user has a premium subscription
     @State private var userIsLoggedIn: Bool = false // Track whether the user is logged in or not. Send them to onboarding if they are not.
+    @State private var selectedRestaurant: Restaurant?
+    @State private var showProfileAndUploadSelection: Bool = false
 
     var body: some View {
          ZStack {
@@ -71,7 +73,7 @@ struct MainView: View {
              if !showingARView && !showingPhotogrammetryView && !showingFeedView {
                 VStack {
                     Spacer() // Push the bar to the bottom
-                    BottomNavigationBar(userIsPremium: $userIsPremium, isUsersOwnProfile: $isUsersOwnProfile, selectedTab: $selectedTab, showingPremiumDashboard: $showingPremiumDashboard)
+                    BottomNavigationBar(showProfileAndUploadSelection: $showProfileAndUploadSelection, userIsPremium: $userIsPremium, isUsersOwnProfile: $isUsersOwnProfile, selectedTab: $selectedTab, showingPremiumDashboard: $showingPremiumDashboard)
                         .scaleEffect(0.85)
                 }
             }
@@ -79,6 +81,12 @@ struct MainView: View {
         .preferredColorScheme(.light) // Set light mode for consistency
         .fullScreenCover(isPresented: $showingPremiumDashboard) {
             PremiumDashboardView(userIsPremium: $userIsPremium)
+            
+        }
+        .onTapGesture {
+            withAnimation {
+                showProfileAndUploadSelection = false // Dismiss the popup
+            }
         }
     }
 }

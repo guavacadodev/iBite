@@ -11,6 +11,7 @@ import CoreLocation
 struct PremiumDashboardView: View {
     @Environment(\.presentationMode) var presentationMode
     @Binding var userIsPremium: Bool // Replace with @Binding if needed
+    @State private var isEditingRestaurant = false
     let navTitleImage = Image("iBiteTransparentBackground")
 
     var body: some View {
@@ -18,15 +19,19 @@ struct PremiumDashboardView: View {
             switchView()
                 .background(Color("darkNeutral"))
                 .navigationBarItems(
-                    leading: Button(action: {
-                        presentationMode.wrappedValue.dismiss()
-                    }) {
-                        HStack {
-                            Image(systemName: "chevron.left")
-                                .foregroundColor(userIsPremium ? Color("purple1") : Color("whiteNeutral"))
-                            Text("Back")
-                                .font(.custom("Fredoka-Regular", size: 16))
-                                .foregroundColor(userIsPremium ? Color("purple1") : Color("whiteNeutral"))
+                    leading: Group {
+                        if !isEditingRestaurant { // Only show the back button if not editing
+                            Button(action: {
+                                presentationMode.wrappedValue.dismiss()
+                            }) {
+                                HStack {
+                                    Image(systemName: "chevron.left")
+                                        .foregroundColor(userIsPremium ? Color("purple1") : Color("whiteNeutral"))
+                                    Text("Back")
+                                        .font(.custom("Fredoka-Regular", size: 16))
+                                        .foregroundColor(userIsPremium ? Color("purple1") : Color("whiteNeutral"))
+                                }
+                            }
                         }
                     }
                 )
@@ -37,7 +42,7 @@ struct PremiumDashboardView: View {
     @ViewBuilder
     private func switchView() -> some View {
         if userIsPremium {
-            SubscribedView()
+            SubscribedView(isEditingRestaurant: $isEditingRestaurant)
         } else {
             UnsubscribedView()
         }
@@ -142,7 +147,12 @@ struct UnsubscribedView: View {
 // MARK: - Displays if the user is premium
 struct SubscribedView: View {
     @State private var showCreateRestaurantView = false
+    @State private var myRestaurants: [Restaurant?] = []
+    @State var selectedRestaurant: Restaurant?
+    @State private var showEditRestaurantView = false
+    @Binding var isEditingRestaurant: Bool
     var body: some View {
+        
         NavigationView {
             ScrollView {
                 VStack(spacing: 20) {
@@ -172,12 +182,33 @@ struct SubscribedView: View {
                         Text("Restaurant Management")
                             .font(.custom("Fredoka-Bold", size: 18))
                             .foregroundColor(Color("purple1"))
-                        AddRestaurantButtonView() // New view to show user's restaurants
+                        AddRestaurantButtonView(myRestaurants: $myRestaurants) // New view to show user's restaurants
                     }
                     .padding(.horizontal)
                     Divider().background(Color("lightGrayNeutral"))
                     
-                    // Displays the slider of restaurants here when added
+                    if !myRestaurants.compactMap({ $0 }).isEmpty {
+                        MyRestaurantsHorizontalSliderView(myRestaurants: $myRestaurants)
+                            .padding(.horizontal)
+                            .onTapGesture {
+                                if let firstRestaurant = myRestaurants.compactMap({ $0 }).first {
+                                    selectedRestaurant = firstRestaurant
+                                    showEditRestaurantView = true
+                                    isEditingRestaurant = true // Notify that editing view is showing
+                                }
+                            }
+                            .background(
+                                NavigationLink(
+                                    destination: EditRestaurantDetailsView(
+                                        restaurant: $selectedRestaurant
+                                    ).onDisappear {
+                                        isEditingRestaurant = false // Reset state when view is dismissed
+                                    },
+                                    isActive: $showEditRestaurantView,
+                                    label: { EmptyView() }
+                                )
+                            )
+                    }
                     
                     Divider().background(Color("lightGrayNeutral"))
 

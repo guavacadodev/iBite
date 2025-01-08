@@ -19,8 +19,9 @@ struct SubscriptionOfferView: View {
             )
             .ignoresSafeArea()
 
+            // MARK: - Main Content
             VStack(spacing: 30) {
-                // Header Section
+                // # 1 Monster image & Header text
                 VStack(spacing: 10) {
                     Image("happymonster")
                         .resizable()
@@ -36,12 +37,12 @@ struct SubscriptionOfferView: View {
 
                     Text("Enjoy exclusive features to enhance your experience!")
                         .font(.custom("Fredoka-Regular", size: 16))
-                        .foregroundColor(Color("lightGrayNeutral"))
+                        .foregroundColor(Color("darkNeutral"))
                         .multilineTextAlignment(.center)
                         .padding(.horizontal, 20)
                 }
 
-                // Features Section
+                // # 2 Features Section
                 VStack(alignment: .leading, spacing: 15) {
                     FeatureRow(icon: "checkmark.circle.fill", text: "Create and manage restaurants easily.")
                     FeatureRow(icon: "checkmark.circle.fill", text: "Access advanced analytics.")
@@ -50,7 +51,7 @@ struct SubscriptionOfferView: View {
                 }
                 .padding(.horizontal, 20)
 
-                // Subscription Plans
+                // # 3 Subscription Plan Options
                 VStack(spacing: 10) {
                     PlanOptionView(
                         title: "Monthly",
@@ -74,7 +75,7 @@ struct SubscriptionOfferView: View {
                 }
                 .padding(.horizontal, 20)
 
-                // Call-to-Action Button
+                // #4 Call-to-Action Button
                 Button(action: {
                     print("Subscribe to \(selectedPlan.rawValue) plan")
                 }) {
@@ -89,12 +90,14 @@ struct SubscriptionOfferView: View {
                 }
                 .padding(.horizontal, 20)
 
-                // Footer Section
-                Text("7 day trial, then just $69.99 per year\nCancel anytime in the App Store")
-                    .font(.custom("Fredoka-Regular", size: 12))
-                    .foregroundColor(Color("lightGrayNeutral"))
-                    .multilineTextAlignment(.center)
+                // #5 Footer Section
+                VStack {
+                    Text("7 day trial, then just $69.99 per year\nCancel anytime in the App Store")
+                        .font(.custom("Fredoka-Regular", size: 12))
+                        .foregroundColor(Color("darkNeutral"))
+                        .multilineTextAlignment(.center)
                     .padding(.top, 10)
+                }
             }
             .padding(.vertical, 20)
         }

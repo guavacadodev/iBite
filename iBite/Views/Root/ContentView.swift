@@ -158,8 +158,9 @@ struct ContentView: View {
                                                 }
                                         }
                                     }
-                                    .padding(.horizontal)
+                                    .padding()
                                 }
+                                .scaleEffect(0.9)
                             }
                         }
                         // Content for the list tab.

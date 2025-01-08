@@ -8,11 +8,12 @@
 import SwiftUI
 
 struct BottomNavigationBar: View {
-    @State private var showProfileAndUploadSelection: Bool = false
+    @Binding var showProfileAndUploadSelection: Bool
     @Binding var userIsPremium: Bool
     @Binding var isUsersOwnProfile: Bool
     @Binding var selectedTab: Int
     @Binding var showingPremiumDashboard: Bool // Bind to MainView
+    //@State private var selectedRestaurant: Restaurant?
     //@Binding var showingPhotogrammetryView: Bool // Bind to MainView's state
     
     var body: some View {

@@ -52,6 +52,8 @@
 		1C9D884F2CFD79CE004B14C0 /* ModelDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9D884E2CFD79CE004B14C0 /* ModelDetailView.swift */; };
 		1C9D88512CFD7A01004B14C0 /* AddToRestaurantView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9D88502CFD7A01004B14C0 /* AddToRestaurantView.swift */; };
 		1C9D88532CFD7C32004B14C0 /* ModelManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9D88522CFD7C32004B14C0 /* ModelManager.swift */; };
+		1CACF3722D2DEF050050F97E /* EditRestaurantDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CACF3712D2DEF050050F97E /* EditRestaurantDetailsView.swift */; };
+		1CACF3742D2DF38A0050F97E /* MyRestaurantsHorizontalSliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CACF3732D2DF38A0050F97E /* MyRestaurantsHorizontalSliderView.swift */; };
 		1CBEBDFD2CD5D79900CA4963 /* sushi_2.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 1CBEBDFC2CD5D79900CA4963 /* sushi_2.usdz */; };
 		1CBEBE012CD5D7B600CA4963 /* pasta_dish_2.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 1CBEBE002CD5D7B600CA4963 /* pasta_dish_2.usdz */; };
 		1CBEBE0A2CD6D87300CA4963 /* dish_1.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 1CBEBE092CD6D87300CA4963 /* dish_1.usdz */; };
@@ -103,6 +105,8 @@
 		1C9D884E2CFD79CE004B14C0 /* ModelDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelDetailView.swift; sourceTree = "<group>"; };
 		1C9D88502CFD7A01004B14C0 /* AddToRestaurantView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToRestaurantView.swift; sourceTree = "<group>"; };
 		1C9D88522CFD7C32004B14C0 /* ModelManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelManager.swift; sourceTree = "<group>"; };
+		1CACF3712D2DEF050050F97E /* EditRestaurantDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditRestaurantDetailsView.swift; sourceTree = "<group>"; };
+		1CACF3732D2DF38A0050F97E /* MyRestaurantsHorizontalSliderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyRestaurantsHorizontalSliderView.swift; sourceTree = "<group>"; };
 		1CBEBDFC2CD5D79900CA4963 /* sushi_2.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = sushi_2.usdz; sourceTree = "<group>"; };
 		1CBEBE002CD5D7B600CA4963 /* pasta_dish_2.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = pasta_dish_2.usdz; sourceTree = "<group>"; };
 		1CBEBE092CD6D87300CA4963 /* dish_1.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = dish_1.usdz; sourceTree = "<group>"; };
@@ -240,15 +244,13 @@
 		1C8BE42B2CDC8AA400EBEA4F /* Root */ = {
 			isa = PBXGroup;
 			children = (
-				1C847E342CCC40C1002A276E /* ContentView.swift */,
-				1C217DEC2D2956B800499D38 /* SubscriptionOfferView.swift */,
-				1C217DEA2D28D05F00499D38 /* CreateRestaurantView.swift */,
-				1C27FE2C2D264E7400C1AD9F /* PremiumDashboardView.swift */,
-				1C8BE4642CE06D5C00EBEA4F /* ProfileView.swift */,
 				1C8BE4622CE06D5000EBEA4F /* MainView.swift */,
 				1C0699B72D24C567009912D9 /* SearchView.swift */,
-				1C6D31E72D0133B700844C25 /* ModelScanning */,
 				1C8BE4602CE06C5300EBEA4F /* BottomNavigationBar.swift */,
+				1CACF3702D2DE97D0050F97E /* Profile */,
+				1C847E342CCC40C1002A276E /* ContentView.swift */,
+				1CACF36F2D2DE9470050F97E /* PremiumDashboard */,
+				1C6D31E72D0133B700844C25 /* ModelScanning */,
 				1C9D88422CEC1E84004B14C0 /* LeaderboardFeedView.swift */,
 				1C8AC3A82CD5BFB300A53AC0 /* AddressEntryView.swift */,
 				1CBEBE0D2CD6F1F000CA4963 /* FeaturedRestaurantCardView.swift */,
@@ -258,6 +260,26 @@
 				1C9D88442CF01CAD004B14C0 /* ARMenuView.swift */,
 			);
 			path = Root;
+			sourceTree = "<group>";
+		};
+		1CACF36F2D2DE9470050F97E /* PremiumDashboard */ = {
+			isa = PBXGroup;
+			children = (
+				1C217DEC2D2956B800499D38 /* SubscriptionOfferView.swift */,
+				1CACF3712D2DEF050050F97E /* EditRestaurantDetailsView.swift */,
+				1CACF3732D2DF38A0050F97E /* MyRestaurantsHorizontalSliderView.swift */,
+				1C217DEA2D28D05F00499D38 /* CreateRestaurantView.swift */,
+				1C27FE2C2D264E7400C1AD9F /* PremiumDashboardView.swift */,
+			);
+			path = PremiumDashboard;
+			sourceTree = "<group>";
+		};
+		1CACF3702D2DE97D0050F97E /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				1C8BE4642CE06D5C00EBEA4F /* ProfileView.swift */,
+			);
+			path = Profile;
 			sourceTree = "<group>";
 		};
 		1CF269902D1795820078F41B /* Archive */ = {
@@ -376,6 +398,7 @@
 				1C847E452CCCAD14002A276E /* SignInView.swift in Sources */,
 				1C217DED2D2956B800499D38 /* SubscriptionOfferView.swift in Sources */,
 				1C847E7A2CD1A8C2002A276E /* CameraView.swift in Sources */,
+				1CACF3742D2DF38A0050F97E /* MyRestaurantsHorizontalSliderView.swift in Sources */,
 				1C9D88532CFD7C32004B14C0 /* ModelManager.swift in Sources */,
 				1C8BE4612CE06C5300EBEA4F /* BottomNavigationBar.swift in Sources */,
 				1C847E352CCC40C1002A276E /* ContentView.swift in Sources */,
@@ -383,6 +406,7 @@
 				1C8BE4652CE06D5C00EBEA4F /* ProfileView.swift in Sources */,
 				1CFFA81A2D20C64900532EC9 /* TabBarWithPopUp.swift in Sources */,
 				1C6D31E92D066BFE00844C25 /* AdvancedPhotoCaptureView.swift in Sources */,
+				1CACF3722D2DEF050050F97E /* EditRestaurantDetailsView.swift in Sources */,
 				1C9D88452CF01CAD004B14C0 /* ARMenuView.swift in Sources */,
 				1C9D88432CEC1E84004B14C0 /* LeaderboardFeedView.swift in Sources */,
 				1C8BE4632CE06D5000EBEA4F /* MainView.swift in Sources */,
