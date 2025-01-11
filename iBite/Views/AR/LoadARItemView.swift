@@ -9,7 +9,7 @@ import SwiftUI
 import ARKit
 import RealityKit
 
-struct ARMenuView: UIViewRepresentable {
+struct LoadARItemView: UIViewRepresentable {
     var models: [String] // Array of model names
     var menuItems: [MenuItem] // Array of MenuItems
     @Binding var modelIndex: Int // Track the current model index
@@ -54,6 +54,8 @@ struct ARMenuView: UIViewRepresentable {
         arView.scene.anchors.append(cameraAnchor)
     }
 }
+
+
 
 
 

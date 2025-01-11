@@ -182,11 +182,12 @@ struct SubscribedView: View {
                         Text("Restaurant Management")
                             .font(.custom("Fredoka-Bold", size: 18))
                             .foregroundColor(Color("purple1"))
-                        AddRestaurantButtonView(myRestaurants: $myRestaurants) // New view to show user's restaurants
+                        AddRestaurantButtonView(myRestaurants: $myRestaurants)
                     }
                     .padding(.horizontal)
                     Divider().background(Color("lightGrayNeutral"))
                     
+                    // Shows the Horizontal Slider of MyRestaurants
                     if !myRestaurants.compactMap({ $0 }).isEmpty {
                         MyRestaurantsHorizontalSliderView(myRestaurants: $myRestaurants)
                             .padding(.horizontal)
@@ -194,7 +195,7 @@ struct SubscribedView: View {
                                 if let firstRestaurant = myRestaurants.compactMap({ $0 }).first {
                                     selectedRestaurant = firstRestaurant
                                     showEditRestaurantView = true
-                                    isEditingRestaurant = true // Notify that editing view is showing
+                                    isEditingRestaurant = true //
                                 }
                             }
                             .background(
@@ -202,14 +203,30 @@ struct SubscribedView: View {
                                     destination: EditRestaurantDetailsView(
                                         restaurant: $selectedRestaurant
                                     ).onDisappear {
-                                        isEditingRestaurant = false // Reset state when view is dismissed
+                                        isEditingRestaurant = false
                                     },
                                     isActive: $showEditRestaurantView,
                                     label: { EmptyView() }
                                 )
                             )
+                    // Shows No Restaurants
+                    } else {
+                        VStack {
+                            Text("No Restaurants Found!")
+                                .font(.custom("Fredoka-Regular", size: 18))
+                                .padding(.top, 10)
+                                .foregroundColor(Color("lightGrayNeutral"))
+                            Text("Try Creating One Above")
+                                .font(.custom("Fredoka-Light", size: 9))
+                                .foregroundColor(Color("lightGrayNeutral"))
+                            Image("sadpurplemonster")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(height: 120)
+                                .padding(.bottom, 30)
+                                .scaleEffect(0.9)
+                        }
                     }
-                    
                     Divider().background(Color("lightGrayNeutral"))
 
                     // Analytics Section

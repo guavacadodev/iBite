@@ -20,9 +20,9 @@ struct FeaturedRestaurantCardView: View {
                 .clipped()
                 .cornerRadius(8)
             
-            VStack(alignment: .leading, spacing: 4) {
+            VStack(alignment: .leading, spacing: 0) {
                 Text(restaurant.name)
-                    .font(.custom("Fredoka-Medium", size: 18))
+                    .font(.custom("Fredoka-Medium", size: 16))
                     .foregroundColor(Color("grayNeutral"))
                     .lineLimit(1)
                 
@@ -33,8 +33,8 @@ struct FeaturedRestaurantCardView: View {
             .padding([.horizontal, .bottom], 8)
         }
         .background(Color("yellow1"))
-        .cornerRadius(10)
-        .shadow(color: Color("orange1"), radius: 5, x: 0, y: 0)
+        .cornerRadius(12)
+        //.shadow(color: Color("orange1"), radius: 5, x: 0, y: 0)
         .frame(width: 250) // Fixed width for each card
     }
 }
@@ -46,7 +46,7 @@ struct FeaturedRestaurantCardView: View {
         cuisine: Cuisines(rawValue: "Italian") ?? .Italian,
         location: CLLocationCoordinate2D(latitude: 40.7128, longitude: -74.0060),
         distance: 2.5,
-        imageName: "sample_image", // Use an actual image name from your assets
+        imageName: "pasta_palace", // Use an actual image name from your assets
         models: ["sample_model1", "sample_model2"],
         menuItems: [
             MenuItem(name: "Sample Dish 1", price: "$12.99", ingredients: "Ingredient A, Ingredient B"),

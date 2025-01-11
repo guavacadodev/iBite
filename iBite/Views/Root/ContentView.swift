@@ -13,8 +13,8 @@ import MapKit
 let cuisineFilters: [(name: String, icon: String)] = [
     ("All", "globe"),
     ("Italian", "fork.knife"),
-    ("Mexican", "tortilla"),
-    ("American", "hamburger")
+    ("Mexican", "carrot"),
+    ("American", "waterbottle.fill")
 ]
 
 struct ContentView: View {
@@ -131,7 +131,7 @@ struct ContentView: View {
                             MapView(selectedLocation: $selectedLocation, restaurants: filteredRestaurants)
                                 .frame(height: 300)
                             // If there are no featured restaurants within the user's radius, show the "No Featured Restaurants" text otherwise, default to "Featured Restaurants"
-                            Text(filteredRestaurants.isEmpty ? "No Results Found" : "Featured Restaurants")
+                            Text(filteredRestaurants.isEmpty ? "No Results!" : "Featured Restaurants")
                                 .font(.custom("Fredoka-Regular", size: 18))
                                 .padding(.top, 10)
                                 .foregroundColor(Color("lightGrayNeutral"))
@@ -187,6 +187,10 @@ struct ContentView: View {
                                                 .padding(8)
                                                 .background(selectedCuisine == filter.name ? Color("purple1") : Color.gray.opacity(0.2))
                                                 .cornerRadius(8)
+                                                .overlay( // Add the outline with dynamic color
+                                                    RoundedRectangle(cornerRadius: 8)
+                                                        .stroke(selectedCuisine == filter.name ? Color("purple2") : Color.gray.opacity(0.4), lineWidth: 2)
+                                                )
                                             }
                                         }
                                     }
@@ -221,7 +225,12 @@ struct ContentView: View {
                                                                 Image(systemName: "star.fill")
                                                                     //.padding(.leading, 15)
                                                                     .font(.custom("Fredoka-SemiBold", size: 24))
-                                                                    .foregroundColor(Color("yellow1"))
+                                                                    .foregroundColor(Color("orange1"))
+                                                                    .overlay(
+                                                                        Image(systemName: "star")
+                                                                            .font(.custom("Fredoka-SemiBold", size: 24))
+                                                                            .foregroundColor(Color("yellow1"))
+                                                                    )
                                                                 Text("Popular")
                                                                     //.padding(.leading, 15)
                                                                     .font(.custom("Fredoka-Medium", size: 24))
@@ -229,9 +238,15 @@ struct ContentView: View {
                                                                 Image(systemName: "star.fill")
                                                                     //.padding(.leading, 15)
                                                                     .font(.custom("Fredoka-SemiBold", size: 24))
-                                                                    .foregroundColor(Color("yellow1"))
-                                                                Spacer()
+                                                                    .foregroundColor(Color("orange1"))
+                                                                    .overlay(
+                                                                        Image(systemName: "star")
+                                                                            .font(.custom("Fredoka-SemiBold", size: 24))
+                                                                            .foregroundColor(Color("yellow1"))
+                                                                    )
+                                                                //Spacer()
                                                             }
+                                                            .padding(.leading, 15)
                                                             ScrollView(.horizontal, showsIndicators: false) {
                                                                 HStack(spacing: 16) {
                                                                     ForEach(filteredRestaurants.prefix(5)) { restaurant in
@@ -246,12 +261,10 @@ struct ContentView: View {
                                                                 .padding()
                                                             }
                                                         }
-                                                        .scaleEffect(0.9)
                                                         Divider().background(Color("lightGrayNeutral"))
                                                         //NEAR YOU CATEGORY
                                                         HStack {
                                                             Text("Near You")
-                                                                .padding(.top, 15)
                                                                 .padding(.leading, 15)
                                                                 .font(.custom("Fredoka-Medium", size: 24))
                                                                 .foregroundColor(Color("whiteNeutral"))
@@ -284,7 +297,7 @@ struct ContentView: View {
                 // Then pass the associated models and menuItems of the selected restaurant to the ARMenuContainerView1.
                 if let restaurant = selectedRestaurant {
                     NavigationLink(
-                        destination: ARMenuContentView(
+                        destination: ARMenuOverlayView(
                             models: restaurant.models,
                             menuItems: restaurant.menuItems
                         )

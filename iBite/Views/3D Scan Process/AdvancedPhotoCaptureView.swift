@@ -161,22 +161,25 @@ struct ARViewContainer: UIViewRepresentable {
         }
         
         // ** Scale the model **
-        modelEntity.scale = SIMD3<Float>(0.05, 0.05, 0.05) // Adjust scale as needed (e.g., 80% of the original size)
+        modelEntity.scale = SIMD3<Float>(0.04, 0.04, 0.04) // Adjust scale as needed (e.g., 80% of the original size)
 
         // Extract the camera's current position and direction
         let cameraTransform = arView.cameraTransform
         let cameraPosition = cameraTransform.matrix.translation
         let forwardDirection = normalize(-cameraTransform.matrix.columns.2.xyz)
 
-        // Position the model 0.6 meters in front of the camera
-        let modelPosition = cameraPosition + forwardDirection * 0.2
+        // Adjusts z position of the phone outline model
+        let modelPosition = cameraPosition + forwardDirection * 0.1
+        // Adjusts y position of the phone outline model
+        var adjustedModelPosition = modelPosition
+        adjustedModelPosition.y -= 0.05 // Move the model downwards by 0.2 meters
 
         // Align the model to face the camera
         let cameraOrientation = simd_quatf(cameraTransform.matrix)
         modelEntity.orientation = cameraOrientation
 
         // Create an anchor and add the model
-        let anchor = AnchorEntity(world: modelPosition)
+        let anchor = AnchorEntity(world: adjustedModelPosition)
         anchor.addChild(modelEntity)
 
         // Add anchor to ARView

@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import CoreLocation
 
 struct RestaurantCardView: View {
     var restaurant: Restaurant
@@ -53,4 +54,26 @@ struct RestaurantCardView: View {
         .padding()
     }
 }
+
+#Preview {
+    RestaurantCardView(
+        restaurant: Restaurant(
+            name: "Sample Restaurant",
+            cuisine: .Italian,
+            location: CLLocationCoordinate2D(latitude: 40.7128, longitude: -74.0060),
+            distance: 2.5,
+            imageName: "pasta_palace",
+            models: ["sample_model1", "sample_model2"],
+            menuItems: [
+                MenuItem(name: "Sample Dish 1", price: "$12.99", ingredients: "Ingredient A, Ingredient B"),
+                MenuItem(name: "Sample Dish 2", price: "$9.99", ingredients: "Ingredient C, Ingredient D")
+            ],
+            reviewText: nil,
+            rating: nil
+        ),
+        userHasLikedRestaurant: .constant(false)
+    )
+    .previewLayout(.sizeThatFits)
+}
+
 

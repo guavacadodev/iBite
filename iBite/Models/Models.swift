@@ -11,15 +11,15 @@ import CoreLocation
 // Models.swift
 struct Restaurant: Identifiable {
     let id = UUID()
-    let name: String
-    let cuisine: Cuisines
+    var name: String
+    var cuisine: Cuisines
     var location: CLLocationCoordinate2D
     var distance: Double
     let imageName: String
     let models: [String]
     let menuItems: [MenuItem]
-    let reviewText: String?
-    let rating: Int?
+    var reviewText: String?
+    var rating: Int?
 }
 
 //// Review Model
