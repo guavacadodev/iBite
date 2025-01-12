@@ -343,46 +343,5 @@ struct AnalyticsCardView: View {
 //    }
 //}
 
-//HStack {
-//    //Take a Photo of a Menu Item
-//    Button(action: {
-//        // create a pop up with options to take a photo or a 3D scan using the photogrammetry view
-//        print("Take A Photo")
-//    }) {
-//        VStack {
-//            Image(systemName: "camera.fill")
-//                .font(.system(size: 40))
-//                .foregroundColor(Color("teal1"))
-//            Text("Take a Photo")
-//                .font(.custom("Fredoka-Medium", size: 14))
-//                .foregroundColor(Color("lightGrayNeutral"))
-//        }
-//        .frame(maxWidth: .infinity)
-//        .padding()
-//        .background(Color("darkNeutral"))
-//        .cornerRadius(12)
-//        .shadow(radius: 5)
-//    }
-//    // Take a 3D Scan of a Menu Item
-//    Button(action: {
-//        // create a pop up with options to take a photo or a 3D scan using the photogrammetry view
-//        print("3D Photo Scan")
-//    }) {
-//        VStack {
-//            Image(systemName: "camera.fill")
-//                .font(.system(size: 40))
-//                .foregroundColor(Color("teal1"))
-//            Text("3D Scan")
-//                .font(.custom("Fredoka-Medium", size: 14))
-//                .foregroundColor(Color("lightGrayNeutral"))
-//        }
-//        .frame(maxWidth: .infinity)
-//        .padding()
-//        .background(Color("darkNeutral"))
-//        .cornerRadius(12)
-//        .shadow(radius: 5)
-//    }
-//}
-
 
 
