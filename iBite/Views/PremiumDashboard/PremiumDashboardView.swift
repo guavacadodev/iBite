@@ -121,7 +121,7 @@ struct UnsubscribedView: View {
                 Button(action: {
                     print("Subscribe to \(selectedPlan.rawValue) plan")
                 }) {
-                    Text("Try FREE and Subscribe")
+                    Text("Try FREE & Subscribe")
                         .font(.custom("Fredoka-Bold", size: 18))
                         .frame(maxWidth: .infinity)
                         .padding()
