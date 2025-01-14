@@ -26,13 +26,13 @@ struct ProfileContent: View {
 
 struct UserProfileView: View {
     var body: some View {
-        ProfileView(bannerTitle: "Your Profile", isUsersOwnProfile: true)
+        ProfileView(bannerTitle: "Your Profile", isUsersOwnProfile: false)
     }
 }
 
 struct OtherUserProfileView: View {
     var body: some View {
-        ProfileView(bannerTitle: "Other User", isUsersOwnProfile: false)
+        ProfileView(bannerTitle: "Other User", isUsersOwnProfile: true)
     }
 }
 
@@ -121,27 +121,19 @@ struct HeaderView: View {
                 .shadow(radius: 10)
                 .animation(.easeInOut, value: offset)
 
+            // Followers and following button
             HStack(spacing: 12) {
                 ZStack {
                     Rectangle()
                         .cornerRadius(8)
-                        .frame(width: 40, height: 40)
+                        .frame(width: 100, height: 40)
                         .foregroundColor(Color("whiteNeutral"))
-                    Image(systemName: "chevron.down.square")
-                }
-
-                ZStack {
-                    VStack {
-                        Image(systemName: "heart.fill")
-                        Text("1,230")
+                    HStack(spacing: nil) {
+                        Text("130,112")
+                            .font(.custom("Fredoka-Regular", size: 14))
+                        Image(systemName: "person.fill")
                     }
-                    Rectangle()
-                        .cornerRadius(8)
-                        .frame(width: 40, height: 40)
-                        .foregroundColor(Color("whiteNeutral"))
-                    Image(systemName: "envelope")
                 }
-
                 ZStack {
                     Rectangle()
                         .cornerRadius(8)
@@ -171,6 +163,15 @@ struct HeaderView: View {
                 }
             }
             .padding()
+            
+            if isUsersOwnProfile {
+                Rectangle()
+                    .frame(width: 200, height: 30)
+                    .foregroundStyle(Color("teal1"))
+                    .overlay {
+                        Text("Edit Profile")
+                    }
+            }
 
             Text("Just a coder navigating the labyrinth of SwiftUI. \nI love building beautiful and functional apps!")
                 .font(.footnote)
@@ -376,27 +377,26 @@ struct FavoritesView: View {
 
 struct CollectionView: View {
     let columns = [
-        GridItem(.flexible(), spacing: 10),
-        GridItem(.flexible(), spacing: 10),
-        GridItem(.flexible(), spacing: 10)
+        GridItem(.flexible()),
+        GridItem(.flexible())
     ]
     
-    let colors: [Color] = (0..<30).map { _ in
-        Color(red: Double.random(in: 0...1),
-              green: Double.random(in: 0...1),
-              blue: Double.random(in: 0...1))
-    }
-    
     var body: some View {
-        LazyVGrid(columns: columns, spacing: 10) {
-            ForEach(colors.indices, id: \.self) { index in
-                Rectangle()
-                    .foregroundColor(colors[index])
-                    .frame(height: 150)
+        ScrollView {
+            LazyVGrid(columns: columns, spacing: 20) {
+                ForEach(0..<10) { _ in // Replace 10 with the number of grid items you want
+                    ZStack {
+                        Rectangle()
+                            .fill(Color.black)
+                            .frame(height: 100) // Adjust height as needed
+                        Text("Coming Soon!")
+                            .foregroundColor(.white)
+                            .font(.headline)
+                    }
+                }
             }
+            .padding()
         }
-        .padding(.horizontal)
-        .background(Color("darkNeutral"))
     }
 }
 

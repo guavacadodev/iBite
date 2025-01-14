@@ -32,7 +32,9 @@ struct FeaturedRestaurantCardView: View {
             }
             .padding([.horizontal, .bottom], 8)
         }
-        .background(Color("yellow1"))
+        .background {
+            AnimatedGradientView()
+        }
         .cornerRadius(12)
         //.shadow(color: Color("orange1"), radius: 5, x: 0, y: 0)
         .frame(width: 250) // Fixed width for each card

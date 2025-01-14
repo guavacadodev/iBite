@@ -29,34 +29,8 @@ struct MainView: View {
                     SearchView()
                         .ignoresSafeArea() // Ensure it extends to edges
                 case 1:
-                    if showingFeedView {
-                        SearchView()
-                            .transition(.move(edge: .leading))
-                            .gesture(
-                                DragGesture()
-                                    .onEnded { value in
-                                        if value.translation.width < -50 { // Swipe left
-                                            withAnimation {
-                                                showingFeedView = false
-                                            }
-                                        }
-                                    }
-                            )
-                    } else {
-                        ContentView(showingARView: $showingARView)
-                            .ignoresSafeArea()
-                            .transition(.move(edge: .trailing))
-                            .gesture(
-                                DragGesture()
-                                    .onEnded { value in
-                                        if value.translation.width > 50 { // Swipe right
-                                            withAnimation {
-                                                showingFeedView = true
-                                            }
-                                        }
-                                    }
-                            )
-                    }
+                    ContentView(showingARView: $showingARView)
+                        .ignoresSafeArea()
                 case 2:
                     ProfileContent(isUsersOwnProfile: $isUsersOwnProfile)
                 case 3:
@@ -90,5 +64,35 @@ struct MainView: View {
         }
     }
 }
+
+
+//if showingFeedView {
+//    SearchView()
+//        .transition(.move(edge: .leading))
+//        .gesture(
+//            DragGesture()
+//                .onEnded { value in
+//                    if value.translation.width < -50 { // Swipe left
+//                        withAnimation {
+//                            showingFeedView = false
+//                        }
+//                    }
+//                }
+//        )
+//} else {
+//    ContentView(showingARView: $showingARView)
+//        .ignoresSafeArea()
+//        .transition(.move(edge: .trailing))
+//        .gesture(
+//            DragGesture()
+//                .onEnded { value in
+//                    if value.translation.width > 50 { // Swipe right
+//                        withAnimation {
+//                            showingFeedView = true
+//                        }
+//                    }
+//                }
+//        )
+//}
 
 

@@ -35,6 +35,7 @@
 		1C847E7A2CD1A8C2002A276E /* CameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C847E792CD1A8C2002A276E /* CameraView.swift */; };
 		1C847E7C2CD1A8E2002A276E /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C847E7B2CD1A8E2002A276E /* Models.swift */; };
 		1C847E7E2CD1AA4B002A276E /* QRCode_ARMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C847E7D2CD1AA4B002A276E /* QRCode_ARMenuView.swift */; };
+		1C856CC12D3507F400FDF1A5 /* AnimatedGradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C856CC02D3507F400FDF1A5 /* AnimatedGradientView.swift */; };
 		1C8AC3A32CD59F1700A53AC0 /* pasta_dish_1.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 1C8AC3A22CD59F1700A53AC0 /* pasta_dish_1.usdz */; };
 		1C8AC3A92CD5BFB300A53AC0 /* AddressEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C8AC3A82CD5BFB300A53AC0 /* AddressEntryView.swift */; };
 		1C8BE4252CDAD90300EBEA4F /* baguette.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 1C8BE4242CDAD90300EBEA4F /* baguette.usdz */; };
@@ -88,6 +89,7 @@
 		1C847E792CD1A8C2002A276E /* CameraView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraView.swift; sourceTree = "<group>"; };
 		1C847E7B2CD1A8E2002A276E /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
 		1C847E7D2CD1AA4B002A276E /* QRCode_ARMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCode_ARMenuView.swift; sourceTree = "<group>"; };
+		1C856CC02D3507F400FDF1A5 /* AnimatedGradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatedGradientView.swift; sourceTree = "<group>"; };
 		1C8AC3A22CD59F1700A53AC0 /* pasta_dish_1.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = pasta_dish_1.usdz; sourceTree = "<group>"; };
 		1C8AC3A82CD5BFB300A53AC0 /* AddressEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressEntryView.swift; sourceTree = "<group>"; };
 		1C8BE4242CDAD90300EBEA4F /* baguette.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = baguette.usdz; sourceTree = "<group>"; };
@@ -267,6 +269,7 @@
 		1C847E602CCDFEA3002A276E /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				1C856CBF2D3507E200FDF1A5 /* Misc */,
 				1C0C18E22D31DE220004873D /* Map */,
 				1C0C18E12D31DE130004873D /* Leaderboard */,
 				1C0C18E02D31DE030004873D /* Restaurant */,
@@ -287,6 +290,14 @@
 				1C847E622CCE0306002A276E /* String.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		1C856CBF2D3507E200FDF1A5 /* Misc */ = {
+			isa = PBXGroup;
+			children = (
+				1C856CC02D3507F400FDF1A5 /* AnimatedGradientView.swift */,
+			);
+			path = Misc;
 			sourceTree = "<group>";
 		};
 		1C8BE42A2CDC8A2F00EBEA4F /* Authentication */ = {
@@ -457,6 +468,7 @@
 				1CACF3722D2DEF050050F97E /* EditRestaurantDetailsView.swift in Sources */,
 				1C9D88452CF01CAD004B14C0 /* LoadARItemView.swift in Sources */,
 				1C9D88432CEC1E84004B14C0 /* LeaderboardFeedView.swift in Sources */,
+				1C856CC12D3507F400FDF1A5 /* AnimatedGradientView.swift in Sources */,
 				1C8BE4632CE06D5000EBEA4F /* MainView.swift in Sources */,
 				1C847E632CCE0306002A276E /* String.swift in Sources */,
 				1C8AC3A92CD5BFB300A53AC0 /* AddressEntryView.swift in Sources */,

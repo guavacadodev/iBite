@@ -14,130 +14,202 @@ import RealityKit
 struct ARMenuOverlayView: View {
     var models: [String] // Array of model names
     var menuItems: [MenuItem] // Array of custom data type menu items
-
+    @Environment(\.presentationMode) var presentationMode
     @State private var modelIndex = 0 // Track the current model index
     @State private var modelScale: Float = 0.05 // Default scale for models
-
     var body: some View {
-        ZStack {
+        VStack {
+            // Custom Back Button
+            Button(action: {
+                presentationMode.wrappedValue.dismiss()
+            }) {
+                HStack {
+                    HStack(spacing: 5) { // Adjust spacing between the icon and the text
+                        Image(systemName: "chevron.left")
+                            .font(.system(size: 18, weight: .medium))
+                            .foregroundColor(Color("purple1"))
+
+                        Text("Back")
+                            .font(.custom("Fredoka-Bold", size: 16))
+                            .foregroundColor(Color("purple1"))
+                    }
+                    .padding(.horizontal, 12) // Add horizontal padding around the content
+                    .padding(.vertical, 8) // Add vertical padding
+                    .background(
+                        RoundedRectangle(cornerRadius: 10)
+                            .fill(Color("grayNeutral").opacity(0.9)) // RoundedRectangle as background
+                            .shadow(color: Color.black.opacity(0.2), radius: 5, x: 0, y: 3) // Add shadow for depth
+                    )
+                    Spacer()
+                }
+                .padding(.leading, 10)
+    
+            }
+            // Header with restaurant name and logo
+            HStack(spacing: 8) {
+                // replace with restaurant.image
+                Text("Sushi Place")
+                    .font(.custom("Fredoka-Bold", size: 24))
+                    .foregroundColor(Color("purple1"))
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.5)
+                    .padding()
+    
+                Spacer()
+
+                // Replace with restaurant owner user image and create a button to direct to profile
+                VStack(spacing: 2) {
+                    Image("profile_image")
+                        .resizable()
+                        .clipShape(Circle())
+                        .frame(width: 30, height: 30)
+                    .shadow(radius: 10)
+                    Text("Owner")
+                        .font(.custom("Fredoka-SemiBold", size: 12))
+                        .foregroundColor(Color("whiteNeutral"))
+                }
+                .padding()
+
+            }
+            //.frame(width: .infinity, height: 50)
+            .background(Color("grayNeutral").opacity(0.9))
+            .cornerRadius(10)
+            .shadow(color: Color.black.opacity(0.2), radius: 5, x: 0, y: 3)
+            .padding(.leading, 10)
+            .padding(.trailing, 10)
+            .padding(.bottom, 10)
             // AR View
-            LoadARItemView(models: models, menuItems: menuItems, modelIndex: $modelIndex, modelScale: $modelScale)
-                .edgesIgnoringSafeArea(.all)
+            ZStack {
+                LoadARItemView(models: models, menuItems: menuItems, modelIndex: $modelIndex, modelScale: $modelScale)
+                    .edgesIgnoringSafeArea(.all)
+                HStack(spacing: 0) {
+                    // Left-side scrollable menu
+                    ScrollView(.vertical, showsIndicators: false) {
+                        VStack(spacing: 12) {
+                            ForEach(0..<models.count, id: \.self) { index in
+                                Button(action: {
+                                    modelIndex = index
+                                    print("Selected index: \(modelIndex)")
+                                }) {
+                                    VStack {
+                                        Image(systemName: "cube.fill")
+                                            .font(.system(size: 18))
+                                            .foregroundColor(Color("yellow1"))
 
-            HStack(spacing: 0) {
-                // Left-side scrollable menu
-                ScrollView(.vertical, showsIndicators: false) {
-                    VStack(spacing: 12) {
-                        ForEach(0..<models.count, id: \.self) { index in
-                            Button(action: {
-                                modelIndex = index
-                                print("Selected index: \(modelIndex)")
-                            }) {
-                                VStack {
-                                    Image(systemName: "cube.fill")
-                                        .font(.system(size: 18))
-                                        .foregroundColor(Color("yellow1"))
-
-                                    Text(menuItems[index].name)
-                                        .font(.custom("Fredoka-Regular", size: 8))
-                                        .foregroundColor(.white)
-                                        .padding(.leading, 5)
-                                        .lineLimit(2)
-                                        //.truncationMode(.tail)
+                                        Text(menuItems[index].name)
+                                            .font(.custom("Fredoka-Regular", size: 8))
+                                            .foregroundColor(.white)
+                                            .padding(.leading, 5)
+                                            .lineLimit(2)
+                                            //.truncationMode(.tail)
+                                    }
+                                    .padding()
+                                    .scaleEffect(1.4)
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                    .background(
+                                        modelIndex == index ? Color("purple1").opacity(0.8) : Color("darkNeutral")
+                                    )
+                                    .cornerRadius(10)
                                 }
-                                .padding()
-                                .scaleEffect(1.4)
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                                .background(
-                                    modelIndex == index ? Color("purple1").opacity(0.8) : Color("darkNeutral")
-                                )
-                                .cornerRadius(10)
                             }
                         }
+                        .padding(.vertical)
                     }
-                    .padding(.vertical)
+                    .padding(.top, 80)
+                    .frame(width: UIScreen.main.bounds.width / 5) // Set menu width to 1/4 of the screen
+                    .background(Color("grayNeutral").opacity(0.9))
+                    .edgesIgnoringSafeArea(.vertical)
+
+                    Spacer()
                 }
-                .padding(.top, 80)
-                .frame(width: UIScreen.main.bounds.width / 5) // Set menu width to 1/4 of the screen
-                .background(Color("grayNeutral").opacity(0.9))
-                .edgesIgnoringSafeArea(.vertical)
 
-                Spacer()
-            }
+                VStack {
+                    Spacer()
 
-            VStack {
-                Spacer()
+                    // Menu Items UI Overlay
+                    VStack(spacing: 8) {
+                        if modelIndex < menuItems.count {
+                            Text(menuItems[modelIndex].name)
+                                .font(.custom("Fredoka-Bold", size: 20))
+                                .foregroundColor(Color("purple1"))
+                                .padding(.bottom, 5)
 
-                // Menu Items UI Overlay
-                VStack(spacing: 8) {
-                    if modelIndex < menuItems.count {
-                        Text(menuItems[modelIndex].name)
-                            .font(.custom("Fredoka-Bold", size: 20))
-                            .foregroundColor(Color("purple1"))
-                            .padding(.bottom, 5)
+                            Text("Price: \(menuItems[modelIndex].price)")
+                                .font(.custom("Fredoka-Regular", size: 16))
+                                .foregroundColor(Color("yellow1"))
+                                .padding(.bottom, 2)
 
-                        Text("Price: \(menuItems[modelIndex].price)")
-                            .font(.custom("Fredoka-Regular", size: 16))
+                            Text("Ingredients: \(menuItems[modelIndex].ingredients)")
+                                .font(.custom("Fredoka-Light", size: 14))
+                                .foregroundColor(Color("lightGrayNeutral"))
+                                .multilineTextAlignment(.center)
+                        } else {
+                            Text("No menu item available.")
+                                .font(.custom("Fredoka-SemiBold", size: 18))
+                                .foregroundColor(.red)
+                        }
+                    }
+                    .padding()
+                    .background(LinearGradient(
+                        gradient: Gradient(colors: [Color("darkNeutral"), Color("grayNeutral").opacity(0.8)]),
+                        startPoint: .top,
+                        endPoint: .bottom
+                    ))
+                    .cornerRadius(15)
+                    .padding(.top, 10)
+
+                    // Scale Slider
+                    VStack(spacing: 10) {
+                        Text("Scale: \(Int(modelScale * 1000))%")
+                            .font(.custom("Fredoka-Regular", size: 14))
                             .foregroundColor(Color("yellow1"))
-                            .padding(.bottom, 2)
 
-                        Text("Ingredients: \(menuItems[modelIndex].ingredients)")
-                            .font(.custom("Fredoka-Light", size: 14))
-                            .foregroundColor(Color("lightGrayNeutral"))
-                            .multilineTextAlignment(.center)
-                    } else {
-                        Text("No menu item available.")
-                            .font(.custom("Fredoka-SemiBold", size: 18))
-                            .foregroundColor(.red)
+                        Slider(value: $modelScale, in: 0.001...0.1)
+                            .accentColor(Color("purple1"))
+                            .padding(.horizontal)
                     }
-                }
-                .padding()
-                .background(LinearGradient(
-                    gradient: Gradient(colors: [Color("darkNeutral"), Color("grayNeutral").opacity(0.8)]),
-                    startPoint: .top,
-                    endPoint: .bottom
-                ))
-                .cornerRadius(15)
-                .padding(.bottom, 20)
+                    .padding(.vertical, 10)
+                    .background(LinearGradient(
+                        gradient: Gradient(colors: [Color("grayNeutral").opacity(0.8), Color("darkNeutral")]),
+                        startPoint: .top,
+                        endPoint: .bottom
+                    ))
+                    .cornerRadius(15)
+                    .shadow(color: Color("lightGrayNeutral").opacity(0.7), radius: 5, x: 0, y: 3)
+                    .padding()
 
-                // Scale Slider
-                VStack(spacing: 10) {
-                    Text("Scale: \(Int(modelScale * 1000))%")
-                        .font(.custom("Fredoka-Regular", size: 14))
-                        .foregroundColor(Color("yellow1"))
-
-                    Slider(value: $modelScale, in: 0.001...0.1)
-                        .accentColor(Color("purple1"))
-                        .padding(.horizontal)
+                    // Next Item Button
+                    Button(action: {
+                        modelIndex = (modelIndex + 1) % models.count
+                        print("Switched to model index: \(modelIndex)")
+                    }) {
+                        Text("Next Item")
+                            .font(.custom("Fredoka-Bold", size: 18))
+                            .frame(maxWidth: .infinity)
+                            .padding()
+                            .background(Color("purple1"))
+                            .foregroundColor(.white)
+                            .cornerRadius(15)
+                            .shadow(color: Color("purple1").opacity(0.5), radius: 5, x: 0, y: 3)
+                            .padding(.horizontal)
+                    }
+                    .padding(.bottom, 20)
                 }
-                .padding(.vertical, 10)
-                .background(LinearGradient(
-                    gradient: Gradient(colors: [Color("grayNeutral").opacity(0.8), Color("darkNeutral")]),
-                    startPoint: .top,
-                    endPoint: .bottom
-                ))
-                .cornerRadius(15)
-                .shadow(color: Color("lightGrayNeutral").opacity(0.7), radius: 5, x: 0, y: 3)
-                .padding()
-
-                // Next Item Button
-                Button(action: {
-                    modelIndex = (modelIndex + 1) % models.count
-                    print("Switched to model index: \(modelIndex)")
-                }) {
-                    Text("Next Item")
-                        .font(.custom("Fredoka-Bold", size: 18))
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .background(Color("purple1"))
-                        .foregroundColor(.white)
-                        .cornerRadius(15)
-                        .shadow(color: Color("purple1").opacity(0.5), radius: 5, x: 0, y: 3)
-                        .padding(.horizontal)
-                }
-                .padding(.bottom, 20)
             }
         }
+        .background(
+            VStack {
+                Image("sushi_place")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: .infinity, height: .infinity)
+                    .clipped()
+                    .ignoresSafeArea()
+                Spacer()
+            },
+            alignment: .top // Aligns the background to the top
+        )
+        .navigationBarBackButtonHidden(true) // Hide the default back button
     }
 }
 

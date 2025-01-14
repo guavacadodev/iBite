@@ -294,7 +294,7 @@ struct ContentView: View {
                 }
                 .background(Color("darkNeutral"))
                 // If the user selects a restaurant from the List tab, capture it in the restaurant variable.
-                // Then pass the associated models and menuItems of the selected restaurant to the ARMenuContainerView1.
+                // Then pass the associated models and menuItems of the selected restaurant to the ARMenuOverlayView.
                 if let restaurant = selectedRestaurant {
                     NavigationLink(
                         destination: ARMenuOverlayView(

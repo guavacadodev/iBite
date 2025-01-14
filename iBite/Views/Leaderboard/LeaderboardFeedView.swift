@@ -27,6 +27,7 @@ struct LeaderboardFeedView: View {
     ]
 
     @State private var currentIndex: Int = 0 // Tracks the currently visible ranking
+    @State private var searchText: String = "" // Search bar text
 
     var body: some View {
         GeometryReader { geometry in
@@ -35,9 +36,27 @@ struct LeaderboardFeedView: View {
                 Text("Leaderboard")
                     .font(.custom("Fredoka-SemiBold", size: 24))
                     .foregroundColor(Color("whiteNeutral"))
-
                 Spacer()
+                // Search bar
+                HStack {
+                    TextField("Search by restaurant name", text: $searchText)
+                        .foregroundStyle(Color("darkNeutral"))
+                        .accentColor(Color("darkNeutral"))
+                        .padding(10)
+                        .background(Color("yellow1"))
+                        .cornerRadius(10)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 10)
+                                .stroke(Color("yellow2"), lineWidth: 1)
+                        )
+                        .padding(.horizontal)
+                }
+                .padding(.bottom, 10)
 
+                Text("Show restaurant on leaderboard based on which one has the most amount of favorites")
+                    .foregroundStyle(Color("whiteNeutral"))
+                
+                // Leaderboard Cards
                 ScrollView(.vertical, showsIndicators: false) {
                     VStack(spacing: 0) {
                         ForEach(leaderboardData) { user in
