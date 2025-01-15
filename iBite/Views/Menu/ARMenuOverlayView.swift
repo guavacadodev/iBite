@@ -193,19 +193,19 @@ struct ARMenuOverlayView: View {
                 }
             }
         }
-        .background(
-            VStack {
-                Image("sushi_place")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: .infinity, height: .infinity)
-                    .clipped()
-                    .ignoresSafeArea()
-                Spacer()
-            },
-            alignment: .top // Aligns the background to the top
-        )
-        .navigationBarBackButtonHidden(true) // Hide the default back button
+//        .background(
+//            VStack {
+//                Image("sushi_place")
+//                    .resizable()
+//                    .scaledToFit()
+//                    .frame(width: .infinity, height: .infinity)
+//                    .clipped()
+//                    .ignoresSafeArea()
+//                Spacer()
+//            },
+//            alignment: .top // Aligns the background to the top
+//        )
+//        .navigationBarBackButtonHidden(true) // Hide the default back button
     }
 }
 

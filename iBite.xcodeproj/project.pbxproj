@@ -36,6 +36,8 @@
 		1C847E7C2CD1A8E2002A276E /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C847E7B2CD1A8E2002A276E /* Models.swift */; };
 		1C847E7E2CD1AA4B002A276E /* QRCode_ARMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C847E7D2CD1AA4B002A276E /* QRCode_ARMenuView.swift */; };
 		1C856CC12D3507F400FDF1A5 /* AnimatedGradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C856CC02D3507F400FDF1A5 /* AnimatedGradientView.swift */; };
+		1C856CC32D374C0000FDF1A5 /* CombinedMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C856CC22D374C0000FDF1A5 /* CombinedMenuView.swift */; };
+		1C856CC52D374C3300FDF1A5 /* FlatMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C856CC42D374C3300FDF1A5 /* FlatMenuView.swift */; };
 		1C8AC3A32CD59F1700A53AC0 /* pasta_dish_1.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 1C8AC3A22CD59F1700A53AC0 /* pasta_dish_1.usdz */; };
 		1C8AC3A92CD5BFB300A53AC0 /* AddressEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C8AC3A82CD5BFB300A53AC0 /* AddressEntryView.swift */; };
 		1C8BE4252CDAD90300EBEA4F /* baguette.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 1C8BE4242CDAD90300EBEA4F /* baguette.usdz */; };
@@ -90,6 +92,8 @@
 		1C847E7B2CD1A8E2002A276E /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
 		1C847E7D2CD1AA4B002A276E /* QRCode_ARMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCode_ARMenuView.swift; sourceTree = "<group>"; };
 		1C856CC02D3507F400FDF1A5 /* AnimatedGradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatedGradientView.swift; sourceTree = "<group>"; };
+		1C856CC22D374C0000FDF1A5 /* CombinedMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CombinedMenuView.swift; sourceTree = "<group>"; };
+		1C856CC42D374C3300FDF1A5 /* FlatMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlatMenuView.swift; sourceTree = "<group>"; };
 		1C8AC3A22CD59F1700A53AC0 /* pasta_dish_1.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = pasta_dish_1.usdz; sourceTree = "<group>"; };
 		1C8AC3A82CD5BFB300A53AC0 /* AddressEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressEntryView.swift; sourceTree = "<group>"; };
 		1C8BE4242CDAD90300EBEA4F /* baguette.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = baguette.usdz; sourceTree = "<group>"; };
@@ -158,13 +162,15 @@
 			path = App;
 			sourceTree = "<group>";
 		};
-		1C0C18DF2D31DD270004873D /* AR */ = {
+		1C0C18DF2D31DD270004873D /* Menu */ = {
 			isa = PBXGroup;
 			children = (
 				1C9D88442CF01CAD004B14C0 /* LoadARItemView.swift */,
+				1C856CC42D374C3300FDF1A5 /* FlatMenuView.swift */,
+				1C856CC22D374C0000FDF1A5 /* CombinedMenuView.swift */,
 				1CF269912D179FBC0078F41B /* ARMenuOverlayView.swift */,
 			);
-			path = AR;
+			path = Menu;
 			sourceTree = "<group>";
 		};
 		1C0C18E02D31DE030004873D /* Restaurant */ = {
@@ -193,7 +199,7 @@
 			path = Map;
 			sourceTree = "<group>";
 		};
-		1C6D31E72D0133B700844C25 /* 3D Scan Process */ = {
+		1C6D31E72D0133B700844C25 /* Dish Scanning */ = {
 			isa = PBXGroup;
 			children = (
 				1C9D88502CFD7A01004B14C0 /* AddToRestaurantView.swift */,
@@ -204,7 +210,7 @@
 				1C847E792CD1A8C2002A276E /* CameraView.swift */,
 				1C9D88482CFD745C004B14C0 /* PhotogrammetryView.swift */,
 			);
-			path = "3D Scan Process";
+			path = "Dish Scanning";
 			sourceTree = "<group>";
 		};
 		1C847E262CCC40C1002A276E = {
@@ -272,13 +278,14 @@
 				1C856CBF2D3507E200FDF1A5 /* Misc */,
 				1C0C18E22D31DE220004873D /* Map */,
 				1C0C18E12D31DE130004873D /* Leaderboard */,
+				1C0C18DF2D31DD270004873D /* Menu */,
 				1C0C18E02D31DE030004873D /* Restaurant */,
-				1C0C18DF2D31DD270004873D /* AR */,
-				1C6D31E72D0133B700844C25 /* 3D Scan Process */,
+				1C6D31E72D0133B700844C25 /* Dish Scanning */,
 				1CACF36F2D2DE9470050F97E /* PremiumDashboard */,
 				1CACF3702D2DE97D0050F97E /* Profile */,
 				1C8BE42B2CDC8AA400EBEA4F /* Root */,
 				1C8BE42A2CDC8A2F00EBEA4F /* Authentication */,
+				1C856CC62D3750D300FDF1A5 /* Onboarding */,
 				1C847E612CCE02F7002A276E /* Extensions */,
 			);
 			path = Views;
@@ -298,6 +305,13 @@
 				1C856CC02D3507F400FDF1A5 /* AnimatedGradientView.swift */,
 			);
 			path = Misc;
+			sourceTree = "<group>";
+		};
+		1C856CC62D3750D300FDF1A5 /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Onboarding;
 			sourceTree = "<group>";
 		};
 		1C8BE42A2CDC8A2F00EBEA4F /* Authentication */ = {
@@ -447,6 +461,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1C856CC52D374C3300FDF1A5 /* FlatMenuView.swift in Sources */,
 				1CBEBE0E2CD6F1F000CA4963 /* FeaturedRestaurantCardView.swift in Sources */,
 				1C847E7C2CD1A8E2002A276E /* Models.swift in Sources */,
 				1C217DEB2D28D05F00499D38 /* CreateRestaurantView.swift in Sources */,
@@ -481,6 +496,7 @@
 				1C9D88492CFD745C004B14C0 /* PhotogrammetryView.swift in Sources */,
 				1C9D88472CF026FC004B14C0 /* myARView.swift in Sources */,
 				1C847E332CCC40C1002A276E /* iBiteApp.swift in Sources */,
+				1C856CC32D374C0000FDF1A5 /* CombinedMenuView.swift in Sources */,
 				1C847E782CD1A895002A276E /* LocationManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

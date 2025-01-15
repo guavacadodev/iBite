@@ -72,7 +72,7 @@ struct ContentView: View {
                             //.shadow(color: .gray.opacity(0.5), radius: 10, x: 0, y: 5) // Add a shadow for depth
                             .scaleEffect(isAddressEntryPresented ? 1.1 : 1.0) // Add scale animation
                             .animation(.easeInOut(duration: 0.2), value: isAddressEntryPresented) // Smooth animation
-
+                            
                         }
                         .padding(.horizontal)
                         // list and map picker
@@ -90,7 +90,7 @@ struct ContentView: View {
                                             .stroke(isMapView ? Color("lightGrayNeutral").opacity(0.4) : Color("purple2"), lineWidth: 2)
                                     )
                             }
-
+                            
                             Button(action: { isMapView = true }) {
                                 Text("Map")
                                     .frame(maxWidth: .infinity)
@@ -145,7 +145,7 @@ struct ContentView: View {
                                     .scaledToFit()
                                     .frame(height: 120)
                                     .padding(.top, 20)
-                            // This else statement will show nearby restaurants in the form of a slideable horizontal carousel in the case that there are restaurants near the user's location.
+                                // This else statement will show nearby restaurants in the form of a slideable horizontal carousel in the case that there are restaurants near the user's location.
                             } else {
                                 ScrollView(.horizontal, showsIndicators: false) {
                                     HStack(spacing: 16) {
@@ -223,7 +223,7 @@ struct ContentView: View {
                                                             HStack(spacing: 3) {
                                                                 //Spacer()
                                                                 Image(systemName: "star.fill")
-                                                                    //.padding(.leading, 15)
+                                                                //.padding(.leading, 15)
                                                                     .font(.custom("Fredoka-SemiBold", size: 24))
                                                                     .foregroundColor(Color("orange1"))
                                                                     .overlay(
@@ -232,11 +232,11 @@ struct ContentView: View {
                                                                             .foregroundColor(Color("yellow1"))
                                                                     )
                                                                 Text("Popular")
-                                                                    //.padding(.leading, 15)
+                                                                //.padding(.leading, 15)
                                                                     .font(.custom("Fredoka-Medium", size: 24))
                                                                     .foregroundColor(Color("yellow1"))
                                                                 Image(systemName: "star.fill")
-                                                                    //.padding(.leading, 15)
+                                                                //.padding(.leading, 15)
                                                                     .font(.custom("Fredoka-SemiBold", size: 24))
                                                                     .foregroundColor(Color("orange1"))
                                                                     .overlay(
@@ -297,18 +297,19 @@ struct ContentView: View {
                 // Then pass the associated models and menuItems of the selected restaurant to the ARMenuOverlayView.
                 if let restaurant = selectedRestaurant {
                     NavigationLink(
-                        destination: ARMenuOverlayView(
+                        destination: CombinedMenuView(
                             models: restaurant.models,
-                            menuItems: restaurant.menuItems
+                            menuItems: restaurant.menuItems,
+                            showingARView: $showingARView
                         )
                         .onAppear {
                             // Set the binding showingARView to true to render the BottomNavigationBar invisible.
                             showingARView = true
                         }
-                        .onDisappear {
-                            // Set it back to false when the user exits, so that the BottomNavigationBar reappears.
-                            showingARView = false
-                        },
+                            .onDisappear {
+                                // Set it back to false when the user exits, so that the BottomNavigationBar reappears.
+                                showingARView = false
+                            },
                         isActive: $showARMenuView
                     ) {
                         EmptyView()

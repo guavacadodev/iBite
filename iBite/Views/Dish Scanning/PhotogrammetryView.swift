@@ -23,6 +23,7 @@ struct PhotogrammetryView: View {
     @State private var showModelSavedView = false // State to navigate to the new view
     @State private var currentQuality: String = "Acceptable"
     let navTitleImage = Image("iBiteTransparentBackground")
+    @State private var showingPhotogrammetryView: Bool = false
 
     var body: some View {
         NavigationView {
