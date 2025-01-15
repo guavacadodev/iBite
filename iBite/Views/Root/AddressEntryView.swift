@@ -30,7 +30,7 @@ struct AddressEntryView: View {
                 .onChange(of: searchText) { newValue in
                     completerDelegate.searchCompleter.queryFragment = newValue
                 }
-
+                .frame(width: .infinity)
             // Displaying search results in a List
             List(completerDelegate.results, id: \.title) { result in
                 Text(result.title)
@@ -44,8 +44,10 @@ struct AddressEntryView: View {
                 enteredAddress = searchText // Save the selected address
                 presentationMode.wrappedValue.dismiss() // Close the view
             }
+            .disabled(searchText.isEmpty)
             .padding()
-            .background(Color.blue)
+            .padding(.horizontal, 20)
+            .background(Color("purple1"))
             .foregroundColor(.white)
             .cornerRadius(8)
             
@@ -53,6 +55,7 @@ struct AddressEntryView: View {
         .onAppear {
             completerDelegate.setupCompleter() // Initialize completer settings
         }
+        //.background(Color("darkNeutral"))
     }
 }
 

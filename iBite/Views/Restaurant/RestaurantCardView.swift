@@ -10,8 +10,8 @@ import CoreLocation
 
 struct RestaurantCardView: View {
     var restaurant: Restaurant
-    @Binding var userHasLikedRestaurant: Bool
-
+    /*@Binding*/ var isFavorite: Bool
+    var onClickFavoriteButton: (()->Void)
     var body: some View {
         VStack(alignment: .leading) {
             Image(restaurant.imageName)
@@ -24,26 +24,22 @@ struct RestaurantCardView: View {
             VStack(alignment: .leading) {
                 HStack {
                     Text(restaurant.name)
-                        .font(.custom("Fredoka-Medium", size: 18))
+                        .font(.custom("Fredoka-Regular", size: 18))
                         .foregroundColor(Color("whiteNeutral"))
                     Spacer()
-                }
-                .overlay {
                     Button(action: {
-                        userHasLikedRestaurant.toggle()
+                        onClickFavoriteButton()
                     }) {
-                        Spacer()
-                        Image(systemName: userHasLikedRestaurant ? "heart.fill" : "heart")
-                            .padding(.top, 15)
-                            .font(.system(size: 24)) // Adjust size as needed
-                            .foregroundColor(userHasLikedRestaurant ? Color("red1") : Color("whiteNeutral"))
+                        Image(systemName: isFavorite ? "heart.fill" : "heart")
+                            .font(.system(size: 18)) // Adjust size as needed
+                            .foregroundColor(isFavorite ? .red : Color("whiteNeutral"))
                     }
                 }
                 Text(restaurant.cuisine.rawValue)
                     .font(.custom("Fredoka-Light", size: 13))
-                    .foregroundColor(Color("yellow1"))
+                    .foregroundColor(Color("lightGrayNeutral"))
                 Text("\(restaurant.distance, specifier: "%.1f") miles away") // Display real distance
-                    .font(.custom("Fredoka-SemiBold", size: 12)) // Updated font to Fredoka-SemiBold
+                    .font(.custom("Fredoka-Medium", size: 12)) // Updated font to Fredoka-SemiBold
                     .foregroundColor(Color("lightGrayNeutral"))
             }
             .padding([.leading, .bottom, .trailing], 8)
@@ -54,26 +50,3 @@ struct RestaurantCardView: View {
         .padding()
     }
 }
-
-#Preview {
-    RestaurantCardView(
-        restaurant: Restaurant(
-            name: "Sample Restaurant",
-            cuisine: .Italian,
-            location: CLLocationCoordinate2D(latitude: 40.7128, longitude: -74.0060),
-            distance: 2.5,
-            imageName: "pasta_palace",
-            models: ["sample_model1", "sample_model2"],
-            menuItems: [
-                MenuItem(name: "Sample Dish 1", price: "$12.99", ingredients: "Ingredient A, Ingredient B"),
-                MenuItem(name: "Sample Dish 2", price: "$9.99", ingredients: "Ingredient C, Ingredient D")
-            ],
-            reviewText: nil,
-            rating: nil
-        ),
-        userHasLikedRestaurant: .constant(false)
-    )
-    .previewLayout(.sizeThatFits)
-}
-
-

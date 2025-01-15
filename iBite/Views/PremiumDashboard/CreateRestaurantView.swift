@@ -135,19 +135,22 @@ struct CreateRestaurantView: View {
         guard !name.isEmpty, !location.isEmpty, let selectedImage = selectedImage else {
             print("Error: Name, location, and image cannot be empty.")
             return
-        }
-
+        }        
+        
         let newRestaurant = Restaurant(
+            //id: UUID(),
             name: name,
             cuisine: cuisine,
-            location: CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0), // Placeholder for location
+            location: Coordinate(CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0)), // Placeholder for location
             distance: 0.0,
-            imageName: saveImageToDisk(selectedImage),
+            imageName: "defaultImage",
             models: [],
             menuItems: [],
             reviewText: nil,
-            rating: nil
+            rating: nil,
+            favorite: false
         )
+        
         myRestaurants.append(newRestaurant)
         print("Created Restaurant: \(newRestaurant)")
         presentationMode.wrappedValue.dismiss()

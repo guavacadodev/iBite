@@ -8,35 +8,112 @@
 import SwiftUI
 import MapKit
 
+
 struct ProfileContent: View {
+    var dummyUserData: UserModel = UserModel(username: "Eslam", dateCreated: Date(), birthday: 97, signedUp: true, isMember: true, followers: 1000, following: 2900)
     @Binding var isUsersOwnProfile: Bool
     @Environment(\.presentationMode) var presentationMode
 
+    @State private var navigateToEditProfile = false
+    @State private var navigateToChangePassword = false
+
     var body: some View {
-        if isUsersOwnProfile {
-            UserProfileView()
-        } else {
-            UserProfileView()
-                .onAppear {
-                    presentationMode.wrappedValue.dismiss()
-                }
+        NavigationView {
+            if isUsersOwnProfile {
+                UserProfileView(user: dummyUserData)
+                    .toolbar {
+                        // Gear icon with Menu
+                        ToolbarItem(placement: .navigationBarTrailing) {
+                            Menu {
+                                Button(action: {
+                                    navigateToEditProfile = true
+                                }) {
+                                    Label("Update Profile", systemImage: "person")
+                                }
+                                Button(action: {
+                                    navigateToChangePassword = true
+                                }) {
+                                    Label("Change Password", systemImage: "lock")
+                                }
+                                Button(role: .destructive, action: {
+                                    print("User signed out!")
+                                }) {
+                                    Label("Sign Out", systemImage: "rectangle.portrait.and.arrow.forward")
+                                }
+                            } label: {
+                                Image(systemName: "gearshape")
+                                    .foregroundColor(.primary)
+                            }
+                        }
+                    }
+                    .background(
+                        NavigationLink("", destination: EditProfileView(user: dummyUserData, userName: dummyUserData.username, bithdate: dummyUserData.birthday.description), isActive: $navigateToEditProfile)
+                            .hidden()
+                    )
+                    .background(
+                        NavigationLink("", destination: ChangePasswordView(), isActive: $navigateToChangePassword)
+                            .hidden()
+                    )
+            } else {
+//                UserProfileView(user: dummyUserData)
+//                    .onAppear {
+//                        presentationMode.wrappedValue.dismiss()
+//                    }
+                OtherUserProfileView(user: dummyUserData)
+                    .onAppear {
+                        presentationMode.wrappedValue.dismiss()
+                    }
+            }
         }
     }
 }
 
-struct UserProfileView: View {
+
+struct SettingsMenuView: View {
     var body: some View {
-        ProfileView(bannerTitle: "Your Profile", isUsersOwnProfile: false)
+        List {
+            NavigationLink(destination: SignOutView()) {
+                Text("Sign Out")
+            }
+            NavigationLink(destination: ChangePasswordView()) {
+                Text("Change Password")
+            }
+//            NavigationLink(destination: UpdateProfileView(user: )) {
+//                Text("Update Profile")
+//            }
+
+        }
+        .navigationTitle("Settings")
+        .navigationBarTitleDisplayMode(.inline)
+        .navigationBarTitleTextColor(Color.violet1)
+    }
+}
+
+// Example UserProfileView for demonstration
+
+struct UserProfileView: View {
+    var user: UserModel
+    var body: some View {
+        ProfileView(user: user, bannerTitle: "Your Profile", isUsersOwnProfile: true)
+            .padding(.bottom, 20)
+            .background(Color("darkNeutral"))
+            .preferredColorScheme(.light)
     }
 }
 
 struct OtherUserProfileView: View {
+    var user: UserModel
     var body: some View {
-        ProfileView(bannerTitle: "Other User", isUsersOwnProfile: true)
+        ProfileView(user: user, bannerTitle: "Other User", isUsersOwnProfile: false)
+            .padding(.bottom, 20)
+            .background(Color("darkNeutral"))
+            .preferredColorScheme(.light)
     }
 }
 
+
 struct ProfileView: View {
+    var user: UserModel
     var bannerTitle: String
     @State private var bannerZIndex: Double = 0 // Track zIndex of BannerView dynamically
     var isUsersOwnProfile: Bool // Pass this from the parent view
@@ -57,11 +134,11 @@ struct ProfileView: View {
                         VStack(spacing: 20) {
                             Color.clear.frame(height: 100) // Spacer for smooth transition
                             // Pass the `isUsersOwnProfile` argument to HeaderView
-                            HeaderView(offset: offset, isUsersOwnProfile: isUsersOwnProfile)
+                            HeaderView(user: user, offset: offset, isUsersOwnProfile: isUsersOwnProfile)
                         }
                         .offset(y: max(-offset, 0)) // Smooth slide under BannerView
                     }
-                    .frame(height: 300) // Limit GeometryReader height
+                    .frame(height: 350) // Limit GeometryReader height
 
                     VStack(spacing: 0) {
                         // StickyTabView with zIndex update logic
@@ -87,6 +164,7 @@ struct ProfileView: View {
         }
         .background(Color("darkNeutral"))
         .preferredColorScheme(.light)
+        
     }
 }
 
@@ -105,10 +183,12 @@ struct BannerView: View {
             .ignoresSafeArea()
     }
 }
+
 struct HeaderView: View {
+    var user: UserModel
     var offset: CGFloat
     var isUsersOwnProfile: Bool // Pass the binding value here
-
+    @State private var isMenuPresented: Bool = false
     var body: some View {
         VStack {
             // Profile Icon
@@ -121,7 +201,6 @@ struct HeaderView: View {
                 .shadow(radius: 10)
                 .animation(.easeInOut, value: offset)
 
-            // Followers and following button
             HStack(spacing: 12) {
                 ZStack {
                     Rectangle()
@@ -129,18 +208,19 @@ struct HeaderView: View {
                         .frame(width: 100, height: 40)
                         .foregroundColor(Color("whiteNeutral"))
                     HStack(spacing: nil) {
-                        Text("130,112")
+                        Text(user.followers.description)
                             .font(.custom("Fredoka-Regular", size: 14))
                         Image(systemName: "person.fill")
                     }
                 }
+                
                 ZStack {
                     Rectangle()
                         .cornerRadius(8)
                         .frame(width: 100, height: 40)
                         .foregroundColor(Color("whiteNeutral"))
                     HStack(spacing: nil) {
-                        Text("130,112")
+                        Text(user.following.description)
                             .font(.custom("Fredoka-Regular", size: 14))
                         Image(systemName: "person.fill")
                     }
@@ -153,24 +233,66 @@ struct HeaderView: View {
                             .cornerRadius(10)
                             .frame(width: 40, height: 40)
                             .foregroundColor(Color("red1"))
-                            .overlay( // Add the teal2 outline
+                            .overlay(
                                 RoundedRectangle(cornerRadius: 8)
                                     .stroke(Color("red2"), lineWidth: 2)
                             )
                         Image(systemName: "plus.square.fill")
                             .foregroundColor(Color("whiteNeutral"))
                     }
+                    .onTapGesture {
+                        isMenuPresented.toggle()
+                    }
+                    .popover(isPresented: $isMenuPresented) {
+                        VStack(alignment: .leading, spacing: 16) {
+                            // Menu Items
+                            ForEach(socialAccounts.allCases, id: \.self) { method in
+                                Button(action: {
+                                    method.itemTapped()
+                                }) {
+                                    HStack {
+                                        ZStack {
+                                            Circle()
+                                                .frame(width: 70, height: 70)
+                                                .foregroundColor(.black)
+                                            Circle()
+                                                .frame(width: 60, height: 60)
+                                                .foregroundColor(.white)
+                                            Image(method.iconName)
+                                                .resizable()
+                                                .scaledToFit()
+                                                .frame(width: 40, height: 40)
+                                                .foregroundColor(.black)
+                                        }
+                                        Text(method.rawValue)
+                                            .foregroundColor(.primary)
+                                    }
+                                    .padding(.horizontal)
+                                }
+                            }
+                        }
+                        .padding()
+                        .background(Color("whiteNeutral"))
+                        .preferredColorScheme(.light)
+                        .cornerRadius(12)
+                        .shadow(radius: 10)
+                    }
+                    .background(Color("darkNeutral"))
+                    .preferredColorScheme(.light)
                 }
             }
-            .padding()
+            .padding(.horizontal)
+            .padding(.top)
             
             if isUsersOwnProfile {
-                Rectangle()
-                    .frame(width: 200, height: 30)
-                    .foregroundStyle(Color("teal1"))
-                    .overlay {
-                        Text("Edit Profile")
-                    }
+                NavigationLink(destination: EditProfileView(user: user, userName: user.username, bithdate: user.birthday.description)) {
+                    Text("Edit Profile")
+                        .foregroundColor(.darkNeutral)
+                        .padding(.vertical, 6)
+                        .padding(.horizontal, 60)
+                        .background(Color.teal1)
+                        .cornerRadius(8)
+                }
             }
 
             Text("Just a coder navigating the labyrinth of SwiftUI. \nI love building beautiful and functional apps!")
@@ -183,6 +305,10 @@ struct HeaderView: View {
         }
     }
 }
+
+
+
+
 
 struct StickyTabView: View {
     @Binding var selectedTab: Int // Bind to parent state
@@ -246,7 +372,7 @@ struct ProfileFeedView: View {
             ReviewsView() // Replace with your reviews content
                 .background(Color("grayNeutral"))
         case 1:
-            FavoritesView() // Replace with your favorites content
+            FavoritesView(favoriteItems: UserDefaults.favoriteResturants) // Replace with your favorites content
                 .background(Color("grayNeutral"))
         case 2:
             CollectionView() // Replace with your collection content
@@ -259,65 +385,66 @@ struct ProfileFeedView: View {
 
 // Example content views for each tab
 struct ReviewsView: View {
-    // Mock data for restaurants with reviews
-    let reviews: [Restaurant] = [
-        Restaurant(
-            name: "Pizza Palace",
-            cuisine: .Italian,
-            location: CLLocationCoordinate2D(latitude: 47.6062, longitude: -122.3321),
-            distance: 1.5,
-            imageName: "pasta_palace",
-            models: [],
-            menuItems: [],
-            reviewText: "The best pizza in town!",
-            rating: 5
-        ),
-        Restaurant(
-            name: "Sushi Place",
-            cuisine: .Seafood,
-            location: CLLocationCoordinate2D(latitude: 47.608, longitude: -122.340),
-            distance: 2.3,
-            imageName: "sushi_place",
-            models: [],
-            menuItems: [],
-            reviewText: "Juicy and delicious burgers.",
-            rating: 4
-        )
+    // Mock data for reviews
+    let reviews: [Review] = [
+        Review(restaurantName: Restaurant(
+                    //id: UUID(),
+                    name: "Pizza Palace",
+                    cuisine: .Italian,
+                    location: Coordinate(CLLocationCoordinate2D(latitude: 47.6062, longitude: -122.3321)),
+                    distance: 1.5,
+                    imageName: "pizza_palace",
+                    models: [],
+                    menuItems: [],
+                    favorite: false
+               ),
+               reviewText: "The best pizza in town!",
+               rating: 5),
+        Review(restaurantName: Restaurant(
+                    //id: UUID(),
+                    name: "Burger Haven",
+                    cuisine: .BBQ,
+                    location: Coordinate(CLLocationCoordinate2D(latitude: 47.608, longitude: -122.340)),
+                    distance: 2.3,
+                    imageName: "burger_haven",
+                    models: [],
+                    menuItems: [],
+                    favorite: false
+               ),
+               reviewText: "Juicy and delicious burgers.",
+               rating: 4)
     ]
 
     var body: some View {
         ScrollView {
             LazyVStack(spacing: 10) {
-                ForEach(reviews) { restaurant in
-                    ReviewCard(restaurant: restaurant)
+                ForEach(reviews) { review in
+                    ReviewCard(review: review)
                 }
             }
-            .padding(.top, 10)
-            .padding(.bottom, 10)
             .padding(.horizontal)
         }
-        //.padding(.top, 5)
         .background(Color("darkNeutral"))
     }
 }
 
 struct ReviewCard: View {
-    let restaurant: Restaurant
+    let review: Review
 
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             // Display restaurant details
             HStack {
-                Image(restaurant.imageName)
+                Image(review.restaurantName.imageName)
                     .resizable()
                     .frame(width: 60, height: 60)
                     .clipShape(RoundedRectangle(cornerRadius: 8))
 
                 VStack(alignment: .leading) {
-                    Text(restaurant.name)
+                    Text(review.restaurantName.name)
                         .font(.headline)
                         .foregroundColor(Color("purple2"))
-                    Text("\(restaurant.cuisine.rawValue) • \(String(format: "%.1f", restaurant.distance)) mi")
+                    Text("\(review.restaurantName.cuisine.rawValue) • \(String(format: "%.1f", review.restaurantName.distance)) mi")
                         .font(.subheadline)
                         .foregroundColor(Color("lightGrayNeutral"))
                 }
@@ -327,30 +454,30 @@ struct ReviewCard: View {
                 // Display star rating
                 HStack(spacing: 2) {
                     ForEach(0..<5) { starIndex in
-                        Image(systemName: starIndex < (restaurant.rating ?? 0) ? "star.fill" : "star")
-                            .foregroundColor(starIndex < (restaurant.rating ?? 0) ? Color("yellow1") : Color.gray)
+                        Image(systemName: starIndex < review.rating ? "star.fill" : "star")
+                            .foregroundColor(starIndex < review.rating ? Color("teal1") : Color.gray)
                             .font(.system(size: 14))
                     }
                 }
             }
 
             // Display review text
-            Text(restaurant.reviewText ?? "No review available")
+            Text(review.reviewText)
                 .font(.body)
                 .foregroundColor(Color("lightGrayNeutral"))
-
 
             Divider()
                 .background(Color("grayNeutral"))
         }
         .padding()
-        .background(Color("grayNeutral"))
+        .background(Color("yellow1"))
         .cornerRadius(12)
-        .shadow(color: Color("lightGrayNeutral"), radius: 10)
+        .shadow(color: Color.black.opacity(0.1), radius: 4, x: 0, y: 2)
     }
 }
-
+//UserDefaults.favoriteResturants
 struct FavoritesView: View {
+    @State var favoriteItems: [Restaurant]
     let columns = [
         GridItem(.flexible(), spacing: 10),
         GridItem(.flexible(), spacing: 10)
@@ -364,10 +491,14 @@ struct FavoritesView: View {
     
     var body: some View {
         LazyVGrid(columns: columns, spacing: 10) {
-            ForEach(colors.indices, id: \.self) { index in
-                Rectangle()
-                    .foregroundColor(colors[index])
-                    .frame(height: 150)
+            ForEach(favoriteItems.indices, id: \.self) { index in
+                let restaurant = favoriteItems[index]
+                RestaurantCardView(restaurant: restaurant, isFavorite: restaurant.favorite, onClickFavoriteButton: {
+                    favoriteItems[index].favorite.toggle()
+                    UserDefaults.favoriteResturants = []
+                    let favoriteRestaurants = favoriteItems.filter { $0.favorite }
+                    UserDefaults.favoriteResturants = favoriteRestaurants
+                })
             }
         }
         .padding(.horizontal)
@@ -377,26 +508,36 @@ struct FavoritesView: View {
 
 struct CollectionView: View {
     let columns = [
-        GridItem(.flexible()),
-        GridItem(.flexible())
+        GridItem(.flexible(), spacing: 10),
+        GridItem(.flexible(), spacing: 10)
+        //GridItem(.flexible(), spacing: 10)
     ]
     
+    let colors: [Color] = (0..<30).map { _ in
+        Color(red: Double.random(in: 0...1),
+              green: Double.random(in: 0...1),
+              blue: Double.random(in: 0...1))
+    }
+    
     var body: some View {
-        ScrollView {
-            LazyVGrid(columns: columns, spacing: 20) {
-                ForEach(0..<10) { _ in // Replace 10 with the number of grid items you want
-                    ZStack {
-                        Rectangle()
-                            .fill(Color.black)
-                            .frame(height: 100) // Adjust height as needed
+        LazyVGrid(columns: columns, spacing: 10) {
+            ForEach((0..<30), id: \.self) { _ in
+                Rectangle()
+                    .foregroundColor(.primary)
+                    .frame(height: 100)
+                    .overlay(
                         Text("Coming Soon!")
                             .foregroundColor(.white)
-                            .font(.headline)
-                    }
-                }
+                    )
+//                ZStack {
+//                    Text("Coming Soon!")
+//                }
+                    .background(Color.primary)
             }
-            .padding()
         }
+        .padding(.top, 20)
+        .padding(.horizontal)
+        .background(Color("darkNeutral"))
     }
 }
 
@@ -409,13 +550,3 @@ struct CollectionView: View {
         ProfileContent(isUsersOwnProfile: state)
     }
 }
-
-
-
-
-
-
-
-
-
-

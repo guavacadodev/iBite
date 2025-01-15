@@ -9,26 +9,45 @@ import Foundation
 import CoreLocation
 
 // Models.swift
-struct Restaurant: Identifiable {
-    let id = UUID()
+struct Restaurant: Identifiable, Codable {
+    var id = UUID()
     var name: String
     var cuisine: Cuisines
-    var location: CLLocationCoordinate2D
+    var location: Coordinate
     var distance: Double
     let imageName: String
     let models: [String]
     let menuItems: [MenuItem]
     var reviewText: String?
     var rating: Int?
+    var favorite: Bool
+    var isSelected: Bool = false
+
 }
 
-//// Review Model
-//struct Review: Identifiable {
-//    let id = UUID()
-//    let restaurantName: Restaurant
-//    let reviewText: String
-//    let rating: Int
-//}
+struct Coordinate: Codable {
+    var latitude: Double
+    var longitude: Double
+    
+    // Initializer for convenience
+    init(_ coordinate: CLLocationCoordinate2D) {
+        self.latitude = coordinate.latitude
+        self.longitude = coordinate.longitude
+    }
+    
+    // Convert back to CLLocationCoordinate2D
+    var clLocationCoordinate2D: CLLocationCoordinate2D {
+        CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+    }
+}
+
+// Review Model
+struct Review: Identifiable {
+    let id = UUID()
+    let restaurantName: Restaurant
+    let reviewText: String
+    let rating: Int
+}
 
 struct ModelItem: Identifiable {
     let id = UUID()
@@ -38,7 +57,7 @@ struct ModelItem: Identifiable {
     let ingredients: String
 }
 
-struct MenuItem {
+struct MenuItem: Codable {
     let name: String
     let price: String
     let ingredients: String
@@ -55,7 +74,7 @@ struct UserModel {
     let following: Int
 }
 
-enum Cuisines: String, CaseIterable {
+enum Cuisines: String, CaseIterable, Codable {
     case Italian
     case BarAndGrill
     case American
@@ -87,7 +106,7 @@ let sampleRestaurants = [
     Restaurant(
         name: "Il Siciliano Ristorante Italiano",
         cuisine: .Italian,
-        location: CLLocationCoordinate2D(latitude: 47.2025, longitude: -121.9915),
+        location: Coordinate(CLLocationCoordinate2D(latitude: 47.2025, longitude: -121.9915)),
         distance: 0.5,
         imageName: "french_cuisine",
         models: ["croissant", "baguette"],
@@ -96,12 +115,13 @@ let sampleRestaurants = [
             MenuItem(name: "Margherita Pizza", price: "$9.99", ingredients: "Tomato, Mozzarella, Basil")
         ],
         reviewText: nil,
-        rating: nil
+        rating: nil,
+        favorite: false
     ),
     Restaurant(
         name: "The Rainier Bar & Grill",
         cuisine: .BarAndGrill,
-        location: CLLocationCoordinate2D(latitude: 47.2025, longitude: -121.9915),
+        location: Coordinate(CLLocationCoordinate2D(latitude: 47.2025, longitude: -121.9915)),
         distance: 0.5,
         imageName: "the_rainier_bar_and_grill",
         models: ["croissant", "baguette"],
@@ -110,12 +130,13 @@ let sampleRestaurants = [
             MenuItem(name: "Margherita Pizza", price: "$9.99", ingredients: "Tomato, Mozzarella, Basil")
         ],
         reviewText: nil,
-        rating: nil
+        rating: nil,
+        favorite: false
     ),
     Restaurant(
         name: "Sushi Palace",
         cuisine: .Seafood,
-        location: CLLocationCoordinate2D(latitude: 47.2025, longitude: -121.9915),
+        location: Coordinate(CLLocationCoordinate2D(latitude: 47.2025, longitude: -121.9915)),
         distance: 0.5,
         imageName: "sushi_place",
         models: ["croissant", "baguette"],
@@ -124,7 +145,8 @@ let sampleRestaurants = [
             MenuItem(name: "Margherita Pizza", price: "$9.99", ingredients: "Tomato, Mozzarella, Basil")
         ],
         reviewText: nil,
-        rating: nil
+        rating: nil,
+        favorite: false
     ),
 ]
 

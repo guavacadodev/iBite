@@ -37,6 +37,13 @@ struct ContentView: View {
     @State private var userHasLikedRestaurant: Bool = false
     @ObservedObject private var locationManager = LocationManager.shared
 
+    private func isCardVisible(geo: GeometryProxy) -> Bool {
+          // We want to detect if the center of the card is within the bounds of the screen
+          let cardMidX = geo.frame(in: .global).midX
+          let screenWidth = UIScreen.main.bounds.width
+          return cardMidX > 50 && cardMidX < screenWidth - 50 // Adjust with some margin for a more stable experience
+      }
+    
     var body: some View {
         NavigationView {
             // -- Main UI -- //
@@ -55,26 +62,30 @@ struct ContentView: View {
                                 .foregroundColor(Color("lightGrayNeutral"))
                             Spacer()
                             // MARK: - Update Address Entry Button here @Eslam //
-                            Button("Change") {
-                                isAddressEntryPresented = true
-                            }
-                            .font(.custom("Fredoka-Bold", size: 9))
-                            .padding(.horizontal, 14) // Add padding around the text
-                            .padding(.vertical, 5)
-                            .background(Color("teal1"))
-                            .foregroundColor(Color("whiteNeutral"))
-                            .cornerRadius(10)
-                            .shadow(radius: 5)
-                            .overlay( // Add the teal2 outline
-                                RoundedRectangle(cornerRadius: 8)
-                                    .stroke(Color("teal2"), lineWidth: 2)
-                            )
-                            //.shadow(color: .gray.opacity(0.5), radius: 10, x: 0, y: 5) // Add a shadow for depth
-                            .scaleEffect(isAddressEntryPresented ? 1.1 : 1.0) // Add scale animation
-                            .animation(.easeInOut(duration: 0.2), value: isAddressEntryPresented) // Smooth animation
-                            
+//                            Button("Change") {
+//                                isAddressEntryPresented = true
+//                            }
+//                            .font(.custom("Fredoka-Bold", size: 9))
+//                            .padding(.horizontal, 14) // Add padding around the text
+//                            .padding(.vertical, 5)
+//                            .background(Color("teal1"))
+//                            .foregroundColor(Color("whiteNeutral"))
+//                            .cornerRadius(10)
+//                            .shadow(radius: 5)
+//                            .overlay( // Add the teal2 outline
+//                                RoundedRectangle(cornerRadius: 8)
+//                                    .stroke(Color("teal2"), lineWidth: 2)
+//                            )
+//                            //.shadow(color: .gray.opacity(0.5), radius: 10, x: 0, y: 5) // Add a shadow for depth
+//                            .scaleEffect(isAddressEntryPresented ? 1.1 : 1.0) // Add scale animation
+//                            .animation(.easeInOut(duration: 0.2), value: isAddressEntryPresented) // Smooth animation
+//                            
                         }
                         .padding(.horizontal)
+                        .padding(.vertical, 5)
+                        .onTapGesture {
+                            isAddressEntryPresented = true
+                        }
                         // list and map picker
                         HStack {
                             Button(action: { isMapView = false }) {
@@ -125,44 +136,135 @@ struct ContentView: View {
                     }
                     .background(Color("darkNeutral"))
                     // Picker content for either List or Map. If the selection is on MapView, then execute the if statement, else execute the content in the else statement for the List picker.
+//                    if isMapView {
+//                        // Map View VStack with optional Featured Restaurants carousel and No Featured Restaurant content.
+//                        VStack {
+//
+//                            MapView(selectedLocation: $selectedLocation, selectedRestaurant: self.$selectedRestaurant, restaurants: filteredRestaurants)
+//                            Text(filteredRestaurants.isEmpty ? "No Results Found" : "Featured Restaurants")
+//                                .padding(.top, 20)
+//                            
+//                            
+//                                .frame(height: 300)
+//                            // If there are no featured restaurants within the user's radius, show the "No Featured Restaurants" text otherwise, default to "Featured Restaurants"
+//                            Text(filteredRestaurants.isEmpty ? "No Results!" : "Featured Restaurants")
+//                                .font(.custom("Fredoka-Regular", size: 18))
+//                                .padding(.top, 10)
+//                                .foregroundColor(Color("lightGrayNeutral"))
+//                            Text(filteredRestaurants.isEmpty ? "Try Updating Your Address" : "")
+//                                .font(.custom("Fredoka-Light", size: 9))
+//                                .foregroundColor(Color("lightGrayNeutral"))
+//                            // This code displays the purple monster below the "No Featured Restaurants" text in the scenario there are no restaurants nearby.
+//                            if filteredRestaurants.isEmpty {
+//                                Image("sadpurplemonster")
+//                                    .resizable()
+//                                    .scaledToFit()
+//                                    .frame(height: 120)
+//                                    .padding(.top, 20)
+//                                // This else statement will show nearby restaurants in the form of a slideable horizontal carousel in the case that there are restaurants near the user's location.
+//                            } else {
+//                                ScrollView(.horizontal, showsIndicators: false) {
+//                                    HStack(spacing: 16) {
+//                                        ForEach(filteredRestaurants.prefix(5)) { restaurant in
+//                                            FeaturedRestaurantCardView(restaurant: restaurant)
+//                                                .frame(width: 250)
+//                                                .onTapGesture {
+//                                                    self.selectedRestaurant = restaurant
+//                                                    self.showARMenuView = true
+//                                                }
+//                                        }
+//                                    }
+//                                    .padding()
+//                                }
+//                                .scaleEffect(0.9)
+//                            }
+//                        }
                     if isMapView {
-                        // Map View VStack with optional Featured Restaurants carousel and No Featured Restaurant content.
-                        VStack {
-                            MapView(selectedLocation: $selectedLocation, restaurants: filteredRestaurants)
-                                .frame(height: 300)
-                            // If there are no featured restaurants within the user's radius, show the "No Featured Restaurants" text otherwise, default to "Featured Restaurants"
-                            Text(filteredRestaurants.isEmpty ? "No Results!" : "Featured Restaurants")
-                                .font(.custom("Fredoka-Regular", size: 18))
-                                .padding(.top, 10)
-                                .foregroundColor(Color("lightGrayNeutral"))
-                            Text(filteredRestaurants.isEmpty ? "Try Updating Your Address" : "")
-                                .font(.custom("Fredoka-Light", size: 9))
-                                .foregroundColor(Color("lightGrayNeutral"))
-                            // This code displays the purple monster below the "No Featured Restaurants" text in the scenario there are no restaurants nearby.
-                            if filteredRestaurants.isEmpty {
-                                Image("sadpurplemonster")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(height: 120)
-                                    .padding(.top, 20)
-                                // This else statement will show nearby restaurants in the form of a slideable horizontal carousel in the case that there are restaurants near the user's location.
-                            } else {
-                                ScrollView(.horizontal, showsIndicators: false) {
-                                    HStack(spacing: 16) {
-                                        ForEach(filteredRestaurants.prefix(5)) { restaurant in
-                                            FeaturedRestaurantCardView(restaurant: restaurant)
-                                                .frame(width: 250)
-                                                .onTapGesture {
-                                                    self.selectedRestaurant = restaurant
-                                                    self.showARMenuView = true
+                                            // Map View VStack with optional Featured Restaurants carousel and No Featured Restaurant content.
+                                            VStack {
+                                                //MapView(selectedLocation: $selectedLocation, restaurants: filteredRestaurants)
+                                                MapView(selectedLocation: $selectedLocation, selectedRestaurant: self.$selectedRestaurant, restaurants: filteredRestaurants)
+                                                    .frame(height: 300)
+                                                // If there are no featured restaurants within the user's radius, show the "No Featured Restaurants" text otherwise, default to "Featured Restaurants"
+                                                Text(filteredRestaurants.isEmpty ? "No Results Found" : "Featured Restaurants")
+                                                    .font(.custom("Fredoka-Regular", size: 18))
+                                                    .padding(.top, 10)
+                                                    .foregroundColor(Color("lightGrayNeutral"))
+                                                Text(filteredRestaurants.isEmpty ? "Try Updating Your Address" : "")
+                                                    .font(.custom("Fredoka-Light", size: 9))
+                                                    .foregroundColor(Color("lightGrayNeutral"))
+                                                // This code displays the purple monster below the "No Featured Restaurants" text in the scenario there are no restaurants nearby.
+                                                if filteredRestaurants.isEmpty {
+                                                    Image("sadpurplemonster")
+                                                        .resizable()
+                                                        .scaledToFit()
+                                                        .frame(height: 120)
+                                                        .padding(.top, 20)
+                                                // This else statement will show nearby restaurants in the form of a slideable horizontal carousel in the case that there are restaurants near the user's location.
+                                                } else {
+                    //                                ScrollView(.horizontal, showsIndicators: false) {
+                    //                                    HStack(spacing: 16) {
+                    //                                        ForEach(filteredRestaurants.prefix(5)) { restaurant in
+                    //                                            FeaturedRestaurantCardView(restaurant: restaurant)
+                    //                                                .frame(width: 250)
+                    //                                                .onTapGesture {
+                    //                                                    self.selectedRestaurant = restaurant
+                    //                                                   // self.showARMenuView = true
+                    //                                                }
+                    //                                        }
+                    //                                    }
+                    //                                    .padding(.horizontal)
+                    //                                }
+                                                    ScrollView(.horizontal, showsIndicators: false) {
+                                                        HStack(spacing: 16) {
+                                                            ForEach(filteredRestaurants.prefix(5)) { restaurant in
+                                                                FeaturedRestaurantCardView(restaurant: restaurant)
+                                                                    .frame(width: 250)
+                                                                FeaturedRestaurantCardView(restaurant: restaurant, dynamicWidth: UIScreen.main.bounds.width - 50)
+                                                                    .frame(width: UIScreen.main.bounds.width - 50)
+                                                                    .background(GeometryReader { geo in
+                                                                        Color.clear
+                                                                            .onAppear {
+                                                                                // Detect if the restaurant card is in view (position)
+                                                                                if geo.frame(in: .global).minX >= 0 && geo.frame(in: .global).minX <= UIScreen.main.bounds.width {
+                                                                                    self.selectedRestaurant = restaurant
+                                                                                }
+                                                                            }
+                                                                            .onChange(of: geo.frame(in: .global)) { newFrame in
+                                                                                // Detect if the restaurant card is still in view (position)
+                                                                                //DispatchQueue.main.asyncAfter(deadline: .now() + 0.2){
+                                                                                    if newFrame.minX >= 0 && newFrame.minX <= UIScreen.main.bounds.width {
+                                                                                        self.selectedRestaurant = restaurant
+                                                                                    }
+                                                                                //}
+
+                                                                            }
+                    //                                                        .onAppear {
+                    //                                                            // Detect when the restaurant card is centered
+                    //                                                            if isCardVisible(geo: geo) {
+                    //                                                                self.selectedRestaurant = restaurant
+                    //                                                            }
+                    //                                                        }
+                    //                                                        .onChange(of: geo.frame(in: .global)) { newFrame in
+                    //                                                            // Detect when the restaurant card is centered during scrolling
+                    //                                                            if isCardVisible(geo: geo) {
+                    //                                                                self.selectedRestaurant = restaurant
+                    //                                                            }
+                    //                                                        }
+                                                                    })
+                                                                    .onTapGesture {
+                                                                        self.selectedRestaurant = restaurant
+                                                                        self.showARMenuView = true
+                                                                        //self.selectedRestaurant = restaurant
+                                                                         self.showARMenuView = true
+                                                                    }
+                                                            }
+                                                        }
+                                                        .padding(.horizontal)
+                                                    }
+
                                                 }
-                                        }
-                                    }
-                                    .padding()
-                                }
-                                .scaleEffect(0.9)
-                            }
-                        }
+                                            }
                         // Content for the list tab.
                     } else {
                         ZStack {
@@ -261,8 +363,27 @@ struct ContentView: View {
                                                                 .padding()
                                                             }
                                                         }
-                                                        Divider().background(Color("lightGrayNeutral"))
-                                                        //NEAR YOU CATEGORY
+                                                        //MARK: - Jack code -
+//                                                        Divider().background(Color("lightGrayNeutral"))
+//                                                        //NEAR YOU CATEGORY
+//                                                        HStack {
+//                                                            Text("Near You")
+//                                                                .padding(.leading, 15)
+//                                                                .font(.custom("Fredoka-Medium", size: 24))
+//                                                                .foregroundColor(Color("whiteNeutral"))
+//                                                            Spacer()
+//                                                        }
+//                                                        ScrollView {
+//                                                            ForEach(filteredRestaurants) { restaurant in
+//                                                                RestaurantCardView(restaurant: restaurant, userHasLikedRestaurant: $userHasLikedRestaurant)
+//                                                                    .onTapGesture {
+//                                                                        self.selectedRestaurant = restaurant
+//                                                                        self.showARMenuView = true
+//                                                                    }
+//                                                                    .padding(.horizontal)
+//                                                            }
+//                                                        }
+//                                                        Divider().background(Color("lightGrayNeutral"))
                                                         HStack {
                                                             Text("Near You")
                                                                 .padding(.leading, 15)
@@ -271,13 +392,19 @@ struct ContentView: View {
                                                             Spacer()
                                                         }
                                                         ScrollView {
-                                                            ForEach(filteredRestaurants) { restaurant in
-                                                                RestaurantCardView(restaurant: restaurant, userHasLikedRestaurant: $userHasLikedRestaurant)
-                                                                    .onTapGesture {
-                                                                        self.selectedRestaurant = restaurant
-                                                                        self.showARMenuView = true
-                                                                    }
-                                                                    .padding(.horizontal)
+                                                            ForEach(filteredRestaurants.indices, id: \.self) { index in
+                                                                let restaurant = filteredRestaurants[index]
+                                                                RestaurantCardView(restaurant: restaurant, isFavorite: restaurant.favorite, onClickFavoriteButton: {
+                                                                    filteredRestaurants[index].favorite.toggle()
+                                                                    UserDefaults.favoriteResturants = []
+                                                                    let favoriteRestaurants = filteredRestaurants.filter { $0.favorite }
+                                                                    UserDefaults.favoriteResturants = favoriteRestaurants
+                                                                })
+                                                                .onTapGesture {
+                                                                    self.selectedRestaurant = restaurant
+                                                                    self.showARMenuView = true
+                                                                }
+                                                                .padding(.horizontal)
                                                             }
                                                         }
                                                         Divider().background(Color("lightGrayNeutral"))
@@ -336,7 +463,7 @@ struct ContentView: View {
                         fetchRealLocation(for: restaurant) { coordinate in
                             if let coordinate = coordinate {
                                 var updatedRestaurant = restaurant
-                                updatedRestaurant.location = coordinate
+                                updatedRestaurant.location = Coordinate(coordinate)
                                 updatedRestaurants.append(updatedRestaurant)
                                 // Update filtered restaurants once all coordinates are updated
                                 if updatedRestaurants.count == sampleRestaurants.count {
@@ -364,7 +491,36 @@ struct ContentView: View {
     // Function to update the filtered restaurants
     private func updateFilteredRestaurants() {
         if selectedCuisine == "All" {
-            filteredRestaurants = sampleRestaurants // Show all cuisines
+            
+            if UserDefaults.favoriteResturants.isEmpty {
+                filteredRestaurants = sampleRestaurants // Show all cuisines
+            } else {
+                print("UserDefaults.favoriteResturants: \(UserDefaults.favoriteResturants)")
+
+                var combinedRestaurants: [Restaurant] = []
+
+                // Step 1: Take favorites from UserDefaults
+                let favoriteRestaurantIds = Set(UserDefaults.favoriteResturants.map { $0.name })
+                var favoriteRestaurants = sampleRestaurants.filter { favoriteRestaurantIds.contains($0.name) }
+
+                // Ensure these restaurants are marked as favorites
+                for index in favoriteRestaurants.indices {
+                    if let userFavorite = UserDefaults.favoriteResturants.first(where: { $0.name == favoriteRestaurants[index].name }) {
+                        favoriteRestaurants[index].favorite = userFavorite.favorite
+                    }
+                }
+                
+                print("favoriteResturantsAFterForEach: \(favoriteRestaurants)")
+
+                combinedRestaurants.append(contentsOf: favoriteRestaurants)
+
+                // Step 2: Append the rest of the sample restaurants that are not in UserDefaults favorites
+                let nonFavoriteRestaurants = sampleRestaurants.filter { !favoriteRestaurantIds.contains($0.name) }
+                combinedRestaurants.append(contentsOf: nonFavoriteRestaurants)
+
+                // Step 3: Set the combined list as filteredRestaurants
+                filteredRestaurants = combinedRestaurants
+            }
         } else {
             filteredRestaurants = sampleRestaurants.filter { $0.cuisine.rawValue == selectedCuisine }
         }
@@ -384,7 +540,7 @@ struct ContentView: View {
                 fetchRealLocation(for: restaurant) { coordinate in
                     if let coordinate = coordinate {
                         var updatedRestaurant = restaurant
-                        updatedRestaurant.location = coordinate
+                        updatedRestaurant.location = Coordinate(coordinate)
                         updatedRestaurants.append(updatedRestaurant)
                         if updatedRestaurants.count == sampleRestaurants.count {
                             onSelectedLocationChange()
