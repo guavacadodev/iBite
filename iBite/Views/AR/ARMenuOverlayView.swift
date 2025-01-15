@@ -19,65 +19,61 @@ struct ARMenuOverlayView: View {
     @State private var modelScale: Float = 0.05 // Default scale for models
     var body: some View {
         VStack {
-            // Custom Back Button
-            Button(action: {
-                presentationMode.wrappedValue.dismiss()
-            }) {
-                HStack {
-                    HStack(spacing: 5) { // Adjust spacing between the icon and the text
+            // Header with restaurant name and logo
+            HStack {
+                // Custom Back Button
+                Button(action: {
+                    presentationMode.wrappedValue.dismiss()
+                }) {
+                    HStack(spacing: 4) { // Adjust spacing between the icon and text
                         Image(systemName: "chevron.left")
                             .font(.system(size: 18, weight: .medium))
                             .foregroundColor(Color("purple1"))
 
                         Text("Back")
-                            .font(.custom("Fredoka-Bold", size: 16))
+                            .font(.custom("Fredoka-Medium", size: 16))
                             .foregroundColor(Color("purple1"))
                     }
-                    .padding(.horizontal, 12) // Add horizontal padding around the content
-                    .padding(.vertical, 8) // Add vertical padding
-                    .background(
-                        RoundedRectangle(cornerRadius: 10)
-                            .fill(Color("grayNeutral").opacity(0.9)) // RoundedRectangle as background
-                            .shadow(color: Color.black.opacity(0.2), radius: 5, x: 0, y: 3) // Add shadow for depth
-                    )
-                    Spacer()
+                    .padding(.horizontal, 10) // Add padding for better click area
+                    .padding(.vertical, 6)
                 }
-                .padding(.leading, 10)
-    
-            }
-            // Header with restaurant name and logo
-            HStack(spacing: 8) {
-                // replace with restaurant.image
-                Text("Sushi Place")
-                    .font(.custom("Fredoka-Bold", size: 24))
-                    .foregroundColor(Color("purple1"))
+
+                Spacer() // Add space to center the title
+
+                // Restaurant Name (Centered)
+                Text("Il Siciliano Ristorante Italiano")
+                    .font(.custom("Fredoka-Bold", size: 20))
+                    .foregroundColor(Color("purple2"))
                     .lineLimit(1)
                     .minimumScaleFactor(0.5)
-                    .padding()
-    
-                Spacer()
 
-                // Replace with restaurant owner user image and create a button to direct to profile
-                VStack(spacing: 2) {
-                    Image("profile_image")
-                        .resizable()
-                        .clipShape(Circle())
-                        .frame(width: 30, height: 30)
-                    .shadow(radius: 10)
-                    Text("Owner")
-                        .font(.custom("Fredoka-SemiBold", size: 12))
-                        .foregroundColor(Color("whiteNeutral"))
+                Spacer() // Add space to center the title
+
+                // Profile Section (Aligned Right)
+                Button(action: {
+                    // Add action to direct to profile
+                }) {
+                    VStack(spacing: 4) {
+                        Image("profile_image")
+                            .resizable()
+                            .clipShape(Circle())
+                            .frame(width: 32, height: 32) // Match the size in the screenshot
+                            .shadow(radius: 5)
+
+                        Text("Owner")
+                            .font(.custom("Fredoka-SemiBold", size: 12))
+                            .foregroundColor(Color("whiteNeutral"))
+                    }
                 }
-                .padding()
-
+                .padding(.top, 5)
+                .padding(.horizontal, 10) // Add padding to avoid clipping
             }
-            //.frame(width: .infinity, height: 50)
+            .frame(maxWidth: .infinity, minHeight: 50) // Ensure a consistent height for the header
             .background(Color("grayNeutral").opacity(0.9))
             .cornerRadius(10)
             .shadow(color: Color.black.opacity(0.2), radius: 5, x: 0, y: 3)
-            .padding(.leading, 10)
-            .padding(.trailing, 10)
-            .padding(.bottom, 10)
+            .padding(.horizontal, 10)
+            .padding(.bottom, 5)
             // AR View
             ZStack {
                 LoadARItemView(models: models, menuItems: menuItems, modelIndex: $modelIndex, modelScale: $modelScale)
