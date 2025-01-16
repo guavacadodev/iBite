@@ -89,6 +89,7 @@
 		AA0315AA2D3873B3002E4ED4 /* SocialMedia.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0315A92D3873B3002E4ED4 /* SocialMedia.swift */; };
 		AA0315AD2D3873F3002E4ED4 /* ARMenuContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0315AB2D3873F3002E4ED4 /* ARMenuContentView.swift */; };
 		AA0315AE2D3873F3002E4ED4 /* ARMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0315AC2D3873F3002E4ED4 /* ARMenuView.swift */; };
+		AA1F411E2D395BA100CA84FF /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1F411D2D395BA100CA84FF /* UserViewModel.swift */; };
 		AA77F2FC2D388EA1000C01C5 /* StickyTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA77F2FB2D388EA1000C01C5 /* StickyTabView.swift */; };
 		AA77F2FE2D388EB6000C01C5 /* ProfileFeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA77F2FD2D388EB6000C01C5 /* ProfileFeedView.swift */; };
 		AA77F3002D388F22000C01C5 /* ReviewsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA77F2FF2D388F22000C01C5 /* ReviewsView.swift */; };
@@ -176,6 +177,7 @@
 		AA0315A92D3873B3002E4ED4 /* SocialMedia.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocialMedia.swift; sourceTree = "<group>"; };
 		AA0315AB2D3873F3002E4ED4 /* ARMenuContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ARMenuContentView.swift; sourceTree = "<group>"; };
 		AA0315AC2D3873F3002E4ED4 /* ARMenuView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ARMenuView.swift; sourceTree = "<group>"; };
+		AA1F411D2D395BA100CA84FF /* UserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
 		AA77F2FB2D388EA1000C01C5 /* StickyTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StickyTabView.swift; sourceTree = "<group>"; };
 		AA77F2FD2D388EB6000C01C5 /* ProfileFeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileFeedView.swift; sourceTree = "<group>"; };
 		AA77F2FF2D388F22000C01C5 /* ReviewsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewsView.swift; sourceTree = "<group>"; };
@@ -416,6 +418,7 @@
 			isa = PBXGroup;
 			children = (
 				1C8BE4642CE06D5C00EBEA4F /* ProfileView.swift */,
+				AA1F411D2D395BA100CA84FF /* UserViewModel.swift */,
 				AA03159D2D3871C7002E4ED4 /* Profile Cycle */,
 				AA77F2FB2D388EA1000C01C5 /* StickyTabView.swift */,
 				AA77F3072D388FA3000C01C5 /* HeaderView.swift */,
@@ -652,6 +655,7 @@
 				1C847E7A2CD1A8C2002A276E /* CameraView.swift in Sources */,
 				1CACF3742D2DF38A0050F97E /* MyRestaurantsHorizontalSliderView.swift in Sources */,
 				AA0315962D3870E0002E4ED4 /* AppTextFieldSwiftUI.swift in Sources */,
+				AA1F411E2D395BA100CA84FF /* UserViewModel.swift in Sources */,
 				AA0315972D3870E0002E4ED4 /* AppTextFieldProtocol.swift in Sources */,
 				1C9D88532CFD7C32004B14C0 /* ModelManager.swift in Sources */,
 				1C8BE4612CE06C5300EBEA4F /* BottomNavigationBar.swift in Sources */,

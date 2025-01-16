@@ -62,15 +62,15 @@ struct MenuItem: Codable {
     let ingredients: String
 }
 
-struct UserModel {
-    let username: String
-    let dateCreated: Date
-    let id = UUID()
-    let birthday: Int
-    let signedUp: Bool?
-    let isMember: Bool?
-    let followers: Int
-    let following: Int
+struct UserModel: Codable {
+    var id = UUID()
+    var username: String
+    var dateCreated: Date
+    var birthday: String
+    var signedUp: Bool?
+    var isMember: Bool?
+    var followers: Int
+    var following: Int
 }
 
 enum Cuisines: String, CaseIterable, Codable {

@@ -9,16 +9,32 @@ import SwiftUI
 import MapKit
 
 struct ProfileContent: View {
-    var dummyUserData: UserModel = UserModel(username: "Eslam", dateCreated: Date(), birthday: 97, signedUp: true, isMember: true, followers: 1000, following: 2900)
+    @StateObject var viewModel: UserViewModel // Shared ViewModel
     @Binding var isUsersOwnProfile: Bool
+    
+    init(isUsersOwnProfile: Binding<Bool>) {
+         let dummyUserData = UserModel(
+             username: "Eslam",
+             dateCreated: Date(),
+             birthday: "97",
+             signedUp: true,
+             isMember: true,
+             followers: 1000,
+             following: 2900
+         )
+         let savedUser = UserDefaults.user ?? dummyUserData
+         _viewModel = StateObject(wrappedValue: UserViewModel(user: savedUser))
+         _isUsersOwnProfile = isUsersOwnProfile
+     }
+        
     var body: some View {
         ZStack {
             Color("darkNeutral")
                 .ignoresSafeArea()
             if isUsersOwnProfile {
-                UserProfileView(user: dummyUserData)
+                UserProfileView(viewModel: viewModel)
             } else {
-                OtherUserProfileView(user: dummyUserData)
+                OtherUserProfileView(viewModel: viewModel)
             }
         }
     }
@@ -26,9 +42,9 @@ struct ProfileContent: View {
 
 // Example UserProfileView for demonstration
 struct UserProfileView: View {
-    var user: UserModel
+    @StateObject var viewModel: UserViewModel // Shared ViewModel
     var body: some View {
-        ProfileView(user: user, bannerTitle: user.username, isUsersOwnProfile: true)
+        ProfileView(viewModel: viewModel, bannerTitle: viewModel.user.username, isUsersOwnProfile: true)
             .padding(.bottom, 20)
             .background(Color("darkNeutral"))
             .preferredColorScheme(.light)
@@ -37,9 +53,9 @@ struct UserProfileView: View {
 
 //MARK: - appear on Sreach from LeaderboardFeedView -
 struct OtherUserProfileView: View {
-    var user: UserModel
+    @StateObject var viewModel: UserViewModel // Shared ViewModel
     var body: some View {
-        ProfileView(user: user, bannerTitle: "Other User", isUsersOwnProfile: false)
+        ProfileView(viewModel: viewModel, bannerTitle: "Other User", isUsersOwnProfile: false)
             .padding(.bottom, 20)
             .background(Color("darkNeutral"))
             .preferredColorScheme(.light)
@@ -47,7 +63,7 @@ struct OtherUserProfileView: View {
 }
 
 struct ProfileView: View {
-    var user: UserModel
+    @ObservedObject var viewModel: UserViewModel
     var bannerTitle: String
     @State private var bannerZIndex: Double = 0 // Track zIndex of BannerView dynamically
     var isUsersOwnProfile: Bool // Pass this from the parent view
@@ -69,7 +85,7 @@ struct ProfileView: View {
                         VStack(spacing: 20) {
                             Color.clear.frame(height: 100) // Spacer for smooth transition
                             // Pass the `isUsersOwnProfile` argument to HeaderView
-                            HeaderView(user: user, offset: offset, isUsersOwnProfile: isUsersOwnProfile)
+                            HeaderView(viewModel: viewModel, offset: offset, isUsersOwnProfile: isUsersOwnProfile)
                         }
                         .offset(y: max(-offset, 0)) // Smooth slide under BannerView
                     }
@@ -100,7 +116,6 @@ struct ProfileView: View {
                     }) {
                         Label("Update Profile", systemImage: "person")
                     }
-                    
                     Button(action: {
                         navigateToChangePassword = true
                     }) {
@@ -118,7 +133,7 @@ struct ProfileView: View {
                 }
             }
             .sheet(isPresented: $navigateToEditProfile) {
-               EditProfileView(user: user, userName: user.username, bithdate: user.birthday.description)
+               EditProfileView(viewModel: viewModel)
             }
             .sheet(isPresented: $navigateToChangePassword) {
                 ChangePasswordView()

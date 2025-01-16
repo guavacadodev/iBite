@@ -14,6 +14,10 @@ struct ChangePasswordView: View {
     @State var isSecureNewPassword = Bool()
     @State var confirmNewPassword = String()
     @State var isSecureconfirmNewPassword = Bool()
+    
+    @Environment(\.presentationMode) var presentationMode
+
+    
     var body: some View {
         ScrollView(showsIndicators: false) {
             VStack(spacing: 40) {
@@ -24,13 +28,12 @@ struct ChangePasswordView: View {
                 }
                 
                 MainButtonView(action: {
-                    print("")
+                    presentationMode.wrappedValue.dismiss()
                 }, buttonTitle: "Save")
             }
         }
         .padding()
         .background(Color("darkNeutral"))
         .preferredColorScheme(.light)
-        .navigationBarTitleTextColor(Color.violet1)
     }
 }

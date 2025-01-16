@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct HeaderView: View {
-    var user: UserModel
+    @ObservedObject var viewModel: UserViewModel
     var offset: CGFloat
     var isUsersOwnProfile: Bool // Pass the binding value here
     @State private var isMenuPresented: Bool = false
@@ -33,7 +33,7 @@ struct HeaderView: View {
                         .frame(width: 100, height: 40)
                         .foregroundColor(Color("whiteNeutral"))
                     HStack(spacing: nil) {
-                        Text(user.followers.description)
+                        Text(viewModel.user.followers.description)
                             .font(.custom("Fredoka-Regular", size: 14))
                         Image(systemName: "person.fill")
                     }
@@ -45,7 +45,7 @@ struct HeaderView: View {
                         .frame(width: 100, height: 40)
                         .foregroundColor(Color("whiteNeutral"))
                     HStack(spacing: nil) {
-                        Text(user.following.description)
+                        Text(viewModel.user.following.description)
                             .font(.custom("Fredoka-Regular", size: 14))
                         Image(systemName: "person.fill")
                     }
@@ -129,7 +129,7 @@ struct HeaderView: View {
                         navigateToEditProfile = true
                     })
                 .sheet(isPresented: $navigateToEditProfile) {
-                   EditProfileView(user: user)
+                    EditProfileView(viewModel: viewModel)
                 }
                 
                 //.background(Color.violet1)

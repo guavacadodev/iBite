@@ -8,29 +8,39 @@
 import SwiftUI
 
 struct EditProfileView: View {
-    var user: UserModel
-    @State var userName = String()
-    @State var bithdate = String()
-  
-  
+    @Environment(\.presentationMode) var presentationMode // For dismissing the sheet
+    @ObservedObject var viewModel: UserViewModel
 
-    
+    @State private var showAlert: Bool = false // State to control alert visibility
+
     var body: some View {
         ScrollView(showsIndicators: false) {
             VStack(spacing: 40) {
                 VStack(spacing: 16) {
-                    NormalTextFieldSwiftUI(type: UserNameFieldCase(), textValue: $userName)
-                    NormalTextFieldSwiftUI(type: BirthdayFieldCase(), textValue: $bithdate)
+                    NormalTextFieldSwiftUI(type: UserNameFieldCase(), textValue: $viewModel.user.username)
+                    NormalTextFieldSwiftUI(type: BirthdayFieldCase(), textValue: $viewModel.user.birthday)
                 }
                 MainButtonView(action: {
-                    print("")
+                    if viewModel.user.username.isEmpty || viewModel.user.birthday.isEmpty {
+                        showAlert = true
+                    } else {
+                        presentationMode.wrappedValue.dismiss()
+                    }
                 }, buttonTitle: "Save")
             }
         }
         .padding()
         .background(Color("darkNeutral"))
         .preferredColorScheme(.light)
-        .navigationBarTitleTextColor(Color.violet1)
+        .alert(isPresented: $showAlert) {
+            Alert(
+                title: Text("Missing Information"),
+                message: Text("Please fill out all fields to save your profile."),
+                dismissButton: .default(
+                    Text("OK").foregroundColor(Color.purple1) // Style with main color
+                )
+            )
+        }
     }
 }
 
