@@ -65,7 +65,7 @@ struct BottomNavigationBar: View {
             if showProfileAndUploadSelection {
                 VStack(spacing: 16) {
                     Button(action: {
-                        isUsersOwnProfile.toggle()
+                        //isUsersOwnProfile.toggle()
                         selectedTab = 2
                         withAnimation { showProfileAndUploadSelection = false }
                     }) {

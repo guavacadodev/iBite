@@ -70,7 +70,6 @@
 		AA0315782D3870D0002E4ED4 /* propertyWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0315762D3870D0002E4ED4 /* propertyWrapper.swift */; };
 		AA0315792D3870D0002E4ED4 /* UserDefaultsExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0315772D3870D0002E4ED4 /* UserDefaultsExtensions.swift */; };
 		AA03158E2D3870E0002E4ED4 /* ViewConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA03157C2D3870E0002E4ED4 /* ViewConstant.swift */; };
-		AA03158F2D3870E0002E4ED4 /* SFSymbol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA03157D2D3870E0002E4ED4 /* SFSymbol.swift */; };
 		AA0315902D3870E0002E4ED4 /* MainButtonSwiftUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0315802D3870E0002E4ED4 /* MainButtonSwiftUI.swift */; };
 		AA0315912D3870E0002E4ED4 /* AppTextFieldCases+Phone.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0315832D3870E0002E4ED4 /* AppTextFieldCases+Phone.swift */; };
 		AA0315922D3870E0002E4ED4 /* AppTextFieldCases+Normal.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0315842D3870E0002E4ED4 /* AppTextFieldCases+Normal.swift */; };
@@ -87,10 +86,17 @@
 		AA0315A52D3871C7002E4ED4 /* ChangePasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA03159F2D3871C7002E4ED4 /* ChangePasswordView.swift */; };
 		AA0315A62D3871C7002E4ED4 /* Emailer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0315A12D3871C7002E4ED4 /* Emailer.swift */; };
 		AA0315A72D3871C7002E4ED4 /* socialMediaEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0315A22D3871C7002E4ED4 /* socialMediaEnum.swift */; };
-		AA0315A82D3871C7002E4ED4 /* PhoneCaller.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0315A32D3871C7002E4ED4 /* PhoneCaller.swift */; };
 		AA0315AA2D3873B3002E4ED4 /* SocialMedia.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0315A92D3873B3002E4ED4 /* SocialMedia.swift */; };
 		AA0315AD2D3873F3002E4ED4 /* ARMenuContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0315AB2D3873F3002E4ED4 /* ARMenuContentView.swift */; };
 		AA0315AE2D3873F3002E4ED4 /* ARMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0315AC2D3873F3002E4ED4 /* ARMenuView.swift */; };
+		AA77F2FC2D388EA1000C01C5 /* StickyTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA77F2FB2D388EA1000C01C5 /* StickyTabView.swift */; };
+		AA77F2FE2D388EB6000C01C5 /* ProfileFeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA77F2FD2D388EB6000C01C5 /* ProfileFeedView.swift */; };
+		AA77F3002D388F22000C01C5 /* ReviewsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA77F2FF2D388F22000C01C5 /* ReviewsView.swift */; };
+		AA77F3022D388F37000C01C5 /* ReviewCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA77F3012D388F37000C01C5 /* ReviewCard.swift */; };
+		AA77F3042D388F52000C01C5 /* FavoritesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA77F3032D388F52000C01C5 /* FavoritesView.swift */; };
+		AA77F3062D388F6D000C01C5 /* ProfileCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA77F3052D388F6D000C01C5 /* ProfileCollectionView.swift */; };
+		AA77F3082D388FA3000C01C5 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA77F3072D388FA3000C01C5 /* HeaderView.swift */; };
+		AA77F30A2D388FBD000C01C5 /* BannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA77F3092D388FBD000C01C5 /* BannerView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -151,7 +157,6 @@
 		AA0315762D3870D0002E4ED4 /* propertyWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = propertyWrapper.swift; sourceTree = "<group>"; };
 		AA0315772D3870D0002E4ED4 /* UserDefaultsExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefaultsExtensions.swift; sourceTree = "<group>"; };
 		AA03157C2D3870E0002E4ED4 /* ViewConstant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewConstant.swift; sourceTree = "<group>"; };
-		AA03157D2D3870E0002E4ED4 /* SFSymbol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SFSymbol.swift; sourceTree = "<group>"; };
 		AA0315802D3870E0002E4ED4 /* MainButtonSwiftUI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainButtonSwiftUI.swift; sourceTree = "<group>"; };
 		AA0315832D3870E0002E4ED4 /* AppTextFieldCases+Phone.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AppTextFieldCases+Phone.swift"; sourceTree = "<group>"; };
 		AA0315842D3870E0002E4ED4 /* AppTextFieldCases+Normal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AppTextFieldCases+Normal.swift"; sourceTree = "<group>"; };
@@ -168,10 +173,17 @@
 		AA03159F2D3871C7002E4ED4 /* ChangePasswordView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangePasswordView.swift; sourceTree = "<group>"; };
 		AA0315A12D3871C7002E4ED4 /* Emailer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Emailer.swift; sourceTree = "<group>"; };
 		AA0315A22D3871C7002E4ED4 /* socialMediaEnum.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = socialMediaEnum.swift; sourceTree = "<group>"; };
-		AA0315A32D3871C7002E4ED4 /* PhoneCaller.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhoneCaller.swift; sourceTree = "<group>"; };
 		AA0315A92D3873B3002E4ED4 /* SocialMedia.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocialMedia.swift; sourceTree = "<group>"; };
 		AA0315AB2D3873F3002E4ED4 /* ARMenuContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ARMenuContentView.swift; sourceTree = "<group>"; };
 		AA0315AC2D3873F3002E4ED4 /* ARMenuView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ARMenuView.swift; sourceTree = "<group>"; };
+		AA77F2FB2D388EA1000C01C5 /* StickyTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StickyTabView.swift; sourceTree = "<group>"; };
+		AA77F2FD2D388EB6000C01C5 /* ProfileFeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileFeedView.swift; sourceTree = "<group>"; };
+		AA77F2FF2D388F22000C01C5 /* ReviewsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewsView.swift; sourceTree = "<group>"; };
+		AA77F3012D388F37000C01C5 /* ReviewCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewCard.swift; sourceTree = "<group>"; };
+		AA77F3032D388F52000C01C5 /* FavoritesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesView.swift; sourceTree = "<group>"; };
+		AA77F3052D388F6D000C01C5 /* ProfileCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCollectionView.swift; sourceTree = "<group>"; };
+		AA77F3072D388FA3000C01C5 /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
+		AA77F3092D388FBD000C01C5 /* BannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -403,8 +415,16 @@
 		1CACF3702D2DE97D0050F97E /* Profile */ = {
 			isa = PBXGroup;
 			children = (
-				AA03159D2D3871C7002E4ED4 /* Profile Cycle */,
 				1C8BE4642CE06D5C00EBEA4F /* ProfileView.swift */,
+				AA03159D2D3871C7002E4ED4 /* Profile Cycle */,
+				AA77F2FB2D388EA1000C01C5 /* StickyTabView.swift */,
+				AA77F3072D388FA3000C01C5 /* HeaderView.swift */,
+				AA77F2FD2D388EB6000C01C5 /* ProfileFeedView.swift */,
+				AA77F3092D388FBD000C01C5 /* BannerView.swift */,
+				AA77F2FF2D388F22000C01C5 /* ReviewsView.swift */,
+				AA77F3012D388F37000C01C5 /* ReviewCard.swift */,
+				AA77F3032D388F52000C01C5 /* FavoritesView.swift */,
+				AA77F3052D388F6D000C01C5 /* ProfileCollectionView.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -441,7 +461,6 @@
 			isa = PBXGroup;
 			children = (
 				AA03157C2D3870E0002E4ED4 /* ViewConstant.swift */,
-				AA03157D2D3870E0002E4ED4 /* SFSymbol.swift */,
 			);
 			path = Utilites;
 			sourceTree = "<group>";
@@ -499,9 +518,9 @@
 		AA03159D2D3871C7002E4ED4 /* Profile Cycle */ = {
 			isa = PBXGroup;
 			children = (
+				AA0315A02D3871C7002E4ED4 /* Socials */,
 				AA03159E2D3871C7002E4ED4 /* EditProfileView.swift */,
 				AA03159F2D3871C7002E4ED4 /* ChangePasswordView.swift */,
-				AA0315A02D3871C7002E4ED4 /* Socials */,
 			);
 			path = "Profile Cycle";
 			sourceTree = "<group>";
@@ -512,7 +531,6 @@
 				AA0315A92D3873B3002E4ED4 /* SocialMedia.swift */,
 				AA0315A12D3871C7002E4ED4 /* Emailer.swift */,
 				AA0315A22D3871C7002E4ED4 /* socialMediaEnum.swift */,
-				AA0315A32D3871C7002E4ED4 /* PhoneCaller.swift */,
 			);
 			path = Socials;
 			sourceTree = "<group>";
@@ -622,14 +640,15 @@
 				AA0315912D3870E0002E4ED4 /* AppTextFieldCases+Phone.swift in Sources */,
 				AA0315902D3870E0002E4ED4 /* MainButtonSwiftUI.swift in Sources */,
 				1C847E472CCCAD1F002A276E /* SignUpView.swift in Sources */,
+				AA77F30A2D388FBD000C01C5 /* BannerView.swift in Sources */,
 				1C0699B82D24C567009912D9 /* SearchView.swift in Sources */,
 				1C847E762CD1A806002A276E /* MapView.swift in Sources */,
 				1C9D88512CFD7A01004B14C0 /* AddToRestaurantView.swift in Sources */,
 				AA0315AD2D3873F3002E4ED4 /* ARMenuContentView.swift in Sources */,
+				AA77F3002D388F22000C01C5 /* ReviewsView.swift in Sources */,
 				1C847E452CCCAD14002A276E /* SignInView.swift in Sources */,
 				AA0315932D3870E0002E4ED4 /* AppTextFieldIconSwiftUI.swift in Sources */,
 				1C217DED2D2956B800499D38 /* SubscriptionOfferView.swift in Sources */,
-				AA03158F2D3870E0002E4ED4 /* SFSymbol.swift in Sources */,
 				1C847E7A2CD1A8C2002A276E /* CameraView.swift in Sources */,
 				1CACF3742D2DF38A0050F97E /* MyRestaurantsHorizontalSliderView.swift in Sources */,
 				AA0315962D3870E0002E4ED4 /* AppTextFieldSwiftUI.swift in Sources */,
@@ -639,6 +658,7 @@
 				1C847E352CCC40C1002A276E /* ContentView.swift in Sources */,
 				1C847E7E2CD1AA4B002A276E /* QRCode_ARMenuView.swift in Sources */,
 				AA03159C2D3870FC002E4ED4 /* View+Extensions.swift in Sources */,
+				AA77F3082D388FA3000C01C5 /* HeaderView.swift in Sources */,
 				1C8BE4652CE06D5C00EBEA4F /* ProfileView.swift in Sources */,
 				AA0315AA2D3873B3002E4ED4 /* SocialMedia.swift in Sources */,
 				1CFFA81A2D20C64900532EC9 /* TabBarWithPopUp.swift in Sources */,
@@ -646,6 +666,8 @@
 				1C6D31E92D066BFE00844C25 /* AdvancedPhotoCaptureView.swift in Sources */,
 				AA03159A2D3870E0002E4ED4 /* PhoneTextFieldSwiftUI.swift in Sources */,
 				AA0315792D3870D0002E4ED4 /* UserDefaultsExtensions.swift in Sources */,
+				AA77F2FC2D388EA1000C01C5 /* StickyTabView.swift in Sources */,
+				AA77F3022D388F37000C01C5 /* ReviewCard.swift in Sources */,
 				1CACF3722D2DEF050050F97E /* EditRestaurantDetailsView.swift in Sources */,
 				AA0315982D3870E0002E4ED4 /* String+InputView.swift in Sources */,
 				1C9D88452CF01CAD004B14C0 /* LoadARItemView.swift in Sources */,
@@ -653,18 +675,20 @@
 				1C9D88432CEC1E84004B14C0 /* LeaderboardFeedView.swift in Sources */,
 				1C856CC12D3507F400FDF1A5 /* AnimatedGradientView.swift in Sources */,
 				1C8BE4632CE06D5000EBEA4F /* MainView.swift in Sources */,
-				AA0315A82D3871C7002E4ED4 /* PhoneCaller.swift in Sources */,
 				AA03158E2D3870E0002E4ED4 /* ViewConstant.swift in Sources */,
 				1C847E632CCE0306002A276E /* String.swift in Sources */,
 				AA0315AE2D3873F3002E4ED4 /* ARMenuView.swift in Sources */,
 				AA0315952D3870E0002E4ED4 /* TextFieldType.swift in Sources */,
 				AA0315A72D3871C7002E4ED4 /* socialMediaEnum.swift in Sources */,
+				AA77F3062D388F6D000C01C5 /* ProfileCollectionView.swift in Sources */,
 				1C8AC3A92CD5BFB300A53AC0 /* AddressEntryView.swift in Sources */,
 				1C9D884F2CFD79CE004B14C0 /* ModelDetailView.swift in Sources */,
+				AA77F2FE2D388EB6000C01C5 /* ProfileFeedView.swift in Sources */,
 				1C847E742CD1A7E2002A276E /* RestaurantCardView.swift in Sources */,
 				1C9D884D2CFD79BD004B14C0 /* ModelCollectionView.swift in Sources */,
 				1C27FE2D2D264E7400C1AD9F /* PremiumDashboardView.swift in Sources */,
 				1C847E592CCDB2B9002A276E /* AppDelegate.swift in Sources */,
+				AA77F3042D388F52000C01C5 /* FavoritesView.swift in Sources */,
 				1CF269922D179FBC0078F41B /* ARMenuOverlayView.swift in Sources */,
 				AA0315A42D3871C7002E4ED4 /* EditProfileView.swift in Sources */,
 				AA0315992D3870E0002E4ED4 /* NormalTextFieldSwiftUI.swift in Sources */,
@@ -732,7 +756,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -789,7 +813,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -818,8 +842,8 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -827,9 +851,11 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.iBiteApp.iBiteApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -852,8 +878,8 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -861,9 +887,11 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.iBiteApp.iBiteApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

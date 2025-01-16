@@ -7,21 +7,6 @@
 
 import MessageUI
 
-/*
- To use this:-
- 
- 1-create an object of this class to your VC on top level scoop
- 
- let emailer = Emailer()
- 
- 2- call send method when press in specific button or view
- 
- emailer.sendMail(body: "Hello From Mohammed", recipients: ["mgabouarab@gmail.com"])
- 
- 
- */
-
-
 class Emailer: NSObject {
     func sendMail(body: String, recipients: [String]) {
         if MFMailComposeViewController.canSendMail() {

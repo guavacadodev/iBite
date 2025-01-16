@@ -11,6 +11,10 @@ struct EditProfileView: View {
     var user: UserModel
     @State var userName = String()
     @State var bithdate = String()
+  
+  
+
+    
     var body: some View {
         ScrollView(showsIndicators: false) {
             VStack(spacing: 40) {
@@ -41,5 +45,3 @@ struct SignOutView: View {
             .padding()
     }
 }
-
-

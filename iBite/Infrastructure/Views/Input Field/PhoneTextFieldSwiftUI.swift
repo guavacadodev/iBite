@@ -67,7 +67,7 @@ struct PhoneTFSwiftUI: View {
     
     var countryCodeView: some View {
         HStack {
-            Image(systemName: SFSymbol.expand.rawValue)
+            Image(systemName: "chevron.down")
                 .foregroundStyle(Color(UIColor.placeholderText))
             Text(countryCodeValue)
                 .foregroundStyle(Color(UIColor.placeholderText))
