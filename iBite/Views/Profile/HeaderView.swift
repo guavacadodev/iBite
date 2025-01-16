@@ -12,6 +12,8 @@ struct HeaderView: View {
     var offset: CGFloat
     var isUsersOwnProfile: Bool // Pass the binding value here
     @State private var isMenuPresented: Bool = false
+    @State private var navigateToEditProfile = false
+
     var body: some View {
         VStack {
             // Profile Icon
@@ -108,14 +110,28 @@ struct HeaderView: View {
             .padding(.top)
             
             if isUsersOwnProfile {
-                NavigationLink(destination: EditProfileView(user: user, userName: user.username, bithdate: user.birthday.description)) {
-                    Text("Edit Profile")
-                        .foregroundColor(.darkNeutral)
-                        .padding(.vertical, 6)
-                        .padding(.horizontal, 60)
-                        .background(Color.teal1)
-                        .cornerRadius(8)
+//                NavigationLink(destination: EditProfileView(user: user, userName: user.username, bithdate: user.birthday.description)) {
+//                    Text("Edit Profile")
+//                        .foregroundColor(.darkNeutral)
+//                        .padding(.vertical, 6)
+//                        .padding(.horizontal, 60)
+//                        .background(Color.teal1)
+//                        .cornerRadius(8)
+//                }
+                
+                Text("Edit Profile")
+                    .foregroundColor(.darkNeutral)
+                    .padding(.vertical, 6)
+                    .padding(.horizontal, 60)
+                    .background(Color.teal1)
+                    .cornerRadius(8)
+                    .onTapGesture(perform: {
+                        navigateToEditProfile = true
+                    })
+                .sheet(isPresented: $navigateToEditProfile) {
+                   EditProfileView(user: user)
                 }
+                
                 //.background(Color.violet1)
             }
 

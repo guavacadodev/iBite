@@ -8,156 +8,19 @@
 import SwiftUI
 import MapKit
 
-
-//struct ProfileContent: View {
-//    var dummyUserData: UserModel = UserModel(username: "Eslam", dateCreated: Date(), birthday: 97, signedUp: true, isMember: true, followers: 1000, following: 2900)
-//    @Binding var isUsersOwnProfile: Bool
-//    @Environment(\.presentationMode) var presentationMode
-//
-//    @State private var navigateToEditProfile = false
-//    @State private var navigateToChangePassword = false
-//
-//    var body: some View {
-//        NavigationStack {
-//            Group {
-//                if isUsersOwnProfile {
-//                    UserProfileView(user: dummyUserData)
-//                        .toolbar {
-//                            // Gear icon with Menu
-//                            ToolbarItem(placement: .navigationBarTrailing) {
-//                                Menu {
-//                                    Button(action: {
-//                                        navigateToEditProfile = true
-//                                    }) {
-//                                        Label("Update Profile", systemImage: "person")
-//                                    }
-//                                    Button(action: {
-//                                        navigateToChangePassword = true
-//                                    }) {
-//                                        Label("Change Password", systemImage: "lock")
-//                                    }
-//                                    Button(role: .destructive, action: {
-//                                        print("User signed out!")
-//                                    }) {
-//                                        Label("Sign Out", systemImage: "rectangle.portrait.and.arrow.forward")
-//                                    }
-//                                } label: {
-//                                    Image(systemName: "gearshape")
-//                                        .foregroundColor(.primary)
-//                                }
-//                            }
-//                        }
-//                        .background(
-////                            NavigationLink("", destination: EditProfileView(user: dummyUserData, userName: dummyUserData.username, bithdate: dummyUserData.birthday.description), isActive: $navigateToEditProfile)
-////                                .hidden()
-//                            
-//                            NavigationLink(
-//                                destination: EditProfileView(user: dummyUserData, userName: dummyUserData.username, bithdate: dummyUserData.birthday.description),
-//                                isActive: $navigateToEditProfile,
-//                                label: { EmptyView() }
-//                            )
-//                            
-//                           
-//                            
-//                        )
-//                        .background(
-//                            NavigationLink("", destination: ChangePasswordView(), isActive: $navigateToChangePassword)
-//                                .hidden()
-//                        )
-//                } else {
-//                    OtherUserProfileView(user: dummyUserData)
-//                        .onAppear {
-//                            presentationMode.wrappedValue.dismiss()
-//                        }
-//                }
-//            }
-//            
-//            .navigationBarTitleDisplayMode(.inline)
-//            
-//        }
-//        .accentColor(.red)
-//    }
-//
-//}
-
-import SwiftUI
-
 struct ProfileContent: View {
-    @Environment(\.presentationMode) var presentationMode
     var dummyUserData: UserModel = UserModel(username: "Eslam", dateCreated: Date(), birthday: 97, signedUp: true, isMember: true, followers: 1000, following: 2900)
     @Binding var isUsersOwnProfile: Bool
-    @State private var navigateToEditProfile = false
-    @State private var navigateToChangePassword = false
-    
-    
     var body: some View {
-        NavigationStack {
-            ZStack {
-                // Custom background color
-                Color("darkNeutral")//violet1
-                    .ignoresSafeArea()
-
-                if isUsersOwnProfile {
-                    UserProfileView(user: dummyUserData)
-                        .toolbar {
-                            ToolbarItem(placement: .navigationBarTrailing) {
-                                Menu {
-                                    Button(action: {
-                                        navigateToEditProfile = true
-                                    }) {
-                                        Label("Update Profile", systemImage: "person")
-                                    }
-                                    Button(action: {
-                                        navigateToChangePassword = true
-                                    }) {
-                                        Label("Change Password", systemImage: "lock")
-                                    }
-                                    Button(role: .destructive, action: {
-                                        print("User signed out!")
-                                    }) {
-                                        Label("Sign Out", systemImage: "rectangle.portrait.and.arrow.forward")
-                                    }
-                                } label: {
-                                    Image(systemName: "gearshape")
-                                        .foregroundColor(.primary)
-                                }
-                            }
-                        }
-                        .background(
-                            NavigationLink("", destination: EditProfileView(user: dummyUserData, userName: dummyUserData.username, bithdate: dummyUserData.birthday.description), isActive: $navigateToEditProfile)
-                                .hidden()
-                        )
-                        .background(
-                            NavigationLink("", destination: ChangePasswordView(), isActive: $navigateToChangePassword)
-                                .hidden()
-                        )
-                } else {
-                    OtherUserProfileView(user: dummyUserData)
-                }
+        ZStack {
+            Color("darkNeutral")
+                .ignoresSafeArea()
+            if isUsersOwnProfile {
+                UserProfileView(user: dummyUserData)
+            } else {
+                OtherUserProfileView(user: dummyUserData)
             }
-            .toolbarBackground(Color.purple1, for: .navigationBar) //this
-            .toolbarBackground(.visible, for: .navigationBar) //this
-            .navigationBarTitleDisplayMode(.inline)
-            .accentColor(.white) // Optional: Adjust accent color for buttons
-            .navigationBarItems(
-                leading: Group {
-                    Button(action: {
-                        presentationMode.wrappedValue.dismiss()
-                    }) {
-                        HStack {
-                            Image(systemName: "chevron.left")
-                                .foregroundColor(Color("purple1"))
-                            Text("Back")
-                                .font(.custom("Fredoka-Regular", size: 16))
-                                .foregroundColor(Color("purple1"))
-                        }
-                    }
-                }
-            )
-            .shadow(color: .clear, radius: 0, x: 0, y: 0)
-
         }
-        .accentColor(Color("purple1"))
     }
 }
 
@@ -189,6 +52,8 @@ struct ProfileView: View {
     @State private var bannerZIndex: Double = 0 // Track zIndex of BannerView dynamically
     var isUsersOwnProfile: Bool // Pass this from the parent view
     @State private var selectedTab = 0 // Track selected tab
+    @State private var navigateToEditProfile = false
+    @State private var navigateToChangePassword = false
 
     var body: some View {
         ZStack(alignment: .top) {
@@ -196,7 +61,6 @@ struct ProfileView: View {
             BannerView(bannerTitle: bannerTitle)
                 .frame(height: 100)
                 .zIndex(bannerZIndex)
-
             VStack {
                 ScrollView {
                     // Header section below Banner
@@ -216,7 +80,7 @@ struct ProfileView: View {
                             let stickyOffset = geometry.frame(in: .global).minY
                             StickyTabView(selectedTab: $selectedTab) // Pass selectedTab binding
                                 .background(Color.white)
-                                .offset(y: stickyOffset < 100 ? -stickyOffset + 188 : 0)
+                                .offset(y: stickyOffset < 100 ? -stickyOffset + 144 : 0)
                                 .zIndex(1)
                                 .onChange(of: stickyOffset) { newOffset in
                                     bannerZIndex = newOffset <= 100 ? 3 : 0
@@ -228,6 +92,42 @@ struct ProfileView: View {
                     }
                 }
             }
+            HStack {
+                Spacer()
+                Menu {
+                    Button(action: {
+                        navigateToEditProfile = true
+                    }) {
+                        Label("Update Profile", systemImage: "person")
+                    }
+                    
+                    Button(action: {
+                        navigateToChangePassword = true
+                    }) {
+                        Label("Change Password", systemImage: "lock")
+                    }
+                    Button(role: .destructive, action: {
+                        print("User signed out!")
+                    }) {
+                        Label("Sign Out", systemImage: "rectangle.portrait.and.arrow.forward")
+                    }
+                } label: {
+                    Image(systemName: "gearshape")
+                        .font(.body)
+                        .foregroundColor(.white)
+                }
+            }
+            .sheet(isPresented: $navigateToEditProfile) {
+               EditProfileView(user: user, userName: user.username, bithdate: user.birthday.description)
+            }
+            .sheet(isPresented: $navigateToChangePassword) {
+                ChangePasswordView()
+            }
+            
+            .padding(.horizontal, 16)
+            .padding(.top, 40)
+            .zIndex(10) // Ensure button stays on top
+            
         }
         .background(Color("darkNeutral"))
         .preferredColorScheme(.light)
