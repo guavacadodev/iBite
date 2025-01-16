@@ -24,7 +24,3 @@ struct AppTextFieldIconSwiftUI: View {
         }
     }
 }
-
-//#Preview {
-//    AppTextFieldIconSwiftUI()
-//}

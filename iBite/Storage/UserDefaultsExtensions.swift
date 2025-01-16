@@ -8,23 +8,6 @@
 import Foundation
 extension UserDefaults {
     private enum Keys: String {
-        case themeStyle
-        case googleMapKey
-        case accessToken
-        case pushNotificationToken
-        case isFirstTime //== isSeenOnBoarding
-        case isLogin
-        case user
-        
-        case accountType
-        case providerType
-        
-        case currentLat
-        case currentLng
-        //case selectedAddress
-        case homeAddress
-        
-        case isEnableNotification
         case favoriteResturants
     }
     

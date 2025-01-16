@@ -16,9 +16,7 @@ struct AppTextFieldSwiftUI: View {
         TextField(placeholderField ?? "placeholder", text: $bodyTextField)
             .keyboardType(keyboardType)
             .autocorrectionDisabled(false)
-        //.clearButton(text: $bodyTextField, tintColor: $tintColor)
             .foregroundStyle(Color(UIColor.label))
-        // .cornerRadius(5.0)
             .disabled(!isEnable)
     }
 }
@@ -39,7 +37,6 @@ struct AppSecureFieldSwiftUI: View {
                     isSecure.toggle()
                 }) {
                     Image(systemName: isSecure ? "eye.slash.fill" : "eye.fill")
-                        //.foregroundStyle(.main.opacity(0.9))
                         .foregroundStyle(Color(UIColor.placeholderText))
                 }
             }
@@ -51,24 +48,18 @@ struct AppSecureFieldSwiftUI: View {
                 TextField(placeholderField ?? "placeholder", text: $bodyTextField)
                     .keyboardType(keyboardType)
                     .autocorrectionDisabled(false)
-                //.clearButton(text: $bodyTextField, tintColor: $tintColor)
                     .foregroundStyle(Color(UIColor.label))
-                // .cornerRadius(5.0)
                     .disabled(!isEnable)
             }
         }
     }
 }
 
-
-
 //MARK: - Modifier -
-import SwiftUI
-
 struct PasswordToggleModifier: ViewModifier {
     @Binding var text: String
     @State private var isSecure: Bool = true
-    @FocusState private var isFocused: Bool // Manage focus state
+    @FocusState private var isFocused: Bool
     
     func body(content: Content) -> some View {
         HStack {
@@ -85,10 +76,10 @@ struct PasswordToggleModifier: ViewModifier {
             
             Button(action: {
                 isSecure.toggle()
-                isFocused = true // Retain focus when toggling
+                isFocused = true
             }) {
                 Image(systemName: isSecure ? "eye.slash.fill" : "eye.fill")
-                    .foregroundColor(.blue) // Customize as needed
+                    .foregroundColor(.blue)
             }
         }
         .padding()
@@ -105,11 +96,3 @@ extension View {
         self.modifier(PasswordToggleModifier(text: text))
     }
 }
-
-//MARK: - Usage -
-//TextField("", text: $password)
-              //.passwordToggle(text: $password)
-
-//#Preview {
- //   AppTextFieldSwiftUI(bodyTextField: "", keyboardType: .default)
-//}

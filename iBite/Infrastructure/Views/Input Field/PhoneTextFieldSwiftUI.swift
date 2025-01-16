@@ -15,28 +15,18 @@ struct PhoneTextFieldSwiftUI: View {
     weak var delegate: PhoneTextFieldSwiftUIDelegate?
     var type: AppPhoneFieldProtocol
     @Binding var textValue: String// = ""
-//    init(type: AppPhoneFieldProtocol, delegate: PhoneTextFieldSwiftUIDelegate?) {
-//        self.type = type
-//        self.delegate = delegate
-//    }
     var body: some View {
         PhoneTFSwiftUI(bodyTextField: $textValue, type: type)
             .background(Color.clear)
     }
 }
 
-//#Preview {
-//    PhoneTextFieldSwiftUI(type: PhoneFieldCase(), delegate: nil, textValue: <#Binding<String>#>)
-//}
-
 struct PhoneTFSwiftUI: View {
     weak var delegate: PhoneTextFieldSwiftUIDelegate?
-    @Binding var bodyTextField: String// = ""
+    @Binding var bodyTextField: String
     @State var countryCodeValue: String = "--"
     @State var countryFlagValue: String = "logo"
     var type: AppPhoneFieldProtocol
-    //@State var tintColor: Color = .main.opacity(0.4)
-    //@State var isFieldEmpty: Bool = true
     var body: some View {
         VStack(alignment: .leading, spacing: InputFieldConstants.fieldSapcing) {
             Group {
@@ -64,9 +54,7 @@ struct PhoneTFSwiftUI: View {
                 countryCodeView
                 
             }
-            .padding()
-            
-            //MARK: - to Make border without hidden in four corners -
+            .padding()            
             .overlay(
                 RoundedRectangle(cornerRadius: InputFieldConstants.fieldCornerRaduis)
                     .stroke(isFieldEmpty() ? .clear : .purple1, lineWidth: 1)

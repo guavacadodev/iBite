@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct MainButtonView: View {
-    let action: (()->Void)?// = nil
+    let action: (()->Void)?
     @State var buttonTitle: String
     var body: some View {
         Button {
@@ -17,7 +17,6 @@ struct MainButtonView: View {
             Text(buttonTitle)
                 .foregroundStyle(Color(UIColor.white))
                 .font(.system(size: 16, weight: .bold))
-                //.font(Font(uiFont: UIFont.systemFont(ofSize: 16, weight: .bold)))
                 .frame(maxWidth: .infinity)
                 .padding()
                 .frame(height: 50, alignment: .center)

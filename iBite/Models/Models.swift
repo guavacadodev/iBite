@@ -22,7 +22,6 @@ struct Restaurant: Identifiable, Codable {
     var rating: Int?
     var favorite: Bool
     var isSelected: Bool = false
-
 }
 
 struct Coordinate: Codable {

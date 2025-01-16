@@ -54,18 +54,6 @@ extension AppPhoneFieldProtocol {
 }
 
 
-/// Selection
-//protocol AppSelectionFieldProtocol: AppInputFieldProtocol {
-//    var selectedData: [BottomSheetData]?  { get set }
-//}
-//
-///// picker
-//protocol AppPickerFieldProtocol: AppInputFieldProtocol {
-//    //func dateValue() -> Date?
-//    var pickerType: PickerView.PickerType { get }
-//    var isOlderAvailable: Bool { get }
-//}
-
 /// for next project
 protocol AppTextFieldProtocol {
     var isActive: Bool { get set }

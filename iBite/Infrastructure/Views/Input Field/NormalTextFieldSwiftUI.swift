@@ -12,11 +12,7 @@ struct SecureFieldViewSwiftUI: View {
     @Binding var textValue: String
     @Binding var isSecure: Bool
     var isSecureField: Bool = true
-//    init(type: AppNormalFieldProtocol, textValue: String) {
-//        self.type = type
-//        self.textValue = textValue
-//    }
-//
+
     var body: some View {
         NormalTFSwiftUI(bodyTextField: $textValue, isSecureField: isSecureField, isSecure: $isSecure, type: type)
             .background(Color.clear)
@@ -28,11 +24,7 @@ struct NormalTextFieldSwiftUI: View {
     @Binding var textValue: String
     var isSecureField: Bool = false
     @State var isSecure: Bool = false
-//    init(type: AppNormalFieldProtocol, textValue: String) {
-//        self.type = type
-//        self.textValue = textValue
-//    }
-//    
+
     var body: some View {
         NormalTFSwiftUI(bodyTextField: $textValue, isSecureField: isSecureField, isSecure: $isSecure, type: type)
             .background(Color.clear)
@@ -41,12 +33,10 @@ struct NormalTextFieldSwiftUI: View {
 
 
 struct NormalTFSwiftUI: View {
-    @Binding var bodyTextField: String// = ""
+    @Binding var bodyTextField: String
     var isSecureField: Bool
     @Binding var isSecure: Bool
     
-    //@State var tintColor: Color = .main.opacity(0.4)
-    //@State var isFieldEmpty: Bool = true
     var type: AppNormalFieldProtocol
     var body: some View {
         VStack(alignment: .leading, spacing: InputFieldConstants.fieldSapcing) {
@@ -79,7 +69,6 @@ struct NormalTFSwiftUI: View {
                 }
             }
             .padding()
-            //MARK: - to Make border without hidden in four corners -
             .overlay(
                 RoundedRectangle(cornerRadius: InputFieldConstants.fieldCornerRaduis)
                     .stroke(isFieldEmpty() ? .clear : .purple1, lineWidth: 1)
